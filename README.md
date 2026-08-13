@@ -470,6 +470,7 @@ hoje (sites mudam).
 | Adicionar um adapter novo | ver seção 4 acima; arquivos em `app/scrapers/`, registro em `app/cli.py` |
 | Ver como o CLI resolve portal → adapter | `app/cli.py`, funções `_find_portal` e `_build_scraper` |
 | Rodar/testar um portal sem afetar o banco | `uv run python -m app.cli run --portal CODE --dry-run` |
+| Reenviar manualmente publicações já vistas de um portal (sem mexer no banco via SQL) | `uv run python -m app.cli run --portal CODE --force` (ver seção 5.1) |
 | Ver o schema real de um portal (JSON/XML/HTML de exemplo) | `tests/fixtures/` |
 | Ver a rota de health check | `app/main.py` (`GET /health`) |
 | Configurar variáveis de ambiente locais | copiar `.env.example` para `.env` e preencher |
@@ -478,6 +479,31 @@ hoje (sites mudam).
 | Ver o roadmap completo (fases futuras) | `PLANO.md` |
 | Ver as regras de negócio (o "porquê" das decisões) | `SPEC.md` |
 | Ver as convenções fixas de stack/arquitetura | `CLAUDE.md` |
+
+### 5.1. Reenviar manualmente publicações já vistas (`--force`)
+
+Feature pontual fora do roadmap do `PLANO.md`, aprovada à parte: antes,
+para reprocessar publicações que já tinham sido enviadas (por exemplo,
+para testar a correção de um bug), era preciso rodar `DELETE FROM
+seen_hashes` / `DELETE FROM publications` direto no Postgres — funciona,
+mas é fácil apagar mais do que deveria e não é uma operação disponível
+sem acesso ao banco.
+
+```bash
+uv run python -m app.cli run --portal CODE --force
+```
+
+`--force` sempre exige `--portal CODE` — reenviar todos os portais de
+uma vez seria destrutivo demais, então o comando sai com erro se
+`--force` for usado sem `--portal`. Por baixo dos panos: faz um
+`fetch()` real do portal, calcula o `content_hash` de cada publicação
+encontrada (mesma fórmula de sempre, `app.dedupe.compute_hash`) e apaga
+de `seen_hashes`/`publications` **só as linhas com esses hashes
+específicos** (`app.dedupe.clear_hashes`) — nunca a tabela inteira, nunca
+por `portal_code` cru, para não arriscar apagar dado de outro portal ou
+período por engano. Em seguida roda o pipeline normal
+(`app.pipeline.run_cycle`), que trata essas publicações como novas de
+novo e as reenvia por e-mail.
 
 ---
 
