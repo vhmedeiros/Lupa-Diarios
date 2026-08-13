@@ -15,6 +15,7 @@ import logging
 
 from app.registry import Portal, load_portals
 from app.scrapers.base import BaseScraper, Publication
+from app.scrapers.comunica_pje import ComunicaPjeScraper
 from app.scrapers.tst_juslaboris import TstJuslaborisScraper
 
 logging.basicConfig(level=logging.INFO)
@@ -24,6 +25,7 @@ logger = logging.getLogger(__name__)
 # Só os adapters já implementados entram aqui (ver PLANO.md, uma fase por portal).
 ADAPTERS: dict[str, type[BaseScraper]] = {
     "juslaboris_feed": TstJuslaborisScraper,
+    "comunica_pje": ComunicaPjeScraper,
 }
 
 
@@ -41,7 +43,13 @@ def _build_scraper(portal: Portal) -> BaseScraper:
         raise SystemExit(
             f"adapter '{portal.adapter}' do portal {portal.code} ainda não foi implementado"
         )
-    return adapter_cls(url=portal.url, portal_code=portal.code, portal_name=portal.name)
+    kwargs = {"url": portal.url, "portal_code": portal.code, "portal_name": portal.name}
+    # Só passa `params` para adapters que de fato o exigem (ex.: comunica_pje,
+    # parametrizado por sigla_tribunal); adapters sem params no portals.yaml
+    # continuam com a assinatura mais simples (ver TstJuslaborisScraper).
+    if portal.params:
+        kwargs["params"] = portal.params
+    return adapter_cls(**kwargs)
 
 
 def _print_publications(publications: list[Publication]) -> None:
