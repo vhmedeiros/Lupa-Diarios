@@ -615,6 +615,7 @@ primeiro.
 | Ver como o Docker Compose sobe app+banco | `docker-compose.yml` / `Dockerfile` |
 | Investigar um portal novo antes de codar | `scripts/inspect.py` |
 | Ver o roadmap completo (fases futuras) | `PLANO.md` |
+| Fazer deploy na VM Oracle A1 | `DEPLOY.md` |
 | Ver as regras de negócio (o "porquê" das decisões) | `SPEC.md` |
 | Ver as convenções fixas de stack/arquitetura | `CLAUDE.md` |
 
