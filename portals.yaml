@@ -1,0 +1,76 @@
+portals:
+  - code: JFDFDJN
+    name: "Diário da Justiça Federal do DF"
+    url: "https://trf1.jus.br/trf1/biblioteca/diarios-da-justica"
+    adapter: trf1_biblioteca
+    engine: playwright
+    enabled: true
+  - code: TCU
+    name: "Diário do TCU"
+    url: "https://portal.tcu.gov.br/btcu"
+    adapter: tcu
+    engine: playwright
+    enabled: true
+  - code: TCDF
+    name: "Diário do TCDF"
+    url: "https://doe.tc.df.gov.br"
+    adapter: tcdf
+    engine: http
+    enabled: true
+  - code: STFDJE
+    name: "DJe do STF"
+    url: "https://digital.stf.jus.br/publico/publicacoes"
+    adapter: stf_dje
+    engine: playwright
+    enabled: true
+  - code: STJ
+    name: "Diário do STJ"
+    url: "https://processo.stj.jus.br/processo/dj/init"
+    adapter: stj
+    engine: playwright
+    enabled: true
+  - code: STJDJN
+    name: "STJ no DJEN (Comunica PJe)"
+    url: "https://comunica.pje.jus.br/consulta?siglaTribunal=STJ&meio=D"
+    adapter: comunica_pje
+    engine: http
+    params: { sigla_tribunal: STJ }
+    enabled: true
+  - code: TST
+    name: "Diário do TST (JusLaboris)"
+    url: "https://juslaboris.tst.jus.br/feed/atom_1.0/site"
+    adapter: juslaboris_feed
+    engine: http
+    enabled: true
+  - code: TSTDJN
+    name: "TST no DEJT/DJEN"
+    url: "https://dejt.jt.jus.br/dejt/f/n/diariocon"
+    adapter: dejt
+    engine: playwright
+    enabled: true
+  - code: TRT10DJN
+    name: "TRT 10ª Região"
+    url: "https://dejt.jt.jus.br/dejt/f/n/diariocon"
+    adapter: dejt
+    engine: playwright
+    params: { tribunal: "TRT da 10ª Região" }
+    enabled: true
+  - code: TJDFTDJN
+    name: "TJDFT 1º e 2º graus"
+    url: "https://pesquisadje.tjdft.jus.br/"
+    adapter: tjdft
+    engine: playwright
+    enabled: true
+  - code: TRFDJN
+    name: "TRF 1ª Região"
+    url: "https://trf1.jus.br/trf1/biblioteca/diarios-da-justica"
+    adapter: trf1_biblioteca
+    engine: playwright
+    params: { secao: "TRF1" }
+    enabled: true
+  - code: TRF1ATA
+    name: "TRF1 Atas de Distribuição"
+    url: "https://www.trf1.jus.br/trf1/ataas/atas"
+    adapter: trf1_atas
+    engine: playwright
+    enabled: true
