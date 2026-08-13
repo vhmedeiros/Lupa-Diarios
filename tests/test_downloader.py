@@ -142,6 +142,29 @@ async def test_persistent_failure_propagates_after_retries(
 
 
 @pytest.mark.asyncio
+async def test_url_without_extension_infers_extension_from_content_type(
+    tmp_path: Path,
+) -> None:
+    content = b"%PDF-1.4 conteudo fake do arquivo"
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, content=content, headers={"content-type": "application/pdf"})
+
+    transport = httpx.MockTransport(handler)
+    publication = _publication(["https://btcu.apps.tcu.gov.br/api/obterDocumentoPdf/80705960"])
+
+    async with httpx.AsyncClient(transport=transport) as client:
+        results = await download_publication_files(publication, base_dir=tmp_path, client=client)
+
+    assert len(results) == 1
+    result = results[0]
+    saved_path = Path(result["path"])
+    assert saved_path.name == "80705960.pdf"
+    assert saved_path.suffix == ".pdf"
+    assert saved_path.read_bytes() == content
+
+
+@pytest.mark.asyncio
 async def test_duplicate_filenames_do_not_overwrite_each_other(tmp_path: Path) -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(200, content=str(request.url).encode())

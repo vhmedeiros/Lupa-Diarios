@@ -12,6 +12,7 @@ do mailer (Fase 12). Aqui `attached` fica sempre com o valor padrão
 
 import asyncio
 import logging
+import mimetypes
 from pathlib import Path
 
 import httpx
@@ -36,16 +37,6 @@ async def _download_one(client: httpx.AsyncClient, url: str, dest_dir: Path) -> 
     dest_dir.mkdir(parents=True, exist_ok=True)
 
     filename = url.rsplit("/", 1)[-1] or "arquivo"
-    dest_path = dest_dir / filename
-    if dest_path.exists():
-        # Evita sobrescrever um arquivo já baixado nesta pasta (ex.: duas
-        # publicações do mesmo dia linkando para nomes de arquivo iguais).
-        stem, _, suffix = filename.partition(".")
-        suffix = f".{suffix}" if suffix else ""
-        counter = 2
-        while dest_path.exists():
-            dest_path = dest_dir / f"{stem}-{counter}{suffix}"
-            counter += 1
 
     headers = {"User-Agent": USER_AGENT}
     last_exc: Exception | None = None
@@ -53,6 +44,27 @@ async def _download_one(client: httpx.AsyncClient, url: str, dest_dir: Path) -> 
         try:
             response = await client.get(url, headers=headers)
             response.raise_for_status()
+
+            if not Path(filename).suffix:
+                # URLs como a do TCU (.../obterDocumentoPdf/80705960) não
+                # trazem extensão nenhuma; tenta inferir pelo Content-Type
+                # da resposta. Sem sucesso, mantém o nome sem extensão.
+                content_type = response.headers.get("content-type", "").split(";")[0].strip()
+                guessed_ext = mimetypes.guess_extension(content_type) if content_type else None
+                if guessed_ext:
+                    filename = f"{filename}{guessed_ext}"
+
+            dest_path = dest_dir / filename
+            if dest_path.exists():
+                # Evita sobrescrever um arquivo já baixado nesta pasta (ex.:
+                # duas publicações do mesmo dia linkando para nomes iguais).
+                stem, _, suffix = filename.partition(".")
+                suffix = f".{suffix}" if suffix else ""
+                counter = 2
+                while dest_path.exists():
+                    dest_path = dest_dir / f"{stem}-{counter}{suffix}"
+                    counter += 1
+
             dest_path.write_bytes(response.content)
             return {
                 "url": url,
