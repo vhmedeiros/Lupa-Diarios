@@ -367,6 +367,7 @@ from app.scrapers.tst_juslaboris import TstJuslaborisScraper
 
 FIXTURE_PATH = Path(__file__).parent / "fixtures" / "tst_juslaboris_feed.xml"
 
+
 def test_parse_feed_returns_publications() -> None:
     xml_text = FIXTURE_PATH.read_text(encoding="utf-8")
     scraper = TstJuslaborisScraper(url="https://juslaboris.tst.jus.br/feed/atom_1.0/site")
@@ -398,7 +399,7 @@ ADAPTERS: dict[str, type[BaseScraper]] = {
     "comunica_pje": ComunicaPjeScraper,
     "tcu": TcuScraper,
     "tcdf": TcdfScraper,
-    "meu_novo_adapter": MeuNovoScraper,   # <- nova linha
+    "meu_novo_adapter": MeuNovoScraper,  # <- nova linha
 }
 ```
 
