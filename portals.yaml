@@ -9,7 +9,7 @@ portals:
     name: "Diário do TCU"
     url: "https://portal.tcu.gov.br/btcu"
     adapter: tcu
-    engine: playwright
+    engine: http
     enabled: true
   - code: TCDF
     name: "Diário do TCDF"

@@ -16,6 +16,7 @@ import logging
 from app.registry import Portal, load_portals
 from app.scrapers.base import BaseScraper, Publication
 from app.scrapers.comunica_pje import ComunicaPjeScraper
+from app.scrapers.tcu import TcuScraper
 from app.scrapers.tst_juslaboris import TstJuslaborisScraper
 
 logging.basicConfig(level=logging.INFO)
@@ -26,6 +27,7 @@ logger = logging.getLogger(__name__)
 ADAPTERS: dict[str, type[BaseScraper]] = {
     "juslaboris_feed": TstJuslaborisScraper,
     "comunica_pje": ComunicaPjeScraper,
+    "tcu": TcuScraper,
 }
 
 
