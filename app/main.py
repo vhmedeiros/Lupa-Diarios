@@ -9,6 +9,7 @@ from sqlalchemy import text
 # Garante que os modelos estejam registrados em Base.metadata antes do create_all.
 from app import models  # noqa: F401
 from app.db import Base, engine
+from app.routers import router
 
 
 @asynccontextmanager
@@ -20,6 +21,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(title="Lupa Diários", lifespan=lifespan)
+app.include_router(router)
 
 
 @app.get("/health")

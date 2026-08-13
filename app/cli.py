@@ -1,13 +1,18 @@
-"""CLI operacional do Lupa Diários (ver PLANO.md Fases 6 e 13 / SPEC.md §8).
+"""CLI operacional do Lupa Diários (ver PLANO.md Fases 6, 13 e 14 / SPEC.md §8).
 
 Uso:
     uv run python -m app.cli run --portal CODE --dry-run
+    uv run python -m app.cli run [--portal CODE]
     uv run python -m app.cli send-test
 
 `run --dry-run`: resolve o adapter do portal pelo registry, chama
 `fetch()` e imprime as publicações — sem gravar no banco, sem baixar
-arquivo e sem enviar e-mail (pipeline completo é de fases futuras do
-PLANO.md).
+arquivo e sem enviar e-mail.
+
+`run` (sem `--dry-run`, Fase 14): roda o pipeline de verdade
+(`app.pipeline.run_cycle`) — grava no banco, baixa arquivos e envia UM
+e-mail agrupado se houver publicação nova. Sem `--portal`, roda todos os
+portais habilitados em portals.yaml.
 
 `send-test`: checkpoint manual da Fase 13 — monta um e-mail com uma
 publicação fictícia via `build_email` e o envia de verdade via SMTP
@@ -20,8 +25,10 @@ import asyncio
 import datetime as dt
 import logging
 
+from app.db import async_session
 from app.mailer import build_email, send_email
 from app.models import Publication
+from app.pipeline import run_cycle
 from app.registry import Portal, load_portals
 from app.scrapers.base import BaseScraper
 from app.scrapers.base import Publication as ScrapedPublication
@@ -83,6 +90,18 @@ async def _run_dry_run(portal_code: str) -> None:
     _print_publications(publications)
 
 
+async def _run_pipeline(portal_code: str | None) -> None:
+    """Roda o pipeline de verdade (Fase 14) e imprime o resultado do ciclo."""
+    async with async_session() as session:
+        count = await run_cycle(session, portal_code)
+        await session.commit()
+
+    if count:
+        print(f"{count} publicações enviadas")
+    else:
+        print("0 publicações novas, nenhum e-mail enviado")
+
+
 async def _run_send_test() -> None:
     """Monta e envia um e-mail de teste real via SMTP (Fase 13)."""
     fake_publication = Publication(
@@ -104,8 +123,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(prog="python -m app.cli")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    run_parser = subparsers.add_parser("run", help="Executa a coleta de um portal")
-    run_parser.add_argument("--portal", required=True, help="Código do portal (ver portals.yaml)")
+    run_parser = subparsers.add_parser("run", help="Executa o pipeline de coleta")
+    run_parser.add_argument(
+        "--portal",
+        required=False,
+        default=None,
+        help="Código do portal (ver portals.yaml); sem isso, roda todos os habilitados",
+    )
     run_parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -119,11 +143,12 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.command == "run":
-        if not args.dry_run:
-            raise SystemExit(
-                "apenas 'run --portal CODE --dry-run' está disponível nesta fase do projeto"
-            )
-        asyncio.run(_run_dry_run(args.portal))
+        if args.dry_run:
+            if args.portal is None:
+                raise SystemExit("'run --dry-run' exige '--portal CODE'")
+            asyncio.run(_run_dry_run(args.portal))
+        else:
+            asyncio.run(_run_pipeline(args.portal))
     elif args.command == "send-test":
         asyncio.run(_run_send_test())
 
