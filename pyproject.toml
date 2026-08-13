@@ -1,0 +1,32 @@
+[project]
+name = "lupa-diarios"
+version = "0.1.0"
+description = "Monitor de Diarios Oficiais brasileiros"
+requires-python = ">=3.13"
+dependencies = [
+    "aiosmtplib>=4",
+    "apscheduler>=3.11,<4",
+    "asyncpg>=0.31.0",
+    "fastapi>=0.141,<0.150",
+    "httpx>=0.28",
+    "playwright>=1.61,<2",
+    "pydantic-settings>=2.15.0",
+    "pyyaml>=6.0.3",
+    "selectolax>=0.4.11",
+    "sqlalchemy>=2.0.52",
+    "uvicorn[standard]>=0.52.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.16.2",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
