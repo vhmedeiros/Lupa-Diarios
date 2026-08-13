@@ -1,20 +1,30 @@
-"""CLI operacional do Lupa Diários (ver PLANO.md Fase 6 / SPEC.md §8).
+"""CLI operacional do Lupa Diários (ver PLANO.md Fases 6 e 13 / SPEC.md §8).
 
 Uso:
     uv run python -m app.cli run --portal CODE --dry-run
+    uv run python -m app.cli send-test
 
-Nesta fase, somente `--dry-run` está implementado: resolve o adapter do
-portal pelo registry, chama `fetch()` e imprime as publicações — sem
-gravar no banco, sem baixar arquivo e sem enviar e-mail (isso é de fases
-futuras do PLANO.md).
+`run --dry-run`: resolve o adapter do portal pelo registry, chama
+`fetch()` e imprime as publicações — sem gravar no banco, sem baixar
+arquivo e sem enviar e-mail (pipeline completo é de fases futuras do
+PLANO.md).
+
+`send-test`: checkpoint manual da Fase 13 — monta um e-mail com uma
+publicação fictícia via `build_email` e o envia de verdade via SMTP
+(MailGrid), usando as credenciais de `app.config.settings`. Não grava
+nada no banco.
 """
 
 import argparse
 import asyncio
+import datetime as dt
 import logging
 
+from app.mailer import build_email, send_email
+from app.models import Publication
 from app.registry import Portal, load_portals
-from app.scrapers.base import BaseScraper, Publication
+from app.scrapers.base import BaseScraper
+from app.scrapers.base import Publication as ScrapedPublication
 from app.scrapers.comunica_pje import ComunicaPjeScraper
 from app.scrapers.tcdf import TcdfScraper
 from app.scrapers.tcu import TcuScraper
@@ -56,7 +66,7 @@ def _build_scraper(portal: Portal) -> BaseScraper:
     return adapter_cls(**kwargs)
 
 
-def _print_publications(publications: list[Publication]) -> None:
+def _print_publications(publications: list[ScrapedPublication]) -> None:
     if not publications:
         print("Nenhuma publicação encontrada.")
         return
@@ -73,6 +83,23 @@ async def _run_dry_run(portal_code: str) -> None:
     _print_publications(publications)
 
 
+async def _run_send_test() -> None:
+    """Monta e envia um e-mail de teste real via SMTP (Fase 13)."""
+    fake_publication = Publication(
+        portal_code="TESTE",
+        portal_name="Portal de Teste",
+        title="Publicação fictícia — checkpoint manual de SMTP",
+        published_at=dt.date.today(),
+        page_url="https://exemplo.gov.br/publicacao/teste",
+        summary="Este é um e-mail de teste do comando 'send-test' do Lupa Diários.",
+        files=[],
+        content_hash="send-test-checkpoint",
+    )
+    subject, html_body, attachments = build_email([fake_publication])
+    await send_email(subject, html_body, attachments)
+    print("e-mail enviado")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="python -m app.cli")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -85,6 +112,10 @@ def main() -> None:
         help="Só imprime o que seria coletado; não grava, não baixa, não envia e-mail",
     )
 
+    subparsers.add_parser(
+        "send-test", help="Envia um e-mail de teste real via SMTP (checkpoint manual da Fase 13)"
+    )
+
     args = parser.parse_args()
 
     if args.command == "run":
@@ -93,6 +124,8 @@ def main() -> None:
                 "apenas 'run --portal CODE --dry-run' está disponível nesta fase do projeto"
             )
         asyncio.run(_run_dry_run(args.portal))
+    elif args.command == "send-test":
+        asyncio.run(_run_send_test())
 
 
 if __name__ == "__main__":

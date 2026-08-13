@@ -1,8 +1,10 @@
-"""Montagem do e-mail de novidades (ver PLANO.md Fase 12 / SPEC.md §2 R2, §6).
+"""Montagem e envio do e-mail de novidades (ver PLANO.md Fases 12 e 13 /
+SPEC.md §2 R2, §6).
 
 `build_email` NÃO envia nada — apenas decide, aplicando a regra R2, quais
-arquivos entram como anexo e monta o assunto + corpo HTML. O envio via
-SMTP real (aiosmtplib) é escopo da Fase 13.
+arquivos entram como anexo e monta o assunto + corpo HTML. `send_email`
+(Fase 13) faz o envio real via SMTP (aiosmtplib, STARTTLS), usando as
+credenciais de `app.config.settings`.
 
 Decisões de design desta fase:
 - Entrada: `Sequence[app.models.Publication]` (o modelo ORM, não o
@@ -28,11 +30,18 @@ Decisões de design desta fase:
 
 import datetime as dt
 import html
+import logging
+import mimetypes
 from collections.abc import Sequence
+from email.message import EmailMessage
 from pathlib import Path
+
+import aiosmtplib
 
 from app.config import settings
 from app.models import Publication
+
+logger = logging.getLogger(__name__)
 
 BYTES_PER_MB = 1024 * 1024
 
@@ -170,3 +179,45 @@ def build_email(
     )
 
     return subject, html_body, attachments
+
+
+async def send_email(subject: str, html_body: str, attachments: list[dict] | None = None) -> None:
+    """Envia o e-mail via SMTP real (MailGrid), com STARTTLS (Fase 13).
+
+    `attachments` é a lista `[{path, filename}, ...]` retornada por
+    `build_email`. Credenciais e destinatários vêm de `app.config.settings`
+    (nunca logadas). Lança a exceção do aiosmtplib em caso de falha — quem
+    chama decide como reportar (ver `app.cli.send-test`).
+    """
+    message = EmailMessage()
+    message["From"] = settings.MAIL_FROM
+    message["To"] = settings.MAIL_TO
+    message["Subject"] = subject
+    message.set_content("Este e-mail requer um cliente compatível com HTML.")
+    message.add_alternative(html_body, subtype="html")
+
+    for attachment in attachments or []:
+        path = Path(attachment["path"])
+        mime_type, _ = mimetypes.guess_type(attachment["filename"])
+        maintype, _, subtype = (mime_type or "application/octet-stream").partition("/")
+        message.add_attachment(
+            path.read_bytes(),
+            maintype=maintype,
+            subtype=subtype or "octet-stream",
+            filename=attachment["filename"],
+        )
+
+    logger.info(
+        "Enviando e-mail via %s:%s para %s",
+        settings.SMTP_HOST,
+        settings.SMTP_PORT,
+        settings.MAIL_TO,
+    )
+    await aiosmtplib.send(
+        message,
+        hostname=settings.SMTP_HOST,
+        port=settings.SMTP_PORT,
+        username=settings.SMTP_USER,
+        password=settings.SMTP_PASSWORD,
+        start_tls=settings.SMTP_TLS,
+    )
