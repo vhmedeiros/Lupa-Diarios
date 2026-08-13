@@ -1,0 +1,485 @@
+{
+  "@context": "/api/contexts/Diario",
+  "@id": "/api/publico/diarios",
+  "@type": "Collection",
+  "totalItems": 109,
+  "member": [
+    {
+      "@id": "/api/diarios/pdf/download/1f196cba-5a21-6c5a-894a-e36c5aa40d74",
+      "@type": "Diario",
+      "id": "1f196cba-5a21-6c5a-894a-e36c5aa40d74",
+      "tipo": "O",
+      "numero": 105,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-13T01:01:18-03:00",
+      "quantidadePublicacoes": 13
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f196027-f025-6f52-8b5e-252c0a9ca5bd",
+      "@type": "Diario",
+      "id": "1f196027-f025-6f52-8b5e-252c0a9ca5bd",
+      "tipo": "O",
+      "numero": 104,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-12T01:01:24-03:00",
+      "quantidadePublicacoes": 12
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f195394-c722-600a-942d-6deb9b9ef3ea",
+      "@type": "Diario",
+      "id": "1f195394-c722-600a-942d-6deb9b9ef3ea",
+      "tipo": "O",
+      "numero": 103,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-11T01:01:12-03:00",
+      "quantidadePublicacoes": 5
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f194702-8584-670e-bf8b-ab72074927e4",
+      "@type": "Diario",
+      "id": "1f194702-8584-670e-bf8b-ab72074927e4",
+      "tipo": "O",
+      "numero": 102,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-10T01:01:21-03:00",
+      "quantidadePublicacoes": 20
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f19214a-ab33-696a-b382-e99c0ecbc401",
+      "@type": "Diario",
+      "id": "1f19214a-ab33-696a-b382-e99c0ecbc401",
+      "tipo": "O",
+      "numero": 101,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-07T01:01:24-03:00",
+      "quantidadePublicacoes": 8
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f1914b8-1480-6a20-abe3-a99abc9f63d8",
+      "@type": "Diario",
+      "id": "1f1914b8-1480-6a20-abe3-a99abc9f63d8",
+      "tipo": "O",
+      "numero": 100,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-06T01:01:25-03:00",
+      "quantidadePublicacoes": 8
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f190825-0f79-6f76-b92c-b1d61d505fa8",
+      "@type": "Diario",
+      "id": "1f190825-0f79-6f76-b92c-b1d61d505fa8",
+      "tipo": "O",
+      "numero": 99,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-05T01:01:16-03:00",
+      "quantidadePublicacoes": 24
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f18fb92-77a4-6136-aad3-11c2dc1cd3a4",
+      "@type": "Diario",
+      "id": "1f18fb92-77a4-6136-aad3-11c2dc1cd3a4",
+      "tipo": "O",
+      "numero": 98,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-04T01:01:17-03:00",
+      "quantidadePublicacoes": 7
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f18eeff-8449-667e-bdee-1dead6bb8703",
+      "@type": "Diario",
+      "id": "1f18eeff-8449-667e-bdee-1dead6bb8703",
+      "tipo": "O",
+      "numero": 97,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-08-03T01:01:10-03:00",
+      "quantidadePublicacoes": 13
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f18c948-13b3-6bf8-a68a-1f4f16791ce8",
+      "@type": "Diario",
+      "id": "1f18c948-13b3-6bf8-a68a-1f4f16791ce8",
+      "tipo": "O",
+      "numero": 96,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-31T01:01:23-03:00",
+      "quantidadePublicacoes": 9
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f18bcb5-75ba-63e6-af56-b7071fdcdc00",
+      "@type": "Diario",
+      "id": "1f18bcb5-75ba-63e6-af56-b7071fdcdc00",
+      "tipo": "O",
+      "numero": 95,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-30T01:01:24-03:00",
+      "quantidadePublicacoes": 12
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f18b022-a1cc-679e-973e-29b8d54a02e0",
+      "@type": "Diario",
+      "id": "1f18b022-a1cc-679e-973e-29b8d54a02e0",
+      "tipo": "O",
+      "numero": 94,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-29T01:01:19-03:00",
+      "quantidadePublicacoes": 12
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f18a390-0eb6-6e6c-95da-471f78096415",
+      "@type": "Diario",
+      "id": "1f18a390-0eb6-6e6c-95da-471f78096415",
+      "tipo": "O",
+      "numero": 93,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-28T01:01:21-03:00",
+      "quantidadePublicacoes": 7
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f1896fc-6d68-6a50-8fa3-effe17fbf75e",
+      "@type": "Diario",
+      "id": "1f1896fc-6d68-6a50-8fa3-effe17fbf75e",
+      "tipo": "O",
+      "numero": 92,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-27T01:00:56-03:00",
+      "quantidadePublicacoes": 19
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f187144-9309-621a-a9ea-15aeed3c9a5a",
+      "@type": "Diario",
+      "id": "1f187144-9309-621a-a9ea-15aeed3c9a5a",
+      "tipo": "O",
+      "numero": 91,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-24T01:00:59-03:00",
+      "quantidadePublicacoes": 5
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f1864b2-7ad6-6a24-95dc-0d94cb88beb1",
+      "@type": "Diario",
+      "id": "1f1864b2-7ad6-6a24-95dc-0d94cb88beb1",
+      "tipo": "O",
+      "numero": 90,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-23T01:01:13-03:00",
+      "quantidadePublicacoes": 15
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f185820-0a07-692c-a60d-638005b74f28",
+      "@type": "Diario",
+      "id": "1f185820-0a07-692c-a60d-638005b74f28",
+      "tipo": "O",
+      "numero": 89,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-22T01:01:19-03:00",
+      "quantidadePublicacoes": 10
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f184b8c-5e5b-6e7e-87dd-f17de9368ad2",
+      "@type": "Diario",
+      "id": "1f184b8c-5e5b-6e7e-87dd-f17de9368ad2",
+      "tipo": "O",
+      "numero": 88,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-21T01:00:51-03:00",
+      "quantidadePublicacoes": 2
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f183ef9-df48-6658-840e-2304d704e691",
+      "@type": "Diario",
+      "id": "1f183ef9-df48-6658-840e-2304d704e691",
+      "tipo": "O",
+      "numero": 87,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-20T01:00:57-03:00",
+      "quantidadePublicacoes": 14
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f181942-d580-6440-aaf1-df8d472fabf5",
+      "@type": "Diario",
+      "id": "1f181942-d580-6440-aaf1-df8d472fabf5",
+      "tipo": "O",
+      "numero": 86,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-17T01:01:20-03:00",
+      "quantidadePublicacoes": 7
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f180caf-3946-6128-9676-413d33246653",
+      "@type": "Diario",
+      "id": "1f180caf-3946-6128-9676-413d33246653",
+      "tipo": "O",
+      "numero": 85,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-16T01:00:54-03:00",
+      "quantidadePublicacoes": 4
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f18001c-9fbc-68c0-bc8f-558dd41a08b6",
+      "@type": "Diario",
+      "id": "1f18001c-9fbc-68c0-bc8f-558dd41a08b6",
+      "tipo": "O",
+      "numero": 84,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-15T01:00:56-03:00",
+      "quantidadePublicacoes": 4
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f17f389-c26e-6322-81f6-c71b0e782aa3",
+      "@type": "Diario",
+      "id": "1f17f389-c26e-6322-81f6-c71b0e782aa3",
+      "tipo": "O",
+      "numero": 83,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-14T01:00:51-03:00",
+      "quantidadePublicacoes": 4
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f17e6f7-4686-6b2c-87e5-5ff2a41e25d5",
+      "@type": "Diario",
+      "id": "1f17e6f7-4686-6b2c-87e5-5ff2a41e25d5",
+      "tipo": "O",
+      "numero": 82,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-13T01:00:55-03:00",
+      "quantidadePublicacoes": 20
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f17c140-8137-6046-b537-5fb4d18edd7e",
+      "@type": "Diario",
+      "id": "1f17c140-8137-6046-b537-5fb4d18edd7e",
+      "tipo": "O",
+      "numero": 81,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-10T01:01:25-03:00",
+      "quantidadePublicacoes": 7
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f17b4ad-bb9f-66ce-b5c9-e5bc647e4c6a",
+      "@type": "Diario",
+      "id": "1f17b4ad-bb9f-66ce-b5c9-e5bc647e4c6a",
+      "tipo": "O",
+      "numero": 80,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-09T01:01:22-03:00",
+      "quantidadePublicacoes": 10
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f17a81a-2cd8-6160-b1ec-b7e10db8ea14",
+      "@type": "Diario",
+      "id": "1f17a81a-2cd8-6160-b1ec-b7e10db8ea14",
+      "tipo": "O",
+      "numero": 79,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-08T01:00:58-03:00",
+      "quantidadePublicacoes": 11
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f179b88-acfa-6260-8cfe-19ee3c8856ae",
+      "@type": "Diario",
+      "id": "1f179b88-acfa-6260-8cfe-19ee3c8856ae",
+      "tipo": "O",
+      "numero": 78,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-07T01:01:28-03:00",
+      "quantidadePublicacoes": 10
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f178ef4-ea25-6f2c-88db-854e21e5fd65",
+      "@type": "Diario",
+      "id": "1f178ef4-ea25-6f2c-88db-854e21e5fd65",
+      "tipo": "O",
+      "numero": 77,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-06T01:01:00-03:00",
+      "quantidadePublicacoes": 15
+    },
+    {
+      "@id": "/api/diarios/pdf/download/1f1770a3-3343-6422-8d31-df79133c90cb",
+      "@type": "Diario",
+      "id": "1f1770a3-3343-6422-8d31-df79133c90cb",
+      "tipo": "E",
+      "numero": 4,
+      "ano": 2026,
+      "anoEdicao": 1,
+      "situacao": "P",
+      "dataPublicacao": "2026-07-03T15:08:31-03:00",
+      "motivacao": "nomeação em caráter prioritário",
+      "quantidadePublicacoes": 1
+    }
+  ],
+  "view": {
+    "@id": "/api/publico/diarios?order%5BdataPublicacao%5D=desc&situacao=P&page=1",
+    "@type": "PartialCollectionView",
+    "first": "/api/publico/diarios?order%5BdataPublicacao%5D=desc&situacao=P&page=1",
+    "last": "/api/publico/diarios?order%5BdataPublicacao%5D=desc&situacao=P&page=4",
+    "next": "/api/publico/diarios?order%5BdataPublicacao%5D=desc&situacao=P&page=2"
+  },
+  "search": {
+    "@type": "IriTemplate",
+    "template": "/api/publico/diarios{?numero,numero[],ano,ano[],publicacaos.edoc,publicacaos.edoc[],tipo,tipo[],dataPublicacao[before],dataPublicacao[strictly_before],dataPublicacao[after],dataPublicacao[strictly_after],order[dataPublicacao],order[numero],order[ano],order[tipo],order[situacao]}",
+    "variableRepresentation": "BasicRepresentation",
+    "mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "numero",
+        "property": "numero",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "numero[]",
+        "property": "numero",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "ano",
+        "property": "ano",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "ano[]",
+        "property": "ano",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "publicacaos.edoc",
+        "property": "publicacaos.edoc",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "publicacaos.edoc[]",
+        "property": "publicacaos.edoc",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "tipo",
+        "property": "tipo",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "tipo[]",
+        "property": "tipo",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "dataPublicacao[before]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "dataPublicacao[strictly_before]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "dataPublicacao[after]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "dataPublicacao[strictly_after]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[dataPublicacao]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[numero]",
+        "property": "numero",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[ano]",
+        "property": "ano",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[tipo]",
+        "property": "tipo",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[situacao]",
+        "property": "situacao",
+        "required": false
+      }
+    ]
+  }
+}

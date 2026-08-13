@@ -1,0 +1,387 @@
+{
+  "@context": "/api/contexts/Diario",
+  "@id": "/api/publico/diarios/1f196cba-5a21-6c5a-894a-e36c5aa40d74/json",
+  "@type": "Collection",
+  "totalItems": 1,
+  "member": [
+    {
+      "id": "1f196cba-5a21-6c5a-894a-e36c5aa40d74",
+      "tipo": "O",
+      "numero": 105,
+      "ano": 2026,
+      "anoEdicao": "I",
+      "situacao": "P",
+      "link": "https://doe.tc.df.gov.br/O/2026/105",
+      "secoes": {
+        "5": {
+          "id": 69,
+          "descricao": "Atos da Segedam",
+          "secoes": {
+            "1": {
+              "id": 71,
+              "descricao": "Atos da Segedam/Despachos - Segedam",
+              "secoes": [],
+              "publicacoes": [
+                {
+                  "id": "1f195c7b-75df-63d8-85f4-47508959da69",
+                  "titulo": "DESPACHO DO SECRETÁRIO-GERAL DE ADMINISTRAÇÃO ",
+                  "subtitulo": "11 de agosto de 2026",
+                  "texto": "<p style=\"text-align:justify;\">Despacho nº 971/2026 – Segedam; Processo nº 00600-00001908/2026-18; Assunto: Reconhecimento de dívida de exercícios anteriores. Responsabilidade IPREV.</p><p style=\"text-align:justify;\">No uso da competência delegada no inciso VIII do art. 1º da Portaria-TCDF nº 10, de 13 de janeiro de 2025, RECONHEÇO a dívida de exercícios anteriores, no valor de R$ 22.862,35 (vinte e dois mil, oitocentos e sessenta e dois reais e trinta e cinco centavos), em favor de pensionista deste Tribunal, conforme demonstrativo constante da peça nº 74, condicionando o pagamento à existência de recursos na dotação orçamentária própria e de cotas e disponibilidade financeira do Instituto de Previdência dos Servidores do Distrito Federal - IPREV/DF.</p><p style=\"text-align:center;\">PAULO CAVALCANTI DE OLIVEIRA</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 1,
+                  "slug": "despacho-do-secretario-geral-de-administracao-10",
+                  "tipoPublicacao": {
+                    "descricao": "Despacho - Segedam"
+                  },
+                  "anexos": []
+                },
+                {
+                  "id": "1f195c65-1348-6f46-b850-47508959da69",
+                  "titulo": "DESPACHO DO SECRETÁRIO-GERAL DE ADMINISTRAÇÃO ",
+                  "subtitulo": "11 de agosto de 2026",
+                  "texto": "<p style=\"text-align:justify;\">Despacho nº 965/2026 – Segedam; Processo nº 40300/2005; Assunto: Reconhecimento de dívida de exercícios anteriores. Responsabilidade IPREV.</p><p style=\"text-align:justify;\">No uso da competência delegada no inciso VIII do art. 1º da Portaria-TCDF nº 10, de 13 de janeiro de 2025, RECONHEÇO a dívida de exercícios anteriores, no valor de R$ 1.435.518,93 (um milhão, quatrocentos e trinta e cinco mil, quinhentos e dezoito reais e noventa e três centavos), em favor de pensionista deste Tribunal, conforme demonstrativo constante da peça nº 118, condicionando o pagamento à existência de recursos na dotação orçamentária própria e de cotas e disponibilidade financeira do Instituto de Previdência dos Servidores do Distrito Federal - IPREV/DF.</p><p style=\"text-align:center;\">PAULO CAVALCANTI DE OLIVEIRA</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 0,
+                  "slug": "despacho-do-secretario-geral-de-administracao-9",
+                  "tipoPublicacao": {
+                    "descricao": "Despacho - Segedam"
+                  },
+                  "anexos": []
+                }
+              ]
+            }
+          },
+          "publicacoes": []
+        },
+        "7": {
+          "id": 73,
+          "descricao": "Atos da Selip",
+          "secoes": [
+            {
+              "id": 74,
+              "descricao": "Atos da Selip/Contratos",
+              "secoes": [],
+              "publicacoes": [
+                {
+                  "id": "1f196974-0656-6614-8c10-434d475e0a7e",
+                  "titulo": "EXTRATO DO CONTRATO Nº 32/2026              ",
+                  "subtitulo": "",
+                  "texto": "<p style=\"text-align:justify;\">Contratante: Tribunal de Contas do Distrito Federal -&nbsp; CNPJ n.º 00.534.560/0001-26 - Contratada: DIGISYSTEM SERVICOS ESPECIALIZADOS LTDA - CNPJ n.º 01.936.069/0010-85 - Objeto: Prestação de serviços terceirizados, com dedicação exclusiva de mão de obra, na área de tecnologia da informação, compreendendo o planejamento, desenvolvimento, implantação e execução de atividades de suporte técnico, remoto e presencial, a clientes de soluções de tecnologia da informação no TCDF, abrangendo atividades de execução de rotinas periódicas, orientação e esclarecimento de dúvidas, recebimento, registro, análise, diagnóstico e atendimento de solicitações utilizando as práticas preconizadas pela <i>Information Technology Infraestructure Library - ITIL</i> e orientado por requisitos de níveis de serviços - Processo n.º 00600-00000302/2026-57 -&nbsp; Licitação: Pregão&nbsp;Eletrônico nº 90012/2026, regido pela Lei Federal nº 14.133/2021, pela Lei Complementar nº 123/2006, bem como pelas Leis Distritais no 4.611/2011 e 4.770/2012, pelo Decreto Distrital nº 44.430/2023, e pelas demais legislações aplicáveis – Vigência e Execução: de 11/08/2026 a 10/08/2027 – Valor estimado: R$1.516.788,00 (um milhão, quinhentos e dezesseis mil e setecentos e oitenta e oito reais) - Unidade Gestora: 20101 - Gestão: 1 - Classificação Orçamentária: 339037 - LOCAÇÃO DE MÃO-DE-OBRA - Programa de Trabalho: 01126823125572568 - Fonte de Recursos: 1500.1001 - ORDINÁRIO NÃO VINCULADO&nbsp;- Nota de Empenho: 2026NE01161 - Data de Emissão da NE: 31/07/2026 - Valor da NE: R$269.651,20 (duzentos e sessenta e nove mil, seiscentos e cinquenta e um reais e vinte centavos) - Data da Assinatura: 11/08/2026 - Assinam: pelo Tribunal, PAULO CAVALCANTI DE OLIVEIRA; e, pela Contratada, MARCUS VINICIUS RODRIGUES DO VALE.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 1,
+                  "slug": "extrato-do-contrato-no-32-2026-1",
+                  "tipoPublicacao": {
+                    "descricao": "Contrato"
+                  },
+                  "anexos": []
+                },
+                {
+                  "id": "1f1966da-fd59-6912-b770-a970f1577669",
+                  "titulo": "EXTRATO DO 1º TERMO ADITIVO AO CONTRATO Nº 24/2025",
+                  "subtitulo": "",
+                  "texto": "<p>Contratante: Tribunal de Contas do Distrito Federal - CNPJ n.º 00.534.560/0001-26 - Contratada: CIDE - CAPACITAÇÃO, INSERÇÃO E DESENVOLVIMENTO - CNPJ n.º 03.935.660/0001-52 - Objeto: prorrogar, por 12 (doze) meses, o prazo de vigência do Contrato nº 24/2025, cujo objeto é contratação de instituição credenciada como “Agente de Integração”, para operacionalização plena de estágio de estudantes que estejam frequentando o ensino regular em instituições de educação superior, de pós-graduação e de ensino médio - Processo n.º 00600-00003225/2024-25-e - Licitação: Pregão Eletrônico nº 90014/2025, regido pela Lei Federal nº 14.133/2021 e pela Lei Complementar nº 123/2006, bem como pelas Leis Distritais nos 4.611/2011 e 4.770/2012, pelo Decreto Distrital nº 44.330/2023 e pelas demais legislações aplicáveis - Fundamento Legal do Aditivo: artigo 107, da Lei nº 14.133/2021 e a Cláusula Terceira do Contrato nº 24/2025 - Vigência e Execução: de 02/09/2026 a 01/09/2027 - Valor do Aditivo: R$4.367.209,20 (quatro milhões trezentos e sessenta e sete mil duzentos e nove reais e vinte centavos) - Unidade Gestora: 20101 - Gestão: 1 - Classificação Orçamentária: 339039 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDICA - Programa de Trabalho: 01122823124229637 - Fonte de Recurso: 1501.1001 - ORDINÁRIO NÃO VINCULADO - Nota de Empenho: 2026NE00248 - Data de Emissão da NE: 28/01/2026 - Valor da NE: R$2.923.603,94 (dois milhões novecentos e vinte e três mil seiscentos e três reais e noventa e quatro centavos) - Data da Assinatura: 11/08/2026 - Assinam: pelo Contratante, PAULO CAVALCANTI DE OLIVEIRA; e, pela Contratada, ARNOBIO CUNHA FREITAS JUNIOR.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=\"text-align:justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>Data de Publicação dos termos anteriores: Contrato n.º 24/2025 (DODF n.º 146, pág. 75, 06/08/2025);</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 0,
+                  "slug": "extrato-do-1o-termo-aditivo-ao-contrato-no-24-2025",
+                  "tipoPublicacao": {
+                    "descricao": "Termo Aditivo"
+                  },
+                  "anexos": []
+                },
+                {
+                  "id": "1f196979-33c9-6b6e-afbf-f5ef6f95a506",
+                  "titulo": "EXTRATO DO 3º TERMO ADITIVO AO CONTRATO Nº 26/2023                ",
+                  "subtitulo": "",
+                  "texto": "<p style=\"text-align:justify;\">Contratante: Tribunal de Contas do Distrito Federal -&nbsp; CNPJ n.º 00.534.560/0001-26 - Contratada: DOMUS COMÉRCIO E SERVIÇO DE CONSERVAÇÃO LTDA - CNPJ n.º 07.810.466/0001-00 - Objeto: prestação de serviços, sob demanda, de desinsetização, desratização, descupinização, imunização de ralos e esgotos e combate a escorpiões; nas dependências dos Edifícios Sede, Anexo, Biblioteca Cyro dos Anjos e Edifício Garagem do Tribunal de Contas do Distrito Federal, envolvendo as áreas internas e externas, pelo período de 12 (doze) meses - prorrogação do prazo de vigência contratual - Processo n.º 6494/2023 -&nbsp; Licitação: Dispensa de Licitação nº 56/2023, &nbsp;com fulcro no Inciso II, do artigo 75 da Lei nº 14.133/2021- Fundamento Legal do Aditivo: artigos 107 e 108 da Lei nº 14.133/2021 e na Cláusula Terceira do Contrato nº 26/2023 – Vigência e Execução: de 05/09/2026 a 04/09/2027 - - Valor estimado do Aditivo: R$ 4.631,18 (quatro mil, seiscentos e trinta e um reais e dezoito centavos) - Unidade Gestora: 20101 - Gestão: 1 - Classificação Orçamentária: 339039 - OUTROS SERVIÇOS DE TERCEIROS - PESSOA JURÍDICA -&nbsp; Programa de Trabalho: 01122823185170019 - Fonte de Recursos: 1500.1000 - ORDINÁRIO NÃO VINCULADO - Nota de Empenho: 2026NE00150 - Data de Emissão da NE: 20/01/2026 - Valor da NE: R$2.212,71 (dois mil, duzentos e doze reais e setenta e um centavos) - Data da Assinatura: 11/08/2026 - Assinam: pelo Tribunal, PAULO CAVALCANTI DE OLIVEIRA; e, pela Contratada, MÁRCIA APARECIDA DE SOUZA MARTINS.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=\"text-align:justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>Data de Publicação dos termos anteriores: Contrato n.º 26/2023 (DODF n.º 171, pág. 121, 12/09/2023); 1 º TA (DODF nº 128, pág. 94, 08/07/2024); 2 º TA (DODF nº 107, pág. 76, 10/06/2025).&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 3,
+                  "slug": "extrato-do-3o-termo-aditivo-ao-contrato-no-26-2023-1",
+                  "tipoPublicacao": {
+                    "descricao": "Termo Aditivo"
+                  },
+                  "anexos": []
+                },
+                {
+                  "id": "1f19697f-df4a-6654-b047-f5ef6f95a506",
+                  "titulo": "EXTRATO DO CONTRATO Nº 26/2026",
+                  "subtitulo": "",
+                  "texto": "<p>Contratante: Tribunal de Contas do Distrito Federal - CNPJ n.º 00.534.560/0001-26 - Contratada: BANCO BRADESCO S.A. - CNPJ n.º 60.746.948/0001-12 - Objeto: prestação de serviços de interesse do Tribunal de Contas do Distrito Federal (TCDF) com seleção a critério de terceiros, com vistas à consignação de valores em folha de pagamento de servidores ativos e inativos e pensionistas (ITEM 1), de acordo com as especificações e condições previstas no Edital de Chamamento Público nº 974003-1/2026 e seus anexos - Processo n.º 00600-00002473/2026-11 - Licitação: Inexigibilidade de Licitação nº <a href=\"https://contratos.tc.df.gov.br/compra/3978\"><span style=\"color:windowtext;\">90018/2026</span></a> - Fundamento Legal: art. 74, inciso IV da Lei nº 14.133, de 1º de abril de 2021, bem como outras normas vigentes relacionadas com o seu objeto - Vigência e Execução: de 11/08/2026 a 10/08/2031 - Valor total: R$ 0,00 (zero) - não envolverá dispêndios por parte do CREDENCIANTE, sendo não oneroso - Data da Assinatura: 11/08/2026 - Assinam: pelo Contratante, PAULO CAVALCANTI DE OLIVEIRA; e, pela Contratada, JOAO SEGUNDO DA COSTA NETO e JORGE LUIS CARDOUZO.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 4,
+                  "slug": "extrato-do-contrato-no-26-2026",
+                  "tipoPublicacao": {
+                    "descricao": "Contrato"
+                  },
+                  "anexos": []
+                },
+                {
+                  "id": "1f196975-4c02-6554-b462-f5ef6f95a506",
+                  "titulo": "EXTRATO DO 1º TERMO ADITIVO AO CONTRATO Nº 36/2023                ",
+                  "subtitulo": "",
+                  "texto": "<p style=\"text-align:justify;\">Contratante: Tribunal de Contas do Distrito Federal -&nbsp; CNPJ n.º 00.534.560/0001-26 - Contratada: BK TECNOLOGIA DA INFORMAÇÃO LTDA. EPP - CNPJ n.º 12.625.657/0001-23 - Objeto: contratação de empresa especializada para a prestação do serviço de subscrição de 6 (seis) licenças de software Elastic Stack Enterprise (ITEM 1); e realização de serviços especializados, sob demanda, relacionados ao Catálogo de Serviços (ITEM 3) no intuito de atender as necessidades do CONTRATANTE - prorrogação do prazo de vigência contratual - Processo nº 00600-00008349/2023-16 -&nbsp; Licitação: Pregão Eletrônico n° 19/2023, regido pela Lei Federal nº 14.133/2021 e pela Lei Complementar nº 123/2006, bem como pelas Leis Distritais nos 4.611/2011 e 4.770/2012, pelo Decreto Distrital nº 44.430/2023 e pelas demais legislações aplicáveis. - Fundamento Legal do Aditivo: nos artigos 107 e 108 da Lei nº 14.133, de 1° de abril de 2021 e na Cláusula Terceira do Contrato n° 36/2023 – Vigência e Execução: de 20/01/2027 a 19/01/2030&nbsp; - Valor estimado do Aditivo: R$2.924.550,00 (dois milhões, novecentos e vinte e quatro mil e quinhentos e cinquenta reais) - Unidade Gestora: 20101 - Gestão: 1 - Classificação Orçamentária: 339040 - SERVIÇO DE TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO – PESSOA JURÍDICA -&nbsp; Programa de Trabalho: 01126823125572568 - Fontes de Recursos: 1500.1000 e 15001001 - ORDINÁRIO NÃO VINCULADO - Notas de Empenho: 2026NE00254 e 2026NE00255 - Data de Emissão das NEs: 28/01/2026 - Valores das NEs: R$530.000,00 (quinhentos e trinta mil reais) e R$444.850,00 (quatrocentos e quarenta e quatro mil e oitocentos e cinquenta reais) - Data da Assinatura: 11/08/2026 - Assinam: pelo Tribunal, PAULO CAVALCANTI DE OLIVEIRA; e, pela Contratada,&nbsp; FABIO SOARES SCHMIDT.&nbsp;</p><p style=\"text-align:justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>Data de Publicação dos termos anteriores: Contrato n.º 36/2023 (DODF n.º 238, pág. 123, 21/12/2023).&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 2,
+                  "slug": "extrato-do-1o-termo-aditivo-ao-contrato-no-36-2023-1",
+                  "tipoPublicacao": {
+                    "descricao": "Termo Aditivo"
+                  },
+                  "anexos": []
+                }
+              ]
+            },
+            {
+              "id": 75,
+              "descricao": "Atos da Selip/Avisos",
+              "secoes": [],
+              "publicacoes": [
+                {
+                  "id": "1f195af5-4f8a-6ee4-9203-7b1eaf77a2ea",
+                  "titulo": "PREGÃO ELETRÔNICO Nº  Nº 974003-8/2026 – PNCP (Nº 90013/2026-TCDF)",
+                  "subtitulo": "",
+                  "texto": "<p>Objeto: Contratação de empresa especializada para a prestação de serviços de agenciamento de viagens para o fornecimento de bilhetes de passagens aéreas, sob demanda, para o território nacional e internacional; incluindo assessoramento, cotação, marcação, reserva de lugares, aquisição de franquia de bagagens, emissão, alteração, remarcação, desdobramento, substituição, revalidação, cancelamento, reembolso e endosso de passagens e similares, por meio de sistema eletrônico Self Booking próprio da CONTRATADA ou por solicitação via e-mail. Processo: 00600-00007023/2026-14 TCDF. Valor estimado: R$1.989.177,00 (12 meses); enquadramento: natureza 3.3.90.33.01 e 3.3.90.33.02 – Passagens e Despesas com Locomoção (Passagens aéreas); e, 3.3.90.33.05 – Passagens e Despesas com Locomoção (Taxa de Agenciamento de Viagens); classificação funcional e programática: 01.122.8231.8517.0019 – Manutenção de Serviços Administrativos Gerais - TCDF; fonte de Recursos 1500.1000. Data limite de recebimento das propostas 27/08/2026, às 09h30min. Cópia do Edital encontra-se à disposição no Serviço de Licitação, localizado no 2º Andar do Ed. Anexo do TCDF, telefone (61) 3314-2742 ou pelos sítios: www.tc.df.gov.br e www.gov.br/compras (UASG: 974003). A Sessão Pública será processada no sítio do Compras.gov.br, nos termos do Edital. Em atendimento à Lei Distrital nº 5.453/2015, as informações referentes ao certame também estão disponíveis no sítio www.tc.df.gov.br, link: Consulta Processo do TCDF.</p><p style=\"text-align:center;\">Brasília/DF, 10 de agosto de 2026.&nbsp;</p><p style=\"text-align:center;\">Veridiana Barboza Ribas&nbsp;</p><p style=\"text-align:center;\">Pregoeira</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 0,
+                  "slug": "pregao-eletronico-no-no-974003-8-2026-pncp-no-90013-2026-tcdf-1",
+                  "tipoPublicacao": {
+                    "descricao": "Aviso de Publicação"
+                  },
+                  "anexos": []
+                }
+              ]
+            }
+          ],
+          "publicacoes": []
+        },
+        "8": {
+          "id": 81,
+          "descricao": "Atos da Sesbe",
+          "secoes": {
+            "1": {
+              "id": 90,
+              "descricao": "Atos da Sesbe/Despachos - Sesbe",
+              "secoes": [],
+              "publicacoes": [
+                {
+                  "id": "1f196a29-1003-6008-a220-434d475e0a7e",
+                  "titulo": "DESPACHO DA SECRETÁRIA DE SAÚDE, QUALIDADE DE VIDA E BEM-ESTAR",
+                  "subtitulo": "Despacho nº 159/2026-SESBE",
+                  "texto": "<p style=\"text-align:center;\">Brasília-DF, 4 de agosto de 2026</p><p>&nbsp;</p><p>Processo nº 00600-00009524/2026-35</p><p>Interessado(a): <strong>SAMARA WANDERLEY DA CUNHA MACEDO</strong></p><p style=\"text-align:justify;\">Assunto: Inscrição de dependente no Programa SAÚDE TCDF. Habilitação na Assistência Indireta e Concessão de reembolso.&nbsp;</p><p style=\"text-align:justify;\">&nbsp;</p><p style=\"text-align:justify;\">No uso da competência delegada no art. 5º, da Portaria nº 10, de 13 de janeiro de 2025, e acolhendo os termos da Informação n° 226/2026-DIBEM (peça nº 02): <strong>HOMOLOGO</strong> a inscrição no Programa de Assistência à Saúde do Tribunal de Contas do Distrito Federal – SAÚDE TCDF DE ISAC DA CUNHA MACEDO (filho) e MATEUS DA CUNHA MACEDO (filho), como dependentes beneficiários de <strong>SAMARA WANDERLEY DA CUNHA MACEDO</strong>, matrícula 8290, servidora requisitada, que iniciou efetivo exercício em 08/06/2026, a contar de 30/07/2026 data do recebimento do requerimento, nos termos do inciso III do art.11 e caput do art.15 do Regulamento do SAÚDE TCDF, aprovado pela Resolução TCDF nº 372/23; e <strong>AUTORIZO</strong> a habilitação na assistência indireta, na forma dos arts. 24 e 25 da Resolução TCDF nº 372/23 de <strong>SAMARA WANDERLEY DA CUNHA MACEDO</strong> servidora supra qualificada e, de seus dependentes beneficiários ISAC DA CUNHA MACEDO (filho) e MATEUS DA CUNHA MACEDO (filho), a contar de 30/07/2026 e, consequentemente, o reembolso parcial das mensalidades pagas pelo(a) interessado(a) ao plano de saúde “ASSEFAZ RUBI” em seu favor e de seus dependentes, tendo como marco inicial para efeitos financeiros a data 04/08/2026, nos termos dos arts. 29 e 32 do Regulamento do Programa SAÚDE TCDF, aprovado pela Resolução TCDF nº 372/23.</p><p style=\"text-align:justify;\">&nbsp;</p><p style=\"text-align:center;\">PAOLA KARINA DE BARRÓN SALES&nbsp;</p><p style=\"text-align:center;\">SECRETÁRIA DE SAÚDE, QUALIDADE DE VIDA E BEM-ESTAR</p>",
+                  "edoc": "534E7CE3",
+                  "edocPublico": false,
+                  "situacao": "P",
+                  "ordem": 0,
+                  "slug": "despacho-da-secretaria-de-saude-qualidade-de-vida-e-bem-estar-534e7ce3-1",
+                  "tipoPublicacao": {
+                    "descricao": "Despacho - Sesbe"
+                  },
+                  "anexos": []
+                },
+                {
+                  "id": "1f196add-6a20-6efa-bb08-434d475e0a7e",
+                  "titulo": "DESPACHO DA SECRETÁRIA DE SAÚDE, QUALIDADE DE VIDA E BEM-ESTAR",
+                  "subtitulo": "Despacho nº 158/2026-SESBE",
+                  "texto": "<p style=\"text-align:center;\">Brasília-DF, 04 de agosto de 2026</p><p>&nbsp;</p><p>Processo nº 00600-000009436/2026-33-e</p><p>Interessado(a): <strong>CORDÉLIA CERQUEIRA RIBEIRO</strong></p><p style=\"text-align:justify;\">Assunto: Requerimento de habilitação na Assistência Indireta relativo ao Programa SAÚDE TCDF. Concessão de reembolso em seu favor. Deferimento.&nbsp;</p><p style=\"text-align:justify;\">&nbsp;</p><p style=\"text-align:justify;\">No uso da competência delegada no art. 5º, da Portaria nº 10, de 13 de janeiro de 2025, e acolhendo os termos da Informação n° 223/2026-DIBEM (peça nº 02): <strong>AUTORIZO</strong> a habilitação na assistência indireta, na forma dos arts. 24 e 25 da Resolução TCDF nº 372/23, de <strong>CORDÉLIA CERQUEIRA RIBEIRO</strong>, matrícula nº 2133, servidora nomeada em comissão que iniciou efetivo exercício desde 27/07/2026, a contar de 29/07/2026 e, consequentemente, o reembolso parcial das mensalidades pagas pelo(a) interessado(a) ao plano de saúde “ASSEFAZ RUBI” em seu favor, tendo como marco inicial para efeitos financeiros a data 03/08/2026, nos termos dos arts. 29 e 32 do Regulamento do Programa SAÚDE TCDF, aprovado pela Resolução TCDF nº 372/23.</p><p style=\"text-align:justify;\">&nbsp;</p><p style=\"text-align:center;\">PAOLA KARINA DE BARRÓN SALES&nbsp;</p><p style=\"text-align:center;\">SECRETÁRIA DE SAÚDE, QUALIDADE DE VIDA E BEM-ESTAR</p>",
+                  "edoc": "C347D53B",
+                  "edocPublico": false,
+                  "situacao": "P",
+                  "ordem": 3,
+                  "slug": "despacho-da-secretaria-de-saude-qualidade-de-vida-e-bem-estar-c347d53b-1",
+                  "tipoPublicacao": {
+                    "descricao": "Despacho - Sesbe"
+                  },
+                  "anexos": []
+                },
+                {
+                  "id": "1f196a59-34d4-6cee-8f58-f5ef6f95a506",
+                  "titulo": "DESPACHO DA SECRETÁRIA DE SAÚDE, QUALIDADE DE VIDA E BEM-ESTAR",
+                  "subtitulo": "Despacho nº 155/2026-SESBE",
+                  "texto": "<p style=\"text-align:center;\">Brasília-DF, 3 de agosto de 2026</p><p>&nbsp;</p><p>Processo nº 00600-00009437/2026-88</p><p>Interessado(a) <strong>RICARDO CLEMENTE DA COSTA JÚNIOR</strong></p><p style=\"text-align:justify;\">Assunto: Inscrição de dependente no Programa SAÚDE TCDF. Habilitação na Assistência Indireta e Concessão de reembolso.&nbsp;</p><p>&nbsp;</p><p style=\"text-align:justify;\">No uso da competência delegada no art. 5º, da Portaria nº 10, de 13 de janeiro de 2025, e acolhendo os termos da Informação n° 222/2026-DIBEM (peça nº 02): <strong>HOMOLOGO</strong> a inscrição no Programa de Assistência à Saúde do Tribunal de Contas do Distrito Federal – SAÚDE TCDF de MAYARA RODRIGUES DOS SANTOS (companheira) e JOAQUIM CLEMENTE DA COSTA RODRIGUES (filho), como dependentes beneficiários de <strong>RICARDO CLEMENTE DA COSTA JÚNIOR</strong>, matrícula 8298, servidor requisitado, que iniciou efetivo exercício em 29/07/2026, a contar de 29/07/2026 data do recebimento do requerimento, nos termos do inciso II e III do art.11 e caput do art.15 do Regulamento do SAÚDE TCDF, aprovado pela Resolução TCDF nº 372/23; e <strong>AUTORIZO</strong> a habilitação na assistência indireta, na forma dos arts. 24 e 25 da Resolução TCDF nº 372/23 de <strong>RICARDO CLEMENTE DA COSTA JÚNIOR</strong> servidor supra qualificado e, de seus dependentes beneficiários MAYARA RODRIGUES DOS SANTOS (companheira) e JOAQUIM CLEMENTE DA COSTA RODRIGUES (filho), a contar de 29/07/2026 e, consequentemente, o reembolso parcial das mensalidades pagas pelo(a) interessado(a) ao plano de saúde “ASSEFAZ RUBI” em seu favor e de seus dependentes, tendo como marco inicial para efeitos financeiros a data 03/08/2026, nos termos dos arts. 29 e 32 do Regulamento do Programa SAÚDE TCDF, aprovado pela Resolução TCDF nº 372/23.</p><p style=\"text-align:justify;\">&nbsp;</p><p style=\"text-align:center;\">PAOLA KARINA DE BARRÓN SALES&nbsp;</p><p style=\"text-align:center;\">SECRETÁRIA DE SAÚDE, QUALIDADE DE VIDA E BEM-ESTAR</p>",
+                  "edoc": "980A1983",
+                  "edocPublico": false,
+                  "situacao": "P",
+                  "ordem": 1,
+                  "slug": "despacho-da-secretaria-de-saude-qualidade-de-vida-e-bem-estar-980a1983-1",
+                  "tipoPublicacao": {
+                    "descricao": "Despacho - Sesbe"
+                  },
+                  "anexos": []
+                },
+                {
+                  "id": "1f196a62-f4a2-60ae-9fb1-f5ef6f95a506",
+                  "titulo": "DESPACHO DA SECRETÁRIA DE SAÚDE, QUALIDADE DE VIDA E BEM-ESTAR ",
+                  "subtitulo": "Despacho nº 157/2026-SESBE",
+                  "texto": "<p>&nbsp;</p><p style=\"text-align:center;\">Brasília-DF, 4 de agosto de 2026</p><p style=\"text-align:justify;\">&nbsp;</p><p style=\"text-align:justify;\">Processo nº 00600-00007681/2024-44&nbsp;</p><p style=\"text-align:justify;\">Interessado(a): <strong>BRUNO DE SOUZA OLIVEIRA</strong></p><p style=\"text-align:justify;\">Assunto: Pedido de inscrição de dependente no Programa SAÚDE TCDF, habilitação na assistência Indireta. Concessão de reembolso do Plano de Saúde. Deferimento&nbsp;</p><p>&nbsp;</p><p style=\"text-align:justify;\">No uso da competência delegada no art. 5º, da Portaria nº 10, de 13 de janeiro de 2026, e acolhendo os termos da Informação n° 225/2026-DIBEM (peça nº 20): <strong>HOMOLOGO</strong> a inscrição no Programa de Assistência à Saúde do Tribunal de Contas do Distrito Federal – SAÚDE TCDF de BEATRIZ ALENCAR DE OLIVEIRA (companheira), como dependente beneficiária de <strong>BRUNO DE SOUZA OLIVEIRA</strong>, matrícula n° 1970, Auditor de Controle Externo, que iniciou efetivo exercício em 17/06/2024 a contar de 30/07/2026, data do recebimento do requerimento nos termos do art. 11 inciso II e caput do art. 15 do Regulamento do SAÚDE TCDF, aprovado pela Resolução TCDF nº 372/23. <strong>AUTORIZO</strong> a habilitação na assistência indireta, na forma dos arts. 24 e 25 da Resolução TCDF nº 372/23 de BEATRIZ ALENCAR DE OLIVEIRA (companheira), como dependente beneficiária do servidor supra qualificado, a contar de 30/07/2026 e, consequentemente, o reembolso parcial das mensalidades pagas pelo(a) interessado(a) ao plano de saúde “ASSEFAZ RUBI”em favor de sua dependente, tendo como marco inicial para efeitos financeiros a data 04/08/2026, nos termos dos arts. 29 e 32 do Regulamento do Programa SAÚDE TCDF, aprovado pela Resolução TCDF nº 372/23.</p><p style=\"text-align:justify;\">&nbsp;</p><p style=\"text-align:center;\">PAOLA KARINA DE BARRÓN SALES</p><p style=\"text-align:center;\">SECRETÁRIA DE SAÚDE, QUALIDADE DE VIDA E BEM-ESTAR</p>",
+                  "edoc": "A6E04FDC",
+                  "edocPublico": false,
+                  "situacao": "P",
+                  "ordem": 2,
+                  "slug": "despacho-da-secretaria-de-saude-qualidade-de-vida-e-bem-estar-a6e04fdc-1",
+                  "tipoPublicacao": {
+                    "descricao": "Despacho - Sesbe"
+                  },
+                  "anexos": []
+                }
+              ]
+            }
+          },
+          "publicacoes": []
+        },
+        "9": {
+          "id": 50,
+          "descricao": "Atos do Plenário",
+          "secoes": {
+            "5": {
+              "id": 56,
+              "descricao": "Atos do Plenário/Pauta das Sessões",
+              "secoes": [],
+              "publicacoes": [
+                {
+                  "id": "1f1967ff-9069-6584-b20c-f5ef6f95a506",
+                  "titulo": "EXTRATO DE PAUTA VIRTUAL Nº 30/2026",
+                  "subtitulo": "",
+                  "texto": "<p style=\"text-align:center;\">SESSÃO DO PLENÁRIO VIRTUAL dos dias 17 a 21 de agosto de 2026(*)</p><p style=\"text-align:justify;\">Processos ordenados, sequencialmente, por tipo de sessão, Relator, assunto e interessado.</p><p style=\"text-align:justify;\">Sessão Ordinária Virtual Nº 211</p><p style=\"text-align:justify;\">Conselheiro Antonio Renato Alves Rainha: 1) 00600-00009367/2026-68-e, Aposentadoria, SIRAC; 2) 00600-00009431/2026-19-e, Concessão - Análise Automatizada, SIRAC;</p><p style=\"text-align:justify;\">Conselheira Anilcéia Luzia Machado: 1) 5561/2018-e, Tomada de Contas Especial, DFTRANS; 2) 00600-00003838/2025-43-e, Análise de Concessão, SIRAC; 3) 00600-00014863/2025-52-e, Análise de Concessão, SIRAC; 4) 00600-00004243/2026-96-e, Análise de Concessão, SIRAC; 5) 00600-00004249/2026-63-e, Análise de Concessão, SIRAC; 6) 00600-00008888/2026-06-e, Reforma (Militar), SIRAC; 7) 00600-00008911/2026-54-e, Reforma (Militar), SIRAC; 8) 00600-00008979/2026-33-e, Admissão de Pessoal, Secretaria de Estado de Saúde do Distrito Federal - SES;</p><p style=\"text-align:justify;\">Conselheiro Inácio Magalhães Filho: 1) 28185/2015-e, Aposentadoria, SIRAC; 2) 00600-00014077/2025-55-e, Admissão de Pessoal, Secretaria de Estado de Educação - SEE; 3) 00600-00001745/2026-65-e, Análise de Concessão, SIRAC; 4) 00600-00004813/2026-48-e, Análise de Concessão, SIRAC; 5) 00600-00008566/2026-59-e, Aposentadoria, SIRAC; 6) 00600-00008982/2026-57-e, Admissão de Pessoal, Secretaria de Estado de Saúde do Distrito Federal - SES;</p><p style=\"text-align:justify;\">Conselheiro Paulo Tadeu Vale Da Silva: 1) 00600-00009522/2026-46-e, Concessão - Análise Automatizada, SIRAC; 2) 00600-00009576/2026-10-e, Aposentadoria, SIRAC;</p><p style=\"text-align:justify;\">Conselheiro André Clemente Lara De Oliveira: 1) 00600-00008757/2024-59-e, Admissão de Pessoal, Secretaria de Estado de Saúde do Distrito Federal - SES; 2) 00600-00001368/2026-64-e, Análise de Concessão, SIRAC; 3) 00600-00001478/2026-26-e, Análise de Concessão, SIRAC; 4) 00600-00001479/2026-71-e, Análise de Concessão, SIRAC; 5) 00600-00001480/2026-03-e, Análise de Concessão, SIRAC; 6) 00600-00006772/2026-24-e, Aposentadoria, SIRAC; 7) 00600-00008910/2026-18-e, Reforma (Militar), SIRAC; 8) 00600-00009705/2026-61-e, Análise de Concessão, SIRAC;</p><p style=\"text-align:justify;\">(*) Elaborado conforme o art 116, § 3º do RI/TCDF.</p><p style=\"text-align:justify;\">Emissão em 12/08/2026</p><p style=\"text-align:justify;\">João Batista Pereira de Souza – Secretário das Sessões.</p>",
+                  "edoc": null,
+                  "edocPublico": null,
+                  "situacao": "P",
+                  "ordem": 0,
+                  "slug": "extrato-de-pauta-virtual-no-30-2026",
+                  "tipoPublicacao": {
+                    "descricao": "Pauta de Sessão Virtual"
+                  },
+                  "anexos": []
+                }
+              ]
+            }
+          },
+          "publicacoes": []
+        }
+      },
+      "dataPublicacao": "QUINTA-FEIRA, 13 DE AGOSTO DE 2026"
+    }
+  ],
+  "search": {
+    "@type": "IriTemplate",
+    "template": "/api/publico/diarios/1f196cba-5a21-6c5a-894a-e36c5aa40d74/json{?numero,numero[],ano,ano[],publicacaos.edoc,publicacaos.edoc[],tipo,tipo[],dataPublicacao[before],dataPublicacao[strictly_before],dataPublicacao[after],dataPublicacao[strictly_after],order[dataPublicacao],order[numero],order[ano],order[tipo],order[situacao]}",
+    "variableRepresentation": "BasicRepresentation",
+    "mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "numero",
+        "property": "numero",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "numero[]",
+        "property": "numero",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "ano",
+        "property": "ano",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "ano[]",
+        "property": "ano",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "publicacaos.edoc",
+        "property": "publicacaos.edoc",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "publicacaos.edoc[]",
+        "property": "publicacaos.edoc",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "tipo",
+        "property": "tipo",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "tipo[]",
+        "property": "tipo",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "dataPublicacao[before]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "dataPublicacao[strictly_before]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "dataPublicacao[after]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "dataPublicacao[strictly_after]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[dataPublicacao]",
+        "property": "dataPublicacao",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[numero]",
+        "property": "numero",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[ano]",
+        "property": "ano",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[tipo]",
+        "property": "tipo",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[situacao]",
+        "property": "situacao",
+        "required": false
+      }
+    ]
+  }
+}
