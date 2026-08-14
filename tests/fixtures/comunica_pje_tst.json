@@ -1,0 +1,513 @@
+{
+  "status": "success",
+  "message": "Sucesso",
+  "count": 10000,
+  "items": [
+    {
+      "id": 690095716,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TST",
+      "tipoComunicacao": "Intimação",
+      "nomeOrgao": "6ª Turma",
+      "idOrgao": 47380,
+      "texto": "Agravante(s): GENILSA CORREIA DE SOUZA ASMAR E OUTRA\nADVOGADO: ANTÔNIO ROGÉRIO BONFIM MELO\nAgravado(s): HIPERPLAN LOGÍSTICA LTDA. - ME\nADVOGADO: ANTÔNIO ROGÉRIO BONFIM MELO\nAgravado(s): JEANYNE SANTOS BONFIM ALMEIDA\nADVOGADO: MÁRCIA FREGADOLLI BRANDÃO BARALE\nGMFG/sr\n\nD E C I S Ã O\n\nA matéria objeto do presente recurso é a mesma tratada no Incidente de Recurso de Revista Repetitivo nº 42, atualmente em trâmite nesta Corte e com determinação de suspensão pelo Exmo. Ministro Relator, nos termos do § 5º do art. 896-C da CLT.\nAssim, determino o sobrestamento do presente feito, com a remessa dos autos para a Secretaria da Sexta Turma, onde devem aguardar o julgamento definitivo do tema de afetação.\nApós o julgamento, voltem os autos conclusos para regular prosseguimento.\nPublique-se.\nBrasília, 3 de agosto de 2026.\n\n\nFABRÍCIO GONÇALVES\nMinistro Relator",
+      "numero_processo": "00032440520135020032",
+      "meio": "D",
+      "link": "https://consultaprocessual.tst.jus.br/consultaProcessual/resumoForm.do?consulta=1&numeroInt=23688&anoInt=2016",
+      "tipoDocumento": "Despacho",
+      "nomeClasse": "AGRAVO DE INSTRUMENTO EM RECURSO DE REVISTA",
+      "codigoClasse": "1002",
+      "numeroComunicacao": 1,
+      "ativo": true,
+      "hash": "mw37ay8Ak6rNIzh5TwpEb764dOjxNQ",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Diário de Justiça Eletrônico Nacional",
+      "numeroprocessocommascara": "0003244-05.2013.5.02.0032",
+      "destinatarios": [
+        {
+          "nome": "GENILSA CORREIA DE SOUZA ASMAR E OUTRA",
+          "comunicacao_id": 690095716,
+          "polo": "A"
+        },
+        {
+          "nome": "HIPERPLAN LOGÍSTICA LTDA. - ME",
+          "comunicacao_id": 690095716,
+          "polo": "P"
+        },
+        {
+          "nome": "JEANYNE SANTOS BONFIM ALMEIDA",
+          "comunicacao_id": 690095716,
+          "polo": "P"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1281842718,
+          "comunicacao_id": 690095716,
+          "advogado_id": 4398868,
+          "created_at": "2026-08-05T18:52:31",
+          "updated_at": "2026-08-05T18:52:31",
+          "advogado": {
+            "id": 4398868,
+            "nome": "DRA. MÁRCIA FREGADOLLI BRANDÃO BARALE",
+            "numero_oab": "183155",
+            "uf_oab": "SP"
+          }
+        },
+        {
+          "id": 1281842717,
+          "comunicacao_id": 690095716,
+          "advogado_id": 3312383,
+          "created_at": "2026-08-05T18:52:31",
+          "updated_at": "2026-08-05T18:52:31",
+          "advogado": {
+            "id": 3312383,
+            "nome": "DR. ANTÔNIO ROGÉRIO BONFIM MELO",
+            "numero_oab": "128462",
+            "uf_oab": "SP"
+          }
+        }
+      ]
+    },
+    {
+      "id": 696843819,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TST",
+      "tipoComunicacao": "Edital",
+      "nomeOrgao": "8ª Turma",
+      "idOrgao": 47392,
+      "texto": "PODER JUDICIÁRIO  JUSTIÇA DO TRABALHO  TRIBUNAL SUPERIOR DO TRABALHO  8ª TURMA  Relator: SERGIO PINTO MARTINS  Ag Emb 0011341-39.2024.5.18.0007  AGRAVANTE: AILTON JOSE FERREIRA  AGRAVADO: COMPANHIA DE URBANIZACAO DE GOIANIA - COMURG  Processo Ag Emb - 0011341-39.2024.5.18.0007   AGRAVANTE: AILTON JOSE FERREIRA  AGRAVADO: COMPANHIA DE URBANIZACAO DE GOIANIA - COMURG  Publicação de Intimação para contrarrazões ao(s) Agravo(s)/Agravo(s) Regimental(is)    Em cumprimento ao art. 1º, I, do Ato nº 202/SEGJUD, de 10 de junho de 2019, fica(m) intimado(s) o(s) agravado(s) para, querendo, manifestar(em)-se sobre o(s) agravo(s) interposto(s), no prazo legal, nos termos dos artigos 1.021, §2º do CPC e 266, caput, do Regimento Interno do Tribunal Superior do Trabalho.     REGINALDO DE OZÊDA ALA Secretário da Oitava Turma<br><br>Intimado(s) / Citado(s)<br> - COMPANHIA DE URBANIZACAO DE GOIANIA - COMURG<br>",
+      "numero_processo": "00113413920245180007",
+      "meio": "E",
+      "link": "https://pje.tst.jus.br/pjekz/validacao/26081313073457900000197461666?instancia=3",
+      "tipoDocumento": "Edital",
+      "nomeClasse": "EMBARGOS",
+      "codigoClasse": "1006",
+      "numeroComunicacao": 1,
+      "ativo": true,
+      "hash": "XvLko4Pw16XaIwhbhGjdXLZbAKq5Vd",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Plataforma Nacional de Editais",
+      "numeroprocessocommascara": "0011341-39.2024.5.18.0007",
+      "destinatarios": [
+        {
+          "nome": "AILTON JOSE FERREIRA",
+          "comunicacao_id": 696843819,
+          "polo": "A"
+        },
+        {
+          "nome": "COMPANHIA DE URBANIZACAO DE GOIANIA - COMURG",
+          "comunicacao_id": 696843819,
+          "polo": "P"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1295903976,
+          "comunicacao_id": 696843819,
+          "advogado_id": 1401997,
+          "created_at": "2026-08-13T13:30:21",
+          "updated_at": "2026-08-13T13:30:21",
+          "advogado": {
+            "id": 1401997,
+            "nome": "PATRICIA MIRANDA CENTENO AMARAL",
+            "numero_oab": "24190",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295903975,
+          "comunicacao_id": 696843819,
+          "advogado_id": 1360481,
+          "created_at": "2026-08-13T13:30:21",
+          "updated_at": "2026-08-13T13:30:21",
+          "advogado": {
+            "id": 1360481,
+            "nome": "ARTENIO BATISTA DA SILVA JUNIOR",
+            "numero_oab": "35707",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295903983,
+          "comunicacao_id": 696843819,
+          "advogado_id": 1410352,
+          "created_at": "2026-08-13T13:30:21",
+          "updated_at": "2026-08-13T13:30:21",
+          "advogado": {
+            "id": 1410352,
+            "nome": "LORENA MIRANDA CENTENO GASEL",
+            "numero_oab": "29390",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295903981,
+          "comunicacao_id": 696843819,
+          "advogado_id": 3461476,
+          "created_at": "2026-08-13T13:30:21",
+          "updated_at": "2026-08-13T13:30:21",
+          "advogado": {
+            "id": 3461476,
+            "nome": "ALINE BORGES DE SOUZA SA",
+            "numero_oab": "58153",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295903977,
+          "comunicacao_id": 696843819,
+          "advogado_id": 3417515,
+          "created_at": "2026-08-13T13:30:21",
+          "updated_at": "2026-08-13T13:30:21",
+          "advogado": {
+            "id": 3417515,
+            "nome": "DENISE ALVES DE MIRANDA BENTO",
+            "numero_oab": "21789",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295903988,
+          "comunicacao_id": 696843819,
+          "advogado_id": 1420666,
+          "created_at": "2026-08-13T13:30:21",
+          "updated_at": "2026-08-13T13:30:21",
+          "advogado": {
+            "id": 1420666,
+            "nome": "JOAQUIM CANDIDO DOS SANTOS JUNIOR",
+            "numero_oab": "27879",
+            "uf_oab": "GO"
+          }
+        }
+      ]
+    },
+    {
+      "id": 696844177,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TST",
+      "tipoComunicacao": "Edital",
+      "nomeOrgao": "8ª Turma",
+      "idOrgao": 47392,
+      "texto": "PODER JUDICIÁRIO  JUSTIÇA DO TRABALHO  TRIBUNAL SUPERIOR DO TRABALHO  8ª TURMA  Relator: SERGIO PINTO MARTINS  Ag Emb 0011384-40.2024.5.18.0018  AGRAVANTE: MARCIEL DE FREITAS  AGRAVADO: COMPANHIA DE URBANIZACAO DE GOIANIA - COMURG  Processo Ag Emb - 0011384-40.2024.5.18.0018   AGRAVANTE: MARCIEL DE FREITAS  AGRAVADO: COMPANHIA DE URBANIZACAO DE GOIANIA - COMURG  Publicação de Intimação para contrarrazões ao(s) Agravo(s)/Agravo(s) Regimental(is)    Em cumprimento ao art. 1º, I, do Ato nº 202/SEGJUD, de 10 de junho de 2019, fica(m) intimado(s) o(s) agravado(s) para, querendo, manifestar(em)-se sobre o(s) agravo(s) interposto(s), no prazo legal, nos termos dos artigos 1.021, §2º do CPC e 266, caput, do Regimento Interno do Tribunal Superior do Trabalho.     REGINALDO DE OZÊDA ALA Secretário da Oitava Turma<br><br>Intimado(s) / Citado(s)<br> - COMPANHIA DE URBANIZACAO DE GOIANIA - COMURG<br>",
+      "numero_processo": "00113844020245180018",
+      "meio": "E",
+      "link": "https://pje.tst.jus.br/pjekz/validacao/26081313073459800000197461665?instancia=3",
+      "tipoDocumento": "Edital",
+      "nomeClasse": "EMBARGOS",
+      "codigoClasse": "1006",
+      "numeroComunicacao": 2,
+      "ativo": true,
+      "hash": "bQ19VxvmEYMpImCzh8oVEJZ4eny8lp",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Plataforma Nacional de Editais",
+      "numeroprocessocommascara": "0011384-40.2024.5.18.0018",
+      "destinatarios": [
+        {
+          "nome": "COMPANHIA DE URBANIZACAO DE GOIANIA - COMURG",
+          "comunicacao_id": 696844177,
+          "polo": "P"
+        },
+        {
+          "nome": "MARCIEL DE FREITAS",
+          "comunicacao_id": 696844177,
+          "polo": "A"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1295905004,
+          "comunicacao_id": 696844177,
+          "advogado_id": 1528590,
+          "created_at": "2026-08-13T13:30:24",
+          "updated_at": "2026-08-13T13:30:24",
+          "advogado": {
+            "id": 1528590,
+            "nome": "ALEXANDRE MACHADO DE SA",
+            "numero_oab": "7461",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295905014,
+          "comunicacao_id": 696844177,
+          "advogado_id": 1410352,
+          "created_at": "2026-08-13T13:30:24",
+          "updated_at": "2026-08-13T13:30:24",
+          "advogado": {
+            "id": 1410352,
+            "nome": "LORENA MIRANDA CENTENO GASEL",
+            "numero_oab": "29390",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295905002,
+          "comunicacao_id": 696844177,
+          "advogado_id": 1401997,
+          "created_at": "2026-08-13T13:30:24",
+          "updated_at": "2026-08-13T13:30:24",
+          "advogado": {
+            "id": 1401997,
+            "nome": "PATRICIA MIRANDA CENTENO AMARAL",
+            "numero_oab": "24190",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295904995,
+          "comunicacao_id": 696844177,
+          "advogado_id": 1360481,
+          "created_at": "2026-08-13T13:30:24",
+          "updated_at": "2026-08-13T13:30:24",
+          "advogado": {
+            "id": 1360481,
+            "nome": "ARTENIO BATISTA DA SILVA JUNIOR",
+            "numero_oab": "35707",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295905007,
+          "comunicacao_id": 696844177,
+          "advogado_id": 3417515,
+          "created_at": "2026-08-13T13:30:24",
+          "updated_at": "2026-08-13T13:30:24",
+          "advogado": {
+            "id": 3417515,
+            "nome": "DENISE ALVES DE MIRANDA BENTO",
+            "numero_oab": "21789",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1295905010,
+          "comunicacao_id": 696844177,
+          "advogado_id": 1420666,
+          "created_at": "2026-08-13T13:30:24",
+          "updated_at": "2026-08-13T13:30:24",
+          "advogado": {
+            "id": 1420666,
+            "nome": "JOAQUIM CANDIDO DOS SANTOS JUNIOR",
+            "numero_oab": "27879",
+            "uf_oab": "GO"
+          }
+        }
+      ]
+    },
+    {
+      "id": 690095764,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TST",
+      "tipoComunicacao": "Intimação",
+      "nomeOrgao": "6ª Turma",
+      "idOrgao": 47380,
+      "texto": "Agravante(s): P. R. J. M.\nADVOGADO: PAULO ROBERTO JULIANO MARTINS JÚNIOR\nAgravado(s): C. R. A. DE O.\nADVOGADO: MURIEL VIEIRA\nADVOGADO: MILENA VIEIRA ALONSO\nAgravado(s): E. de A. H. C. M. DA F.\nADVOGADO: MARCELO COSTA\nAgravado(s): F. M. S.\nAgravado(s): I. DE P. C. D. J. F. L.\nAgravado(s): J. A. N.\nADVOGADO: LUCIANO ROBERTO DEL DUQUE\nADVOGADO: PAULO ROBERTO JULIANO MARTINS JÚNIOR\nAgravado(s): M. M. S. M.\nGMFG/sr\n\nD E C I S Ã O\n\nA matéria objeto do presente recurso é a mesma tratada no Incidente de Recurso de Revista Repetitivo nº 26, atualmente em trâmite nesta Corte e com determinação de suspensão pelo Exmo. Ministro Relator, nos termos do § 5º do art. 896-C da CLT.\nAssim, determino o sobrestamento do presente feito, com a remessa dos autos para a Secretaria da Sexta Turma, onde devem aguardar o julgamento definitivo do tema de afetação.\nApós o julgamento, voltem os autos conclusos para regular prosseguimento.\nPublique-se.\nBrasília, 3 de agosto de 2026.\n\n\nFABRÍCIO GONÇALVES\nMinistro Relator",
+      "numero_processo": "00102965320175030042",
+      "meio": "D",
+      "link": "https://consultaprocessual.tst.jus.br/consultaProcessual/resumoForm.do?consulta=1&numeroInt=371460&anoInt=2024",
+      "tipoDocumento": "Despacho",
+      "nomeClasse": "AGRAVO DE INSTRUMENTO EM RECURSO DE REVISTA",
+      "codigoClasse": "1002",
+      "numeroComunicacao": 3,
+      "ativo": true,
+      "hash": "Emone3zr8ZeaIzT3TBXAVMZABQLjKw",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Diário de Justiça Eletrônico Nacional",
+      "numeroprocessocommascara": "0010296-53.2017.5.03.0042",
+      "destinatarios": [
+        {
+          "nome": "C.R.A.D.O.",
+          "comunicacao_id": 690095764,
+          "polo": "P"
+        },
+        {
+          "nome": "E.D.A.H.C.M.D.F.",
+          "comunicacao_id": 690095764,
+          "polo": "P"
+        },
+        {
+          "nome": "F.M.S.",
+          "comunicacao_id": 690095764,
+          "polo": "P"
+        },
+        {
+          "nome": "I.D.P.C.D.J.F.L.",
+          "comunicacao_id": 690095764,
+          "polo": "P"
+        },
+        {
+          "nome": "J.A.N.",
+          "comunicacao_id": 690095764,
+          "polo": "P"
+        },
+        {
+          "nome": "M.M.S.M.",
+          "comunicacao_id": 690095764,
+          "polo": "P"
+        },
+        {
+          "nome": "P.R.J.M.",
+          "comunicacao_id": 690095764,
+          "polo": "A"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1281842791,
+          "comunicacao_id": 690095764,
+          "advogado_id": 4866139,
+          "created_at": "2026-08-05T18:52:36",
+          "updated_at": "2026-08-05T18:52:36",
+          "advogado": {
+            "id": 4866139,
+            "nome": "DR. MARCELO COSTA",
+            "numero_oab": "110493",
+            "uf_oab": "MG"
+          }
+        },
+        {
+          "id": 1281842785,
+          "comunicacao_id": 690095764,
+          "advogado_id": 3390956,
+          "created_at": "2026-08-05T18:52:36",
+          "updated_at": "2026-08-05T18:52:36",
+          "advogado": {
+            "id": 3390956,
+            "nome": "DR. PAULO ROBERTO JULIANO MARTINS JÚNIOR",
+            "numero_oab": "107857",
+            "uf_oab": "MG"
+          }
+        },
+        {
+          "id": 1281842789,
+          "comunicacao_id": 690095764,
+          "advogado_id": 4832738,
+          "created_at": "2026-08-05T18:52:36",
+          "updated_at": "2026-08-05T18:52:36",
+          "advogado": {
+            "id": 4832738,
+            "nome": "DR. MURIEL VIEIRA",
+            "numero_oab": "54877",
+            "uf_oab": "MG"
+          }
+        },
+        {
+          "id": 1281842790,
+          "comunicacao_id": 690095764,
+          "advogado_id": 4087806,
+          "created_at": "2026-08-05T18:52:36",
+          "updated_at": "2026-08-05T18:52:36",
+          "advogado": {
+            "id": 4087806,
+            "nome": "DRA. MILENA VIEIRA ALONSO",
+            "numero_oab": "140963",
+            "uf_oab": "MG"
+          }
+        },
+        {
+          "id": 1281842788,
+          "comunicacao_id": 690095764,
+          "advogado_id": 3390954,
+          "created_at": "2026-08-05T18:52:36",
+          "updated_at": "2026-08-05T18:52:36",
+          "advogado": {
+            "id": 3390954,
+            "nome": "DR. LUCIANO ROBERTO DEL DUQUE",
+            "numero_oab": "82088",
+            "uf_oab": "MG"
+          }
+        }
+      ]
+    },
+    {
+      "id": 690095792,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TST",
+      "tipoComunicacao": "Intimação",
+      "nomeOrgao": "6ª Turma",
+      "idOrgao": 47380,
+      "texto": "Embargante: SINDICATO DOS BANCARIOS E TRABALHADORES NO SISTEMA FINANCEIRO DO EXTREMO SUL DA BAHIA\nADVOGADO: JOSÉ EYMARD LOGUÉRCIO\nEmbargado(a): CAIXA ECONÔMICA FEDERAL\nADVOGADO: MÁRCIO RICARDO PIRES SANT'ANNA\nADVOGADO: MARINA MIDLEJ ROCHA VELAME\n\nD E S P A C H O\n\nDeclaro o meu impedimento para atuar no presente processo, com fundamento no art. 144 do CPC.\nÀ Secretaria da Sexta Turma para providenciar a redistribuição, mediante compensação, na forma regimental.\n\nPublique-se.\nBrasília, 5 de agosto de 2026.\n\n\nELEONORA BORDINI COCA\nDesembargadora Convocada Relatora",
+      "numero_processo": "00108777720155050561",
+      "meio": "D",
+      "link": "https://consultaprocessual.tst.jus.br/consultaProcessual/resumoForm.do?consulta=1&numeroInt=218494&anoInt=2023",
+      "tipoDocumento": "Despacho",
+      "nomeClasse": "EMBARGOS DE DECLARAçãO CíVEL",
+      "codigoClasse": "1689",
+      "numeroComunicacao": 4,
+      "ativo": true,
+      "hash": "JKOdGxm7gYmpIqI1T7mMy4Zy5DBkl2",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Diário de Justiça Eletrônico Nacional",
+      "numeroprocessocommascara": "0010877-77.2015.5.05.0561",
+      "destinatarios": [
+        {
+          "nome": "CAIXA ECONÔMICA FEDERAL",
+          "comunicacao_id": 690095792,
+          "polo": "P"
+        },
+        {
+          "nome": "SINDICATO DOS BANCARIOS E TRABALHADORES NO SISTEMA FINANCEIRO DO EXTREMO SUL DA BAHIA",
+          "comunicacao_id": 690095792,
+          "polo": "A"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1281842851,
+          "comunicacao_id": 690095792,
+          "advogado_id": 3310169,
+          "created_at": "2026-08-05T18:52:38",
+          "updated_at": "2026-08-05T18:52:38",
+          "advogado": {
+            "id": 3310169,
+            "nome": "DRA. MARINA MIDLEJ ROCHA VELAME",
+            "numero_oab": "23063",
+            "uf_oab": "BA"
+          }
+        },
+        {
+          "id": 1281842850,
+          "comunicacao_id": 690095792,
+          "advogado_id": 3310168,
+          "created_at": "2026-08-05T18:52:38",
+          "updated_at": "2026-08-05T18:52:38",
+          "advogado": {
+            "id": 3310168,
+            "nome": "DR. MÁRCIO RICARDO PIRES SANT'ANNA",
+            "numero_oab": "16979",
+            "uf_oab": "BA"
+          }
+        },
+        {
+          "id": 1281842849,
+          "comunicacao_id": 690095792,
+          "advogado_id": 3307004,
+          "created_at": "2026-08-05T18:52:38",
+          "updated_at": "2026-08-05T18:52:38",
+          "advogado": {
+            "id": 3307004,
+            "nome": "DR. JOSÉ EYMARD LOGUÉRCIO",
+            "numero_oab": "1441",
+            "uf_oab": "DF"
+          }
+        }
+      ]
+    }
+  ]
+}

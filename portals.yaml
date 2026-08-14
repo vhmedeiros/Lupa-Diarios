@@ -49,11 +49,12 @@ portals:
     engine: http
     enabled: true
   - code: TSTDJN
-    name: "TST no DEJT/DJEN"
-    url: "https://dejt.jt.jus.br/dejt/f/n/diariocon"
-    adapter: dejt
-    engine: playwright
-    enabled: false
+    name: "TST no DJEN (Comunica PJe)"
+    url: "https://comunica.pje.jus.br/consulta?siglaTribunal=TST&meio=D"
+    adapter: comunica_pje
+    engine: http
+    params: { sigla_tribunal: TST }
+    enabled: true
   - code: TRT10DJN
     name: "TRT 10ª Região"
     url: "https://dejt.jt.jus.br/dejt/f/n/diariocon"
