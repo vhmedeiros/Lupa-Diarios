@@ -461,3 +461,226 @@ na ordem (itens 1 a 6), incluindo `docker compose up --build` limpo.
 
 Se não houver objeção às premissas assumidas em (1) e (2), não é preciso
 responder — o plano segue com elas.
+
+---
+
+## 8. Fases 19+ — Expansão: TRF1 e TST/TRT10 no DJEN (sessão de 14/08/2026)
+
+Lido antes de estender este plano: `CLAUDE.md`, `SPEC.md`, `portals.yaml`
+(estado atual, depois das Fases 1-18: TST, STJDJN, TCU, TCDF e TJDFTDJN
+`enabled: true`; os outros 7 `enabled: false`). Nenhuma mudança de stack
+ou de regra de negócio é necessária aqui — esta seção só habilita mais
+portais reaproveitando um adapter já em produção. Nota lateral: também
+descobri, lendo o código já commitado, que `TJDFTDJN` acabou implementado
+reaproveitando `comunica_pje` (`params.sigla_tribunal: TJDFT`) em vez do
+`app/scrapers/tjdft.py`/URL previsível que a Fase 10 original previa — a
+árvore de arquivos da seção 1 e a Fase 10 ficam como registro histórico da
+decisão de planejamento, não como o que existe hoje no repositório. Essa
+mesma dinâmica (reaproveitar `comunica_pje` em vez de escrever um adapter
+novo) é exatamente o que a investigação desta seção encontrou de novo para
+os quatro portais abaixo.
+
+### 8.1 O que mudou desde a análise original da seção 3
+
+A seção 3 deste plano foi escrita **antes de qualquer implementação** e
+supôs `engine: playwright` tanto para JFDFDJN/TRFDJN (adapter
+`trf1_biblioteca`, nunca implementado) quanto para TSTDJN/TRT10DJN
+(adapter `dejt`, nunca implementado). Investigação real feita agora por
+`WebFetch`/`WebSearch` (não tenho acesso a `scripts/inspect.py` nem a
+rodar comandos — essa parte cabe ao executor) encontrou evidência forte
+de que os quatro portais podem ser cobertos pelo adapter `comunica_pje`
+já implementado e em produção (hoje usado por STJDJN e TJDFTDJN), **sem
+escrever nenhum adapter novo**:
+
+- A própria página do TRF1 para a qual `portals.yaml` aponta JFDFDJN e
+  TRFDJN (`trf1.jus.br/trf1/biblioteca/diarios-da-justica`) traz, para o
+  acesso a diários correntes, um link direto para
+  `https://comunica.pje.jus.br/consulta?siglaTribunal=TRF1` — o próprio
+  TRF1 direciona ao DJEN para diários atuais; o resto da página é acervo
+  histórico (e-DJF1 2009-2020), irrelevante para um buffer de 3 dias.
+- O CNJ confirma publicamente que o TRF1 usa o DJEN desde 09/12/2020 e
+  descreve a Central Nacional de Comunicações como instrumento oficial
+  "em 1º e 2º grau" do tribunal sob a mesma `siglaTribunal` — não achei
+  evidência de uma sigla separada para a Seção Judiciária do DF (1º grau,
+  seria o alvo natural de JFDFDJN).
+- O CNJ e o próprio TST confirmam que o DJEN substituiu o DEJT como
+  instrumento oficial de publicação dos atos do PJe na Justiça do
+  Trabalho a partir de 01/08/2024, mantendo o DEJT só para "matérias
+  administrativas" (fora do escopo de um serviço de diário de
+  intimações). TST está no DJEN desde então; os 24 TRTs também
+  (inclusive TRT10).
+- Um resultado de busca indexado mostra uma URL real de
+  `comunicaapi.pje.jus.br/api/v1/comunicacao/.../certidao` para "Tribunal
+  Regional Federal da 1ª Região", confirmando que a API tem conteúdo real
+  para esse tribunal — a mesma API já usada em produção neste projeto.
+
+Não consegui bater diretamente na API (`comunicaapi.pje.jus.br`) nem no
+front (`comunica.pje.jus.br`) via `WebFetch`: as chamadas voltaram
+`403 Forbidden`, provavelmente um WAF/anti-bot que não reconhece o
+user-agent do `WebFetch` — isso é uma **limitação da minha ferramenta de
+investigação**, não evidência de que a API não funcione (ela já funciona
+em produção neste projeto via `httpx` com o User-Agent
+`LupaDiarios/1.0`, exatamente como `scripts/inspect.py` faz, e como a
+Fase 7 já confirmou para STJ). Por isso cada fase abaixo **começa** com o
+executor confirmando com `scripts/inspect.py` de verdade, no mesmo
+timebox e mesma disciplina de "parar e reportar" da Fase 8 (TCU) — eu não
+decido por evidência indireta, peço confirmação direta antes de qualquer
+commit.
+
+### 8.2 Análise portal a portal (JFDFDJN, TRFDJN, TSTDJN, TRT10DJN)
+
+| Código | Estratégia proposta | Risco | Justificativa (1 linha) |
+|---|---|---|---|
+| **TRFDJN** | Reaproveitar `comunica_pje` (`sigla_tribunal: TRF1`) — zero adapter novo | **Baixo** | TRF1 está no DJEN desde 2020, a própria página institucional do TRF1 aponta para lá, e a API é a mesma já em produção (STJDJN/TJDFTDJN). |
+| **JFDFDJN** | Mesma fonte que TRFDJN (`siglaTribunal=TRF1` parece cobrir 1º e 2º grau) — ver pergunta 1 (8.5) | **Baixo tecnicamente, decisão de produto pendente** | Não achei sigla separada para a Seção Judiciária do DF; habilitar os dois como portais distintos arriscaria e-mail duplicado (mesma publicação, `portal_code` diferente → hash diferente no dedupe). |
+| **TSTDJN** | Reaproveitar `comunica_pje` (`sigla_tribunal: TST`) — zero adapter novo | **Baixo** | TST está no DJEN desde 01/08/2024 (confirmado pelo próprio TST/CNJ); o DEJT (URL que `portals.yaml` aponta hoje) ficou só com conteúdo administrativo desde então — fora do escopo de "diário de intimações" deste projeto. |
+| **TRT10DJN** | Reaproveitar `comunica_pje` (`sigla_tribunal: TRT10`) — zero adapter novo | **Baixo** | Mesma migração nacional do DJEN cobre todos os 24 TRTs desde 01/08/2024, inclusive o TRT10; padrão de sigla `TRTn` confirmado por uma URL real indexada (`siglaTribunal=TRT1`). |
+
+**Nota para não confundir com o portal `TST` já habilitado:** `TST`
+(feed Atom de `juslaboris.tst.jus.br`) é a biblioteca digital jurídica do
+TST (jurisprudência/publicações), uma fonte totalmente diferente de
+`TSTDJN` (intimações processuais do DJEN) — habilitar `TSTDJN` não
+duplica o conteúdo de `TST`.
+
+Consequência prática: nenhum dos quatro portais parece precisar de
+Playwright, ao contrário do que os nomes de adapter em `portals.yaml`
+sugerem hoje (`trf1_biblioteca`, `dejt`, nenhum dos dois implementado).
+Por isso nenhuma fase abaixo instala
+`uv run playwright install --with-deps chromium`. Se a confirmação por
+`scripts/inspect.py` falhar em qualquer uma delas, a fase correspondente
+para e reporta ao usuário (mesma regra da Fase 8) em vez de escrever um
+adapter Playwright por conta própria — isso ficaria para uma sessão
+futura à parte, fora deste plano.
+
+### 8.3 Fases de execução
+
+Mesma disciplina das Fases 1-18: cada fase termina com
+`uv run ruff check --fix . && uv run ruff format .`, `uv run pytest -q`
+verde e um commit; nenhuma fase depende de código de fase futura.
+
+### Fase 19 — TRF1 no DJEN (habilita TRFDJN; decide o destino de JFDFDJN)
+Rodar `uv run python scripts/inspect.py
+"https://comunicaapi.pje.jus.br/api/v1/comunicacao?siglaTribunal=TRF1&dataDisponibilizacaoInicio=<hoje>&dataDisponibilizacaoFim=<hoje>&itensPorPagina=50&pagina=1"`
+(data de hoje em ISO) para confirmar que a API devolve itens reais para
+`siglaTribunal=TRF1`. Nesse mesmo passo, inspecionar o campo
+`orgaoJulgador` dos itens retornados para checar se aparecem tanto
+juízos de 1º grau (ex.: contendo "Vara Federal" ou "Seção Judiciária")
+quanto de 2º grau (ex.: "Turma", "Gabinete", "Desembargador") — isso
+confirma ou refuta a hipótese da seção 8.1 de que uma única
+`siglaTribunal=TRF1` cobre as duas instâncias. Se em ~20 min não
+confirmar itens reais, parar e reportar ao usuário antes de prosseguir
+(mesma regra da Fase 8) em vez de partir para Playwright por conta
+própria. Salvar `tests/fixtures/comunica_pje_trf1.json` com uma amostra
+real. Adicionar `test_parse_page_returns_publications_trf1` em
+`tests/test_scrapers_comunica_pje.py` (mesmo padrão dos testes já
+existentes nesse arquivo, só trocando a fixture e as asserções de
+`portal_code`/`page_url`). Atualizar `portals.yaml`: `TRFDJN` passa a
+`adapter: comunica_pje`, `engine: http`,
+`params: {sigla_tribunal: TRF1}` (troca o atual `params: {secao: "TRF1"}`,
+que não é um parâmetro que o adapter lê), `enabled: true`. `JFDFDJN`
+segue conforme a resposta à pergunta 1 (seção 8.5); por padrão, continua
+`enabled: false`, com um comentário no YAML explicando que o conteúdo já
+é coberto por `TRFDJN` via DJEN — a menos que o usuário responda diferente
+antes desta fase rodar.
+
+**Aceite:** `uv run pytest tests/test_scrapers_comunica_pje.py -q` → `3
+passed`; `uv run python -m app.cli run --portal TRFDJN --dry-run` imprime
+publicações reais do dia.
+**Commit:** "feat: habilita TRFDJN reaproveitando comunica_pje (DJEN)"
+
+### Fase 20 — TST no DJEN (habilita TSTDJN)
+Rodar `uv run python scripts/inspect.py
+"https://comunicaapi.pje.jus.br/api/v1/comunicacao?siglaTribunal=TST&dataDisponibilizacaoInicio=<hoje>&dataDisponibilizacaoFim=<hoje>&itensPorPagina=50&pagina=1"`
+para confirmar itens reais. Timebox ~20 min; se não confirmar, parar e
+reportar ao usuário (mesma regra da Fase 8). Salvar
+`tests/fixtures/comunica_pje_tst.json`. Adicionar
+`test_parse_page_returns_publications_tst` em
+`tests/test_scrapers_comunica_pje.py`. Atualizar `portals.yaml`:
+`TSTDJN` → `adapter: comunica_pje`, `engine: http`,
+`params: {sigla_tribunal: TST}`, `enabled: true`.
+
+**Aceite:** `uv run pytest tests/test_scrapers_comunica_pje.py -q` → `4
+passed`; `uv run python -m app.cli run --portal TSTDJN --dry-run` imprime
+publicações reais do dia.
+**Commit:** "feat: habilita TSTDJN reaproveitando comunica_pje (DJEN)"
+
+### Fase 21 — TRT10 no DJEN (habilita TRT10DJN)
+Rodar `uv run python scripts/inspect.py
+"https://comunicaapi.pje.jus.br/api/v1/comunicacao?siglaTribunal=TRT10&dataDisponibilizacaoInicio=<hoje>&dataDisponibilizacaoFim=<hoje>&itensPorPagina=50&pagina=1"`
+para confirmar itens reais. Timebox ~20 min; se não confirmar, parar e
+reportar ao usuário (mesma regra da Fase 8). Salvar
+`tests/fixtures/comunica_pje_trt10.json`. Adicionar
+`test_parse_page_returns_publications_trt10` em
+`tests/test_scrapers_comunica_pje.py`. Atualizar `portals.yaml`:
+`TRT10DJN` → `adapter: comunica_pje`, `engine: http`,
+`params: {sigla_tribunal: TRT10}` (troca o atual
+`params: {tribunal: "TRT da 10ª Região"}`, que não é o formato que o
+adapter lê), `enabled: true`.
+
+**Aceite:** `uv run pytest tests/test_scrapers_comunica_pje.py -q` → `5
+passed`; `uv run python -m app.cli run --portal TRT10DJN --dry-run`
+imprime publicações reais do dia.
+**Commit:** "feat: habilita TRT10DJN reaproveitando comunica_pje (DJEN)"
+
+### Fase 22 — Fechamento da expansão
+Sem código novo: rodar a suíte completa e, com `.env` configurado, rodar
+`uv run python -m app.cli run --dry-run` sem `--portal` para conferir que
+todos os portais agora habilitados (os 5 do MVP + TRFDJN + TSTDJN +
+TRT10DJN, e JFDFDJN se a pergunta 1 da seção 8.5 tiver sido respondida
+com "manter habilitado") rodam num único ciclo sem exceção não tratada
+(R4 — falha em um portal não pode derrubar os demais).
+
+**Aceite:** `uv run pytest -q` → todos verdes; `uv run python -m app.cli
+run --dry-run` imprime publicações de cada portal habilitado, sem
+traceback.
+**Commit:** "chore: expansão TRF1/TST/TRT10 no DJEN concluída"
+
+### 8.4 Riscos desta expansão
+
+1. **A hipótese de reaproveitamento pode não se confirmar** no
+   `scripts/inspect.py` real — minha evidência é indireta (busca e
+   leitura de páginas públicas), já que `WebFetch` tomou 403 direto na
+   API e no front. Mitigação: cada fase começa com essa confirmação,
+   time-boxed, e para/reporta se falhar, em vez de decidir Playwright
+   sozinha.
+2. **JFDFDJN pode ter conteúdo distinto de TRFDJN** se a Seção Judiciária
+   do DF usar, na prática, uma sigla própria que a investigação por fora
+   não encontrou. Mitigação: a Fase 19 verifica isso olhando o campo
+   `orgaoJulgador` dos itens reais devolvidos por `siglaTribunal=TRF1`;
+   se aparecer evidência de que 1º grau não está coberto, a fase para e
+   reporta em vez de assumir.
+3. **Volume diário desconhecido para TRF1/TST/TRT10** — podem ser maiores
+   que o do STJ (~13 mil comunicações/dia, que já exige paginação e
+   respeita um rate limit de 20 requisições/janela). Mitigação: as Fases
+   19-21 reaproveitam a paginação e o controle de rate limit já
+   implementados em `comunica_pje.py` (Fase 7); o risco é operacional
+   (ciclo mais lento naquele portal), não de código novo a escrever.
+
+### 8.5 Perguntas para o usuário
+
+1. **JFDFDJN e TRFDJN parecem ser a mesma fonte de dados.** A
+   investigação não achou uma `siglaTribunal` separada para a Seção
+   Judiciária do DF (1º grau) — tudo indica que `siglaTribunal=TRF1` já
+   cobre 1º e 2º grau. Se isso se confirmar na Fase 19, habilitar os dois
+   códigos como portais distintos entregaria a **mesma** publicação duas
+   vezes no e-mail (uma vez agrupada em "JFDFDJN", outra em "TRFDJN"),
+   porque o dedupe usa `portal_code` no hash (`SPEC.md` §4) — publicações
+   idênticas em conteúdo teriam hashes diferentes. Por isso a Fase 19
+   assume, por padrão, que **só `TRFDJN` fica habilitado** e `JFDFDJN`
+   continua `enabled: false`, documentado como redundante. Confirma essa
+   leitura, ou prefere: (a) apagar `JFDFDJN` de `portals.yaml` de vez, já
+   que seria redundante; (b) investigar mais a fundo (fora deste plano)
+   se dá para filtrar por `orgaoJulgador` e manter os dois sem duplicar;
+   ou (c) aceitar a duplicação mesmo assim, por algum motivo de negócio
+   que eu não conheço?
+2. **Não tive acesso a `scripts/inspect.py` nem a rodar comandos** — as
+   evidências das seções 8.1/8.2 vêm de busca e leitura de páginas
+   públicas (`WebFetch`/`WebSearch`), não de uma chamada direta e
+   confirmada à API real com os parâmetros exatos de cada tribunal (a
+   própria API bloqueou meu `WebFetch` com 403). Estou tratando isso como
+   "forte indício, a confirmar pelo executor no início de cada fase", não
+   como fato definitivo — ok seguir assim, ou prefere que eu tente mais
+   alguma investigação antes de aprovar as Fases 19-21?
+
+Se não houver objeção, o plano segue com a leitura padrão assumida em (1)
+(só `TRFDJN` habilitado) e com a disciplina de confirmação descrita em (2).
