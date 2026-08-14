@@ -90,6 +90,15 @@ lupa-diarios/
 └── .gitignore                                      # .venv, .env, data/files, __pycache__...
 ```
 
+**Nota (14/08/2026, ver seção 9):** esta árvore descreve o plano *antes*
+da implementação. O código real diverge em pontos conhecidos e já
+documentados (`app/scrapers/tjdft.py` nunca foi criado, `tests/test_api.py`
+virou `tests/test_routers.py`, e existem `tests/test_cli.py` e
+`tests/test_scheduler.py` que não estavam previstos aqui) — ver `README.md`
+seção "Inconsistência que vale registrar" e a seção 9.6 deste plano. Isso
+não é retrabalho pendente, é só a árvore original ficando desatualizada
+como registro histórico; `app/` é sempre a fonte de verdade.
+
 ---
 
 ## 2. Modelo de dados
@@ -142,6 +151,14 @@ Observação de `SPEC.md` §10: intimações "TRF1 PJe" podem já estar
 cobertas pelo DJEN (`comunica_pje` com `siglaTribunal=TRF1`) — vale
 validar isso *antes* de investir tempo em JFDFDJN/TRFDJN num dia futuro,
 porque pode eliminar a necessidade do adapter Playwright inteiramente.
+
+**Nota (14/08/2026):** esta tabela é a análise original, feita ANTES de
+qualquer implementação. Ela já se mostrou parcialmente errada nos dois
+sentidos — algumas estratégias "Playwright" viraram HTTP simples (TCU,
+TCDF, TJDFTDJN, TRFDJN, TSTDJN, TRT10DJN, todas confirmadas na prática) —,
+e a seção 9.2 deste plano traz uma reavaliação, com evidência nova, dos
+três últimos portais que restaram sem investigação (STFDJE, STJ,
+TRF1ATA). Mantida aqui como registro histórico da decisão original.
 
 ---
 
@@ -532,7 +549,7 @@ commit.
 | Código | Estratégia proposta | Risco | Justificativa (1 linha) |
 |---|---|---|---|
 | **TRFDJN** | Reaproveitar `comunica_pje` (`sigla_tribunal: TRF1`) — zero adapter novo | **Baixo** | TRF1 está no DJEN desde 2020, a própria página institucional do TRF1 aponta para lá, e a API é a mesma já em produção (STJDJN/TJDFTDJN). |
-| **JFDFDJN** | Mesma fonte que TRFDJN (`siglaTribunal=TRF1` parece cobrir 1º e 2º grau) — ver pergunta 1 (8.5) | **Baixo tecnicamente, decisão de produto pendente** | Não achei sigla separada para a Seção Judiciária do DF; habilitar os dois como portais distintos arriscaria e-mail duplicado (mesma publicação, `portal_code` diferente → hash diferente no dedupe). |
+| **JFDFDJN** | Mesma fonte que TRFDJN (`siglaTribunal=TRF1` parece cobrir 1º e 2º grau) — ver pergunta 1 (8.5) | **Baixo tecnicamente, decisão de produto pendente** | Não achei sigla separada para a Seção Judiciária do DF — habilitar os dois como portais distintos arriscaria e-mail duplicado (mesma publicação, `portal_code` diferente → hash diferente no dedupe). |
 | **TSTDJN** | Reaproveitar `comunica_pje` (`sigla_tribunal: TST`) — zero adapter novo | **Baixo** | TST está no DJEN desde 01/08/2024 (confirmado pelo próprio TST/CNJ); o DEJT (URL que `portals.yaml` aponta hoje) ficou só com conteúdo administrativo desde então — fora do escopo de "diário de intimações" deste projeto. |
 | **TRT10DJN** | Reaproveitar `comunica_pje` (`sigla_tribunal: TRT10`) — zero adapter novo | **Baixo** | Mesma migração nacional do DJEN cobre todos os 24 TRTs desde 01/08/2024, inclusive o TRT10; padrão de sigla `TRTn` confirmado por uma URL real indexada (`siglaTribunal=TRT1`). |
 
@@ -684,3 +701,505 @@ traceback.
 
 Se não houver objeção, o plano segue com a leitura padrão assumida em (1)
 (só `TRFDJN` habilitado) e com a disciplina de confirmação descrita em (2).
+
+---
+
+## 9. Fases 23+ — Levantamento completo de pendências (sessão de 14/08/2026)
+
+Lido antes de escrever esta seção: `CLAUDE.md`, `SPEC.md`, `portals.yaml`
+e o código real em `app/`, `tests/` e `DEPLOY.md` (estado após as Fases
+1-22, todas implementadas e commitadas localmente — ver 9.4 sobre "commitado
+localmente" não ser o mesmo que "publicado"). Esta seção não propõe
+mudança de stack nem de regra de negócio; é um inventário do que falta,
+com uma fase pequena e verificável por pendência, na mesma disciplina das
+seções 5 e 8.
+
+Nenhum conflito novo entre `CLAUDE.md` e `SPEC.md` foi encontrado. Um
+ponto de atenção (não um conflito, ver 9.2.1): `SPEC.md` §10 sugere
+"listar o conteúdo do ZIP" do STJ no e-mail — a Fase 23 propõe simplificar
+essa ideia original, e isso está marcado como pergunta ao usuário na
+seção 9.7, não decidido em silêncio.
+
+### 9.1 Método desta revisão
+
+Assim como na seção 8, não tenho acesso a `scripts/inspect.py` nem a
+rodar comandos — toda a investigação abaixo usou `WebFetch`/`WebSearch`
+contra os sites reais dos três portais nunca investigados, e leitura
+direta do código/git deste repositório para os outros dois pontos. Onde
+a investigação encontrou evidência concreta (URLs reais, respostas HTTP
+reais, não só busca), eu digo explicitamente; onde é só indício por
+busca, digo isso também. Cada fase de portal novo abaixo começa,
+igualmente, com o executor confirmando via `scripts/inspect.py` antes de
+codar — mesma regra de "parar e reportar" das Fases 8 e 19-21.
+
+### 9.2 Pendência 1 — três portais nunca investigados (STFDJE, STJ, TRF1ATA)
+
+`portals.yaml` ainda tem `STFDJE`, `STJ` e `TRF1ATA` como `enabled: false`,
+todos com `engine: playwright`, herdados sem revisão da análise original
+da seção 3 (feita antes de qualquer implementação). Diferente de
+JFDFDJN/TRFDJN/TSTDJN/TRT10DJN (seção 8), estes três nunca foram
+reexaminados. A investigação de hoje mudou a avaliação de risco dos três,
+em direções diferentes — um caso melhorou bastante (STJ), um revelou um
+problema não previsto (TRF1ATA) e um manteve o risco alto, com um detalhe
+técnico novo (STFDJE).
+
+#### 9.2.1 Achados da investigação de hoje
+
+**STJ (portal `STJ`, adapter `stj` — não confundir com `STJDJN`, que já
+roda via DJEN):** `WebFetch` em `https://processo.stj.jus.br/processo/dj/init`
+mostrou uma página com formulário renderizado no servidor (não é SPA) e,
+mais importante, um **padrão de URL previsível e por data** para o Diário
+de Justiça Eletrônico completo em ZIP:
+`https://processo.stj.jus.br/docs_internet/processo/dje/zip/stj_dje_{AAAAMMDD}.zip`.
+Uma tentativa direta de baixar essa URL com a data de hoje
+(`stj_dje_20260814.zip`) devolveu um arquivo real maior que 10MB (o
+`WebFetch` cortou por exceder o limite de conteúdo da ferramenta — a
+própria falha é evidência de que a URL serviu um binário grande de
+verdade, não uma página de erro). Isso é exatamente o padrão que
+`SPEC.md` §10 já cogitava ("Publica ZIP diário com muitos PDFs") — a
+mudança é que a *descoberta* do arquivo do dia não precisa de Playwright
+nenhum: é só montar a URL com a data de hoje. Isso rebaixa a estratégia
+de "Playwright" (seção 3 original) para **URL previsível de arquivo**, a
+segunda opção mais preferida da hierarquia de `CLAUDE.md` — risco cai de
+**Alto** para **Baixo-médio**.
+
+**TRF1ATA (portal `TRF1ATA`, adapter `trf1_atas`):** `WebFetch` em
+`https://www.trf1.jus.br/trf1/ataas/atas` (a URL exata que `portals.yaml`
+já define) mostrou uma página HTML estática de verdade, sem necessidade
+de JS — mas o conteúdo listado é uma tabela fixa de ~30 documentos
+`.doc`, todos de **2009 e 2010** (ex.: `Ata01-ProcessoDigital_30072009.doc`,
+`Ata30-ProcessoDigital_30032010.doc`), sem paginação, busca ou qualquer
+sinal de que a página é atualizada. Parece ser o arquivo morto de um
+projeto institucional antigo ("Processo Digital"), não uma lista viva de
+atas de distribuição diárias. Isso **não é** uma questão de Playwright vs.
+HTML estático (a página já é HTML estático, fácil de raspar) — é uma
+dúvida mais básica: **é a URL certa?** Uma pista encontrada por busca:
+outras seções judiciárias do TRF1 têm páginas próprias de "atas e pautas"
+(ex.: `trf1.jus.br/sjrr/atas-de-julgamento/atas-e-pautas`, para a Seção
+Judiciária de Roraima), sugerindo que "atas de distribuição" reais podem
+viver espalhadas por seção, não numa página institucional central. Risco
+técnico de scraping continua **Médio** (HTML estático, se a URL certa for
+achada), mas o risco de **escopo/URL errada** é novo e mais sério — ver
+pergunta 3 na seção 9.7.
+
+**STFDJE (portal `STFDJE`, adapter `stf_dje`):** `WebFetch` em
+`https://digital.stf.jus.br/publico/publicacoes` e em
+`https://digital.stf.jus.br/publico/publicacao/463139` falhou nas duas
+vezes com o erro `unable to verify the first certificate` — não consegui
+nem confirmar se o HTML é SSR ou SPA. O mesmo aconteceu com o sistema
+legado (`https://portal.stf.jus.br/servicos/dje/listarDiarioJustica.asp`).
+Busca por fora confirma que sites `.jus.br` que usam certificado
+ICP-Brasil às vezes não são reconhecidos por cadeias de confiança padrão
+fora do ambiente configurado para isso — mas isso é um padrão conhecido
+em geral, não uma confirmação de que o `httpx`/`certifi` do ambiente do
+executor (que roda localmente, não pela minha ferramenta de busca) vai
+falhar do mesmo jeito. Ou seja: **não sei se este é um problema real do
+ambiente de produção ou só uma limitação da minha ferramenta de
+investigação** — fica marcado como algo a confirmar logo no primeiro
+passo da fase (9.2 abaixo), porque, se for real, contornar checagem de
+certificado (`verify=False` ou equivalente) é uma decisão de segurança
+que precisa aprovação explícita, não algo para o executor decidir
+sozinho. Fora esse obstáculo, nada mudou da análise original: nenhuma
+evidência de API JSON pública foi encontrada por busca, e o front
+(`digital.stf.jus.br`) segue parecendo um SPA moderno. Risco continua
+**Alto**.
+
+#### 9.2.2 Tabela de risco atualizada
+
+| Código | Estratégia (seção 3, original) | Estratégia (hoje, 9.2.1) | Risco (hoje) | O que mudou |
+|---|---|---|---|---|
+| **STJ** | Playwright + ZIP | URL previsível de arquivo (ZIP por data) | **Baixo-médio** (era Alto) | Padrão de URL do ZIP diário confirmado por download real; não precisa de browser para descobrir o arquivo. |
+| **TRF1ATA** | HTML estático a validar | HTML estático confirmado, **mas URL parece ser um arquivo morto (2009-2010)** | **Médio-alto** (risco de escopo, não de scraping) | A raspagem em si seria fácil; o problema é não haver evidência de que aquela página ainda é "atas de distribuição" vivas. |
+| **STFDJE** | Playwright | Playwright (mantido) + risco novo de certificado SSL | **Alto** | Confirma SPA sem API pública encontrada; acrescenta um obstáculo técnico não previsto (SSL) a confirmar antes de investir tempo. |
+
+### Fase 23 — Habilita STJ (adapter `stj`, URL previsível de ZIP diário)
+Rodar `uv run python scripts/inspect.py
+"https://processo.stj.jus.br/docs_internet/processo/dje/zip/stj_dje_<hoje em AAAAMMDD>.zip"`
+para confirmar status 200, `content-type` de arquivo binário (zip/
+octet-stream) e tamanho (`content-length`) num dia útil; testar também
+um fim de semana/feriado (deve dar 404 ou similar — a ausência de edição
+não pode ser tratada como erro fatal). Rodar `scripts/inspect.py` também
+em `https://processo.stj.jus.br/processo/dj/init` (página de referência
+para `page_url`) para confirmar que segue no ar e sem exigir JS. Timebox
+~20 min; se o padrão de URL não bater, parar e reportar ao usuário (regra
+das Fases 8/19-21) em vez de partir para Playwright.
+
+Implementar `app/scrapers/stj.py`: **decisão de design assumida por
+padrão** (ver pergunta 2, seção 9.7) — tratar o ZIP do dia como **UMA
+única `Publication`** (título `"DJe do STJ — {data}"`, `page_url` =
+página de consulta do DJe, `file_urls = [url_do_zip]`), em vez de abrir o
+ZIP e listar cada PDF interno como item separado. Isso reaproveita 100%
+da arquitetura existente (downloader baixa o ZIP como um arquivo comum;
+mailer aplica a regra dos 15MB a ele como a qualquer outro arquivo — como
+o ZIP tende a ser bem maior que 15MB, o caminho mais provável é ele
+**sempre** virar link com aviso de tamanho no corpo do e-mail, nunca
+anexo, o que já é um comportamento válido e testado do mailer, R2). É
+mais simples que a leitura literal de `SPEC.md` §10 ("listar o conteúdo
+do ZIP"), então fica marcado como decisão a confirmar, não assumida
+silenciosamente.
+
+`fetch()` aceita um `reference_date` opcional (mesmo padrão de `now` em
+`app.mailer.build_email`, para testes determinísticos); sem ele, usa a
+data de hoje em `America/Sao_Paulo`. Faz um `HEAD` (não `GET` — minimiza
+tráfego, `CLAUDE.md`: "mínimo de requests") na URL do ZIP do dia; se
+`200`, monta a `Publication`; se `404` (dia sem edição — fim de semana,
+feriado, ou o DJe daquele dia ainda não foi publicado, já que costuma
+sair só à noite), retorna lista vazia sem erro. **Nota sobre fixture:**
+diferente dos outros adapters, aqui não há um HTML/JSON de conteúdo para
+salvar como fixture — a única variável é a data. O teste
+(`tests/test_scrapers_stj.py`) cobre a construção determinística da
+`Publication` a partir de uma `reference_date` fixa, sem rede (chama o
+método de montagem diretamente, não `fetch()`), e é a exceção documentada
+à regra "fixture obrigatória" de `CLAUDE.md` — não por preguiça, mas
+porque não existe HTML/JSON remoto a fixar aqui. Atualizar `portals.yaml`:
+`STJ` → `adapter: stj`, `engine: http` (troca de `playwright`);
+`enabled` continua `false` até o usuário revisar o resultado do
+`--dry-run` (mesmo padrão cauteloso das Fases 19-21 antes de ligar em
+produção).
+
+**Aceite:** `uv run pytest tests/test_scrapers_stj.py -q` → `1 passed`
+(sem rede); `uv run python -m app.cli run --portal STJ --dry-run` roda
+sem traceback e ou imprime a publicação do ZIP do dia (dia útil, após a
+publicação noturna) ou confirma explicitamente "nenhuma edição disponível
+hoje" (fim de semana/antes da publicação) — as duas saídas são aceitáveis,
+o critério é não haver exceção não tratada.
+**Commit:** "feat: habilita STJ (URL previsível de ZIP diário do DJe)"
+
+### Fase 24 — TRF1ATA: investigar se a URL atual ainda é válida
+**Esta fase é de investigação primeiro, código depois** — o achado da
+seção 9.2.1 (URL aponta para um arquivo morto de 2009-2010) precisa ser
+resolvido antes de escrever qualquer adapter. Rodar
+`uv run python scripts/inspect.py "https://www.trf1.jus.br/trf1/ataas/atas"`
+para confirmar (ou refutar) o achado de hoje. Se confirmado que o
+conteúdo é mesmo só o arquivo morto, procurar por ~20 min (busca no
+próprio site do TRF1, ex. campo de busca institucional, ou variações de
+URL por seção judiciária como `/sjdf/atas-de-julgamento/atas-e-pautas`,
+inspirado no padrão real achado para `/sjrr/`) uma página viva de atas de
+distribuição da Seção Judiciária do DF (relevante para o escopo deste
+projeto, focado em DF/federal — ver `portal_code` `JFDFDJN` na seção 8).
+
+**Ramo A — fonte viva encontrada dentro do timebox:** implementar
+`app/scrapers/trf1_atas.py` seguindo a estratégia que o `inspect.py`
+confirmar (provavelmente HTML estático, mesma família de portais
+institucionais do TRF1 já bem-sucedida nas Fases 19-21 para o conteúdo
+processual). Fixture + teste sem rede, como todo adapter. Atualizar
+`portals.yaml` (`engine`, `adapter` se mudar, `enabled` continua `false`
+até revisão).
+**Aceite (ramo A):** `uv run pytest tests/test_scrapers_trf1_atas.py -q`
+→ `1 passed`; `uv run python -m app.cli run --portal TRF1ATA --dry-run`
+imprime atas reais e recentes (não as de 2009-2010).
+**Commit (ramo A):** "feat: habilita TRF1ATA (fonte viva de atas de distribuição)"
+
+**Ramo B — não encontrada dentro do timebox:** nenhum código novo.
+Atualizar o comentário de `TRF1ATA` em `portals.yaml` documentando o
+achado (URL atual é um arquivo morto de 2009-2010) e continuar
+`enabled: false`. Esta fase para aqui e devolve a decisão ao usuário (
+pergunta 3, seção 9.7) em vez de escrever um adapter Playwright por conta
+própria só para raspar um arquivo morto.
+**Aceite (ramo B):** nenhum teste novo esperado; `git log -1 --format=%s`
+mostra o commit de documentação abaixo.
+**Commit (ramo B):** "docs: registra que a URL de TRF1ATA aponta para arquivo morto (2009-2010)"
+
+### Fase 25 — STFDJE: confirmar SSL/estratégia e, se necessário, Playwright
+Primeiro passo, antes de qualquer outra investigação: rodar
+`uv run python scripts/inspect.py "https://digital.stf.jus.br/publico/publicacoes"`.
+
+**Se `scripts/inspect.py` falhar com erro de certificado/SSL** (o mesmo
+problema que o `WebFetch` teve hoje, seção 9.2.1): **parar e reportar ao
+usuário** antes de qualquer outra ação — em especial, não desativar a
+verificação de certificado (`verify=False` no `httpx`, ou equivalente)
+por conta própria; é uma decisão de segurança que precisa aprovação
+explícita (ver pergunta 4, seção 9.7). Esta fase termina aqui nesse
+cenário, sem código novo.
+
+**Se `scripts/inspect.py` funcionar normalmente:** confirmar se a URL
+devolve HTML com conteúdo real (SSR) ou uma casca vazia de SPA (o
+esperado, pela análise da seção 9.2.1). Timebox ~20 min olhando por
+qualquer chamada de API JSON referenciada no HTML/JS servido (mesmo
+processo das Fases 8/19-21). Se nenhuma API for encontrada, **instalar o
+Playwright de verdade pela primeira vez neste projeto**:
+`uv run playwright install --with-deps chromium`. Implementar
+`app/scrapers/stf_dje.py`: `fetch()` usa Playwright para navegar até a
+página, esperar a lista de publicações renderizar, e capturar o HTML
+renderizado; um método `_parse()` separado (mesmo padrão de todo adapter
+já existente) usa `selectolax` sobre esse HTML já renderizado — o teste
+(`tests/fixtures/stf_dje_rendered.html` + `tests/test_scrapers_stf_dje.py`)
+chama `_parse()` direto, sem precisar do Playwright instalado para rodar
+a suíte. Atualizar `Dockerfile` para instalar o browser também na imagem
+de produção (`RUN uv run playwright install --with-deps chromium` — ou
+equivalente, ver documentação do Playwright para imagens Debian slim),
+já que a imagem atual nunca precisou disso até agora. Atualizar
+`portals.yaml`: `STFDJE` → `engine: playwright` (mantido), `enabled`
+continua `false` até revisão.
+
+**Aceite (SSL falhou):** nenhum código novo; a fase produz só um relato
+ao usuário (fora do PLANO.md, na conversa) — sem commit de código.
+**Aceite (SSL funcionou, Playwright necessário):**
+`uv run playwright install --with-deps chromium` termina sem erro;
+`uv run pytest tests/test_scrapers_stf_dje.py -q` → `1 passed` (sem
+navegador, usa a fixture já renderizada); `uv run python -m app.cli run
+--portal STFDJE --dry-run` (com o navegador instalado) imprime
+publicações reais; `docker compose up --build -d && curl -s
+http://localhost:8000/health` → `{"status":"ok","db":true,...}` (confirma
+que a imagem com Playwright ainda builda e sobe).
+**Commit:** "feat: habilita STFDJE via Playwright (primeiro portal com browser real)"
+
+### 9.3 Pendência 2 — cinco portais de alto volume nunca disparados de verdade em produção
+
+`STJDJN` (~10 mil/dia), `TJDFTDJN` (~10 mil/dia), `TRFDJN` (~32 mil/dia,
+o maior de todos), `TSTDJN` (~12 mil/dia) e `TRT10DJN` (~5,8 mil/dia, o
+único sem estar capado pelo teto de páginas na prática, porque seu volume
+diário já fica abaixo do teto) usam todos `comunica_pje` e estão
+`enabled: true` — mas nunca foram rodados sem `--dry-run` de verdade.
+`app/scrapers/comunica_pje.py` tem `MAX_PAGES = 10` e `ITEMS_PER_PAGE =
+1000`, ou seja, cada execução processa no máximo 10.000 itens por portal
+por ciclo. Isso não é um bug — é uma pendência de produto/operação, como
+o `README.md` e o `DEPLOY.md` já registram — mas ela nunca foi resolvida
+de fato, e a investigação de hoje encontrou um segundo problema
+relacionado, mais sério que "e-mail grande".
+
+#### 9.3.1 O problema do primeiro disparo ("e-mail gigante")
+
+Como `seen_hashes` está vazio para esses 5 portais, a primeira execução
+real trataria **tudo** como novo — de ~5,8 mil a ~32 mil publicações num
+único e-mail. Analisando as opções levantadas:
+
+- **(a) Aceitar o e-mail grande na primeira vez.** Simples, zero código
+  novo, mas arriscado: um e-mail HTML com dezenas de milhares de `<li>`
+  pode estourar limite de tamanho de mensagem do MailGrid (ou do cliente
+  de e-mail do destinatário), e não há como saber isso sem testar.
+- **(b) Carga inicial manual controlada, portal por portal, fora do
+  horário de pico**, antes de deixar o scheduler assumir aquele portal.
+  Não exige código novo — só disciplina operacional, reaproveitando o
+  `--force`/`run --portal CODE` que já existem. Permite observar o
+  resultado real (o e-mail chegou? o MailGrid aceitou?) antes de
+  comprometer o próximo ciclo automático a fazer a mesma coisa sem
+  supervisão.
+- **(c) Aumentar `MAX_PAGES` ou mudar a paginação.** Não resolve o
+  problema do primeiro disparo (só aumentaria ainda mais o volume do
+  primeiro e-mail) — é uma resposta ao problema *diferente* da seção
+  9.3.2 abaixo, não deste.
+- **(d) Outra ideia:** poderia se cogitar um "modo de carga inicial" que
+  grava os hashes em `seen_hashes` sem enviar e-mail (popular a memória
+  de dedupe silenciosamente, como se o portal já estivesse rodando há
+  dias) — mas isso violaria a regra de nunca perder uma publicação (o
+  usuário nunca veria essas publicações nem no primeiro e-mail nem
+  depois, já que ficariam marcadas como "já vistas"). Descartado por
+  contrariar `CLAUDE.md`/`SPEC.md` (nenhuma publicação pode ser
+  silenciosamente descartada).
+
+**Minha recomendação:** opção (b). É a mais segura (dá para observar e
+abortar antes de comprometer o scheduler automático) e não exige nenhum
+código novo — só um roteiro operacional, que a Fase 27 documenta e deixa
+registrado em `DEPLOY.md`. Fica como pergunta ao usuário (seção 9.7,
+pergunta 1) porque, mesmo sendo minha recomendação, é uma decisão de
+produto/operação, não uma correção técnica óbvia.
+
+#### 9.3.2 Achado novo: risco de perda estrutural por causa do teto `MAX_PAGES`
+
+Lendo `app/scrapers/comunica_pje.py` com atenção: `fetch()` pagina pela
+API filtrando por `dataDisponibilizacaoInicio`/`Fim` = hoje, para de
+paginar quando uma página devolve menos que `ITEMS_PER_PAGE` itens, e tem
+um teto de `MAX_PAGES = 10` (10.000 itens) por execução. Isso é
+inofensivo para portais com menos de 10 mil publicações/dia (a paginação
+sempre alcança o fim antes do teto). Mas `TRFDJN` já tem ~32 mil/dia
+confirmadas (`README.md`) — **mais que o triplo do teto**.
+
+O problema em potencial: `SCAN_CRON` roda de hora em hora (padrão), e
+cada execução volta a paginar **a partir da página 1** do dia corrente.
+Se a API devolver os itens do dia sempre na mesma ordem (por exemplo, por
+ID crescente, mais antigos primeiro) e a lista só cresce ao longo do dia,
+então toda execução do dia vai ficar re-lendo os mesmos primeiros 10.000
+itens (que o dedupe descarta rapidamente, sem custo de e-mail, mas com
+custo de requisições) — e os itens que existem **além** da posição
+10.000 no dia (para `TRFDJN`, isso pode ser a maioria: ~22 mil de ~32
+mil) **nunca seriam alcançados**, em nenhuma execução daquele dia,
+porque o teto nunca "avança" — cada execução recomeça do zero. Isso seria
+uma perda **estrutural e recorrente**, não um problema de "primeiro
+e-mail grande" — publicações reais do DJEN, todo santo dia, nunca
+chegando ao usuário, silenciosamente.
+
+Isso é uma **hipótese a confirmar**, não um fato — não tenho como rodar
+o adapter real para testar a ordenação da API. A forma mais barata de
+confirmar (ou refutar) sem escrever código novo: comparar os hashes
+devolvidos na página 10 da consulta `siglaTribunal=TRF1` em dois horários
+bem espaçados do mesmo dia (ex.: 9h e 17h). Se os hashes da página 10
+mudarem entre as duas capturas (itens novos aparecendo nas últimas
+páginas à medida que o dia avança), a ordenação não é estável por
+posição fixa — o teto só atrasa a entrega de alguns itens para o ciclo
+seguinte dentro do mesmo dia, sem perda. Se os hashes da página 10
+continuarem sendo os mesmos nas duas capturas (mesmo com o total do dia
+claramente maior), a perda estrutural está confirmada.
+
+### Fase 26 — Investigar se `MAX_PAGES=10` causa perda estrutural em TRFDJN
+Rodar, em dois horários bem espaçados do mesmo dia útil (ex.: 9h e 17h):
+`uv run python -m app.cli run --portal TRFDJN --dry-run` (ou
+`scripts/inspect.py` direto na API, página 10) e comparar os hashes
+(campo `hash` de cada item) retornados na página 10 das duas capturas.
+
+**Se os hashes da página 10 mudarem** entre as duas capturas (evidência
+de que a ordenação não é por posição fixa e itens novos aparecem nas
+páginas finais ao longo do dia): sem perda estrutural confirmada. Nenhuma
+mudança de código — só documentar a confirmação como comentário na
+docstring de `app/scrapers/comunica_pje.py`, perto de `MAX_PAGES`.
+**Aceite:** `uv run pytest -q` → todos verdes (nada quebrou); a docstring
+de `comunica_pje.py` passa a citar essa confirmação, com a data do teste.
+**Commit:** "docs: confirma que MAX_PAGES não causa perda estrutural em TRFDJN"
+
+**Se os hashes da página 10 forem os mesmos nas duas capturas** (evidência
+de perda estrutural real): **parar e reportar ao usuário** — não decidir
+sozinho entre aumentar `MAX_PAGES` (mais requisições, mais tempo de
+ciclo, ainda pode não bastar para 32 mil/dia), implementar paginação por
+cursor/ID em vez de recomeçar do zero a cada execução (mudança de código
+mais profunda no adapter compartilhado por 5 portais), ou aceitar a perda
+parcial como um limite conhecido do MVP. Ver pergunta 2, seção 9.7. Esta
+fase termina aqui nesse cenário, sem código novo além do relato.
+**Aceite (perda confirmada):** nenhum teste novo esperado — a fase produz
+um relato ao usuário com a evidência (hashes comparados) em vez de commit
+de correção.
+
+### Fase 27 — Carga inicial controlada dos 5 portais de alto volume
+Só depois da Fase 26 concluída (nenhum sentido em popular `seen_hashes`
+de um portal com paginação estruturalmente incompleta sem essa decisão
+tomada primeiro). Roteiro operacional, sem código novo, assumindo a
+recomendação (b) da seção 9.3.1 (a confirmar com o usuário, pergunta 1,
+seção 9.7):
+
+1. Antes de expor os 5 portais ao scheduler automático (seja localmente
+   ou já na VM, ver seção 9.4), confirmar que estão `enabled: true` em
+   `portals.yaml` mas rodar o primeiro ciclo de cada um **manualmente**,
+   um de cada vez, fora do horário de pico: `uv run python -m app.cli run
+   --portal CODE` (ou, na VM, `docker compose exec app uv run python -m
+   app.cli run --portal CODE`, ver `DEPLOY.md`).
+2. Observar se o e-mail chega e é aceito pelo MailGrid sem erro/rejeição
+   por tamanho. Se for rejeitado, é um sinal de que a opção (a) da seção
+   9.3.1 (aceitar sem controle) teria falhado — evidência a favor de (b).
+3. Repetir para os 5 portais, um de cada vez (podem ser dias diferentes,
+   se o volume individual já se mostrar grande demais para conforto).
+   Depois do primeiro disparo bem-sucedido de cada portal,
+   `seen_hashes` já estará populada para ele — os próximos ciclos do
+   scheduler (automáticos) só verão o delta do dia a partir daí, um
+   volume ordens de magnitude menor.
+4. Atualizar `DEPLOY.md` seção 9 ("Pendências conhecidas"): hoje ela só
+   cita `STJDJN` e `TJDFTDJN` (desatualizado — são 5 portais de alto
+   volume hoje, não 2, ver `README.md`); atualizar a lista e referenciar
+   este roteiro.
+
+**Aceite:** para cada um dos 5 portais, um e-mail real chega e é aceito
+pelo MailGrid (checkpoint manual do usuário, mesmo padrão da Fase 13 —
+não automatizável); `DEPLOY.md` atualizado citando os 5 portais e o
+roteiro de carga inicial.
+**Commit:** "docs: roteiro de carga inicial para portais de alto volume + atualiza DEPLOY.md"
+
+### 9.4 Pendência 3 — deploy na VM Oracle A1 ainda não aconteceu
+
+`DEPLOY.md` já existe, pronto, com passo a passo completo (instalação de
+Docker, clone, `.env`, `docker compose up --build -d`, túnel SSH,
+atualização) — não é código faltando, é execução pendente. Conferido
+agora, lendo o histórico do git deste repositório: `refs/heads/main`
+aponta para o commit `0abf42c` (o mais recente, "docs: atualiza README.md
+com Fases 15-22"), enquanto `refs/remotes/origin/main` ainda aponta para
+`005f9c2e2a` ("docs: atualiza README.md com Fases 11-14 e feature
+--force") — **cerca de 10 commits committed localmente e nunca
+publicados** (do job de retenção, Fase 15, até o fechamento da expansão
+DJEN, Fase 22, incluindo TRFDJN/TSTDJN/TRT10DJN). Isso confirma
+diretamente o item 0 do próprio `DEPLOY.md` ("`git push origin main` já
+feito... não deste ambiente") como uma pendência real, não hipotética.
+Nota: esta checagem foi feita comparando as referências locais do git,
+não um `git fetch` ao vivo — o passo abaixo pede para confirmar com
+`git status -sb` antes de agir, já que o estado remoto pode ter mudado
+desde a última sincronização local.
+
+### Fase 28 — Publicar o repositório e executar o deploy real (operacional, sem código novo)
+Esta fase não segue o template "código + commit" das demais — é checklist
+de execução, não desenvolvimento. Passos, na ordem:
+
+1. No terminal local (não neste ambiente, que não tem credenciais do
+   GitHub): `git status -sb` para confirmar quantos commits estão à
+   frente de `origin/main`; `git push origin main`.
+2. Seguir `DEPLOY.md` do início ao fim (seções 0 a 8) — já cobre
+   instalação de Docker, clone, `.env`, subida dos containers e
+   confirmação de `/health` e do scheduler. Não duplicado aqui.
+3. Só depois do deploy básico confirmado (containers de pé, `/health`
+   ok, scheduler com os jobs agendados), aplicar o roteiro da Fase 27
+   (carga inicial controlada) antes de considerar os 5 portais de alto
+   volume "em produção" de fato — a seção 9 do `DEPLOY.md`, já
+   atualizada pela Fase 27, cobre isso.
+
+**Aceite:** `git log --oneline -1` no GitHub (via web ou `gh`) mostra o
+commit mais recente deste repositório; na VM,
+`curl -s http://localhost:8000/health` → `{"status":"ok","db":true,...}`;
+`docker compose logs app --tail 50 | grep -i scheduler` mostra os jobs
+`scan` e `retention` agendados.
+**Sem commit de código** — esta fase é sobre publicar e operar commits já
+existentes, não criar um novo.
+
+### 9.5 Ligação com `SPEC.md` §11 (critérios de aceite do MVP)
+
+Os critérios 4 e 5 de `SPEC.md` §11 ("um ciclo real entrega e-mail... e
+grava sent_at" / "segundo ciclo imediato não reenvia nada") foram
+validados ao vivo apenas para 3 dos 8 portais hoje habilitados (TST, TCU,
+TCDF — ver `README.md`, seção "Testes reais já rodados"). Os outros 5
+(exatamente os da seção 9.3: STJDJN, TJDFTDJN, TRFDJN, TSTDJN, TRT10DJN)
+seguem pendentes desses dois critérios — não é uma pendência nova, é a
+mesma pendência da seção 9.3 vista pela ótica do checklist original do
+MVP. A Fase 27 fecha essa lacuna para os 5 de uma vez.
+
+### 9.6 Outras divergências encontradas (sem fase própria — cosméticas)
+
+- **Nomes de arquivo de teste divergem do plano original:** a seção 1
+  (árvore de arquivos) e a Fase 17 citam `tests/test_api.py`; o arquivo
+  real chama-se `tests/test_routers.py`. Também existem `tests/test_cli.py`
+  e `tests/test_scheduler.py`, não previstos na árvore original. Isso já
+  é esperado e consistente com o aviso que o próprio `README.md` faz
+  ("o código é a fonte de verdade") — não há ação a tomar, só registro.
+- **`app/scrapers/tjdft.py` nunca existiu** (a Fase 10 real reaproveitou
+  `comunica_pje`) — já documentado no `README.md` ("Inconsistência que
+  vale registrar") e na seção 8 deste plano; sem ação nova aqui.
+
+### 9.7 Perguntas para o usuário
+
+1. **Rollout dos 5 portais de alto volume (seção 9.3.1):** confirma a
+   recomendação — opção (b), carga inicial manual controlada por portal,
+   fora do horário de pico, antes do scheduler assumir — ou prefere (a)
+   aceitar o e-mail grande na primeira vez mesmo assim, ou outra
+   abordagem?
+2. **Se a Fase 26 confirmar perda estrutural em TRFDJN** (itens além da
+   posição 10.000 do dia nunca alcançados): aumentar `MAX_PAGES` (mais
+   requisições/ciclo mais lento, pode não bastar sozinho para 32 mil/dia),
+   implementar paginação por cursor/ID entre execuções (mudança mais
+   profunda em `comunica_pje.py`, adapter compartilhado por 5 portais), ou
+   aceitar a perda parcial como limitação conhecida do MVP por enquanto?
+   Não tenho uma recomendação técnica óbvia sem antes ver a confirmação
+   real da Fase 26 — é decisão de produto quando/se o problema se
+   confirmar.
+3. **TRF1ATA (seção 9.2.1, Fase 24):** a URL que `portals.yaml` já define
+   aponta para um arquivo morto de 2009-2010. Se a Fase 24 não achar uma
+   página viva de atas de distribuição em ~20 min de busca (ramo B),
+   prefere: (a) deixar `TRF1ATA` documentado como `enabled: false`
+   indefinidamente, sem mais investimento; (b) que eu tente uma nova
+   rodada de investigação por fora antes da próxima sessão; ou (c)
+   remover `TRF1ATA` de `portals.yaml` de vez, por não haver evidência de
+   que a fonte pretendida ainda existe? Minha recomendação, dado o achado
+   de hoje, é (a) — não vejo motivo para insistir sem uma pista concreta
+   de onde a fonte viva estaria.
+4. **STFDJE (seção 9.2.1, Fase 25):** se `scripts/inspect.py` confirmar o
+   mesmo erro de certificado que meu `WebFetch` teve hoje contra
+   `digital.stf.jus.br`, como prefere resolver — instalar a cadeia
+   ICP-Brasil no ambiente (mais correto, mais trabalho), desativar a
+   verificação de certificado só para esse portal (mais rápido, risco de
+   segurança a avaliar), ou pausar `STFDJE` até decidir? Não tenho
+   recomendação padrão aqui porque envolve trade-off de segurança, não só
+   engenharia.
+5. **STJ (seção 9.2.1, Fase 23):** confirma tratar o ZIP diário do DJe
+   como **um único arquivo anexado/linkado por publicação** (minha
+   recomendação, mais simples, reaproveita a arquitetura existente sem
+   mudança), em vez de abrir o ZIP e listar cada PDF interno como item
+   separado (mais fiel à sugestão original de `SPEC.md` §10, mais código:
+   extrair, nomear e decidir dedupe/anexo por PDF individual dentro do
+   ZIP)?
+
+Se não houver objeção às recomendações (1 = opção b, 3 = opção a, 5 =
+manter zip único), o plano segue com elas; as perguntas 2 e 4 dependem de
+confirmação técnica que ainda não existe (Fases 26 e 25, respectivamente)
+e não têm uma leitura padrão a assumir.
