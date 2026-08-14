@@ -1,4 +1,10 @@
 portals:
+  # Conteúdo já coberto por TRFDJN via DJEN (comunica_pje, sigla_tribunal:
+  # TRF1) — a Fase 19 do PLANO.md confirmou que uma única siglaTribunal=TRF1
+  # cobre 1º e 2º grau (ver orgaoJulgador com "Vara Federal"/"Seção
+  # Judiciária" e "Gab. NN - DESEMBARGADOR FEDERAL"/"Turma Recursal" nos
+  # mesmos resultados). Habilitar os dois duplicaria e-mail (mesma
+  # publicação, portal_code diferente → hash diferente no dedupe).
   - code: JFDFDJN
     name: "Diário da Justiça Federal do DF"
     url: "https://trf1.jus.br/trf1/biblioteca/diarios-da-justica"
@@ -65,10 +71,10 @@ portals:
   - code: TRFDJN
     name: "TRF 1ª Região"
     url: "https://trf1.jus.br/trf1/biblioteca/diarios-da-justica"
-    adapter: trf1_biblioteca
-    engine: playwright
-    params: { secao: "TRF1" }
-    enabled: false
+    adapter: comunica_pje
+    engine: http
+    params: { sigla_tribunal: TRF1 }
+    enabled: true
   - code: TRF1ATA
     name: "TRF1 Atas de Distribuição"
     url: "https://www.trf1.jus.br/trf1/ataas/atas"
