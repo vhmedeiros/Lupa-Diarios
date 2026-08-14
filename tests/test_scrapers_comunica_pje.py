@@ -8,6 +8,7 @@ from app.scrapers.comunica_pje import ComunicaPjeScraper
 FIXTURE_PATH = Path(__file__).parent / "fixtures" / "comunica_pje_stj.json"
 FIXTURE_PATH_TRF1 = Path(__file__).parent / "fixtures" / "comunica_pje_trf1.json"
 FIXTURE_PATH_TST = Path(__file__).parent / "fixtures" / "comunica_pje_tst.json"
+FIXTURE_PATH_TRT10 = Path(__file__).parent / "fixtures" / "comunica_pje_trt10.json"
 
 
 def test_parse_page_returns_publications() -> None:
@@ -72,6 +73,29 @@ def test_parse_page_returns_publications_tst() -> None:
     first = publications[0]
     assert first.portal_code == "TSTDJN"
     assert first.portal_name == "TST no DJEN (Comunica PJe)"
+    assert first.title
+    assert first.page_url.startswith("https://comunicaapi.pje.jus.br/api/v1/comunicacao/")
+    assert isinstance(first.published_at, dt.date)
+    assert first.summary
+    assert first.file_urls == []
+
+
+def test_parse_page_returns_publications_trt10() -> None:
+    json_text = FIXTURE_PATH_TRT10.read_text(encoding="utf-8")
+    scraper = ComunicaPjeScraper(
+        url="https://comunica.pje.jus.br/consulta?siglaTribunal=TRT10&meio=D",
+        portal_code="TRT10DJN",
+        portal_name="TRT 10ª Região no DJEN (Comunica PJe)",
+        params={"sigla_tribunal": "TRT10"},
+    )
+
+    publications = scraper._parse(json_text)
+
+    assert len(publications) > 0
+
+    first = publications[0]
+    assert first.portal_code == "TRT10DJN"
+    assert first.portal_name == "TRT 10ª Região no DJEN (Comunica PJe)"
     assert first.title
     assert first.page_url.startswith("https://comunicaapi.pje.jus.br/api/v1/comunicacao/")
     assert isinstance(first.published_at, dt.date)

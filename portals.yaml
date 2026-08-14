@@ -56,12 +56,12 @@ portals:
     params: { sigla_tribunal: TST }
     enabled: true
   - code: TRT10DJN
-    name: "TRT 10ª Região"
-    url: "https://dejt.jt.jus.br/dejt/f/n/diariocon"
-    adapter: dejt
-    engine: playwright
-    params: { tribunal: "TRT da 10ª Região" }
-    enabled: false
+    name: "TRT 10ª Região no DJEN (Comunica PJe)"
+    url: "https://comunica.pje.jus.br/consulta?siglaTribunal=TRT10&meio=D"
+    adapter: comunica_pje
+    engine: http
+    params: { sigla_tribunal: TRT10 }
+    enabled: true
   - code: TJDFTDJN
     name: "TJDFT no DJEN (Comunica PJe)"
     url: "https://comunica.pje.jus.br/consulta?siglaTribunal=TJDFT&meio=D"

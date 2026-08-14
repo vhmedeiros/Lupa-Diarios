@@ -1,0 +1,531 @@
+{
+  "status": "success",
+  "message": "Sucesso",
+  "count": 5805,
+  "items": [
+    {
+      "id": 696385486,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TRT10",
+      "tipoComunicacao": "Intimação",
+      "nomeOrgao": "15ª Vara do Trabalho de Brasília - DF",
+      "idOrgao": 46614,
+      "texto": "PODER JUDICIÁRIO  JUSTIÇA DO TRABALHO  TRIBUNAL REGIONAL DO TRABALHO DA 10ª REGIÃO  15ª Vara do Trabalho de Brasília - DF   ATOrd 0000025-61.2023.5.10.0015  RECLAMANTE: CARLA EMANUELA DA SILVA GONCALVES  RECLAMADO: CONTAX S.A. - EM RECUPERACAO JUDICIAL EM RECUPERACAO JUDICIAL, TIM S A  INTIMAÇÃO  Fica V. Sa. intimado para tomar ciência da Sentença ID 64af535 proferida nos autos, cujo dispositivo consta a seguir:  III - DISPOSITIVO Pelo exposto, JULGO PROCEDENTES EM PARTE os EMBARGOS À EXECUÇÃO opostos por CONTAX S.A. - EM RECUPERACAO JUDICIAL para determinar a readequação dos cálculos previdenciários, observando-se o regime de desoneração da folha de pagamento (cota patronal) no período da condenação, mantendo-se os demais parâmetros de atualização e juros fixados no título executivo.  Custas processuais na execução pela executada, no valor de R$ 44,26, conforme art. 789-A, V, da CLT.  Observe-se a Secretaria no momento oportuno que se trata de execução em desfavor das empresas CONTAX S.A. - EM RECUPERACAO JUDICIAL EM RECUPERACAO JUDICIAL e TIM S A, sendo a última de forma subsidiária.  Intimem-se as partes.   DEBORA HERINGER MEGIORIN  Juíza do Trabalho Titular<br><br>Intimado(s) / Citado(s)<br> - TIM S A<br> - CONTAX S.A. - EM RECUPERACAO JUDICIAL EM RECUPERACAO JUDICIAL<br>",
+      "numero_processo": "00000256120235100015",
+      "meio": "D",
+      "link": "https://pje.trt10.jus.br/pjekz/validacao/26081222362802300000055667650?instancia=1",
+      "tipoDocumento": "Notificação",
+      "nomeClasse": "AçãO TRABALHISTA - RITO ORDINáRIO",
+      "codigoClasse": "985",
+      "numeroComunicacao": 1,
+      "ativo": true,
+      "hash": "1v3KLNz5Yo5Au8h7TK7q216kXgDenG",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Diário de Justiça Eletrônico Nacional",
+      "numeroprocessocommascara": "0000025-61.2023.5.10.0015",
+      "destinatarios": [
+        {
+          "nome": "CARLA EMANUELA DA SILVA GONCALVES",
+          "comunicacao_id": 696385486,
+          "polo": "A"
+        },
+        {
+          "nome": "CONTAX S.A. - EM RECUPERACAO JUDICIAL EM RECUPERACAO JUDICIAL",
+          "comunicacao_id": 696385486,
+          "polo": "P"
+        },
+        {
+          "nome": "TIM S A",
+          "comunicacao_id": 696385486,
+          "polo": "P"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1294895477,
+          "comunicacao_id": 696385486,
+          "advogado_id": 3093178,
+          "created_at": "2026-08-13T07:00:00",
+          "updated_at": "2026-08-13T07:00:00",
+          "advogado": {
+            "id": 3093178,
+            "nome": "CARLOS FERNANDO DE SIQUEIRA CASTRO",
+            "numero_oab": "20014",
+            "uf_oab": "DF"
+          }
+        },
+        {
+          "id": 1294895479,
+          "comunicacao_id": 696385486,
+          "advogado_id": 1381213,
+          "created_at": "2026-08-13T07:00:00",
+          "updated_at": "2026-08-13T07:00:00",
+          "advogado": {
+            "id": 1381213,
+            "nome": "FABIO LUIZ SEIXAS SOTERIO DE OLIVEIRA",
+            "numero_oab": "38557",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1294895478,
+          "comunicacao_id": 696385486,
+          "advogado_id": 1371416,
+          "created_at": "2026-08-13T07:00:00",
+          "updated_at": "2026-08-13T07:00:00",
+          "advogado": {
+            "id": 1371416,
+            "nome": "GILIANE AGUINEL DE SOUSA",
+            "numero_oab": "143816",
+            "uf_oab": "RJ"
+          }
+        },
+        {
+          "id": 1294895476,
+          "comunicacao_id": 696385486,
+          "advogado_id": 3060844,
+          "created_at": "2026-08-13T07:00:00",
+          "updated_at": "2026-08-13T07:00:00",
+          "advogado": {
+            "id": 3060844,
+            "nome": "GUSTAVO REZENDE MITNE",
+            "numero_oab": "52997",
+            "uf_oab": "PR"
+          }
+        },
+        {
+          "id": 1294895480,
+          "comunicacao_id": 696385486,
+          "advogado_id": 1360903,
+          "created_at": "2026-08-13T07:00:00",
+          "updated_at": "2026-08-13T07:00:00",
+          "advogado": {
+            "id": 1360903,
+            "nome": "LEONARDO SANTINI ECHENIQUE",
+            "numero_oab": "249651",
+            "uf_oab": "SP"
+          }
+        },
+        {
+          "id": 1294895481,
+          "comunicacao_id": 696385486,
+          "advogado_id": 1360950,
+          "created_at": "2026-08-13T07:00:00",
+          "updated_at": "2026-08-13T07:00:00",
+          "advogado": {
+            "id": 1360950,
+            "nome": "DANIEL BATTIPAGLIA SGAI",
+            "numero_oab": "214918",
+            "uf_oab": "SP"
+          }
+        }
+      ]
+    },
+    {
+      "id": 696389871,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TRT10",
+      "tipoComunicacao": "Edital",
+      "nomeOrgao": "4ª Vara do Trabalho de Taguatinga - DF",
+      "idOrgao": 46600,
+      "texto": "PODER JUDICIÁRIO  JUSTIÇA DO TRABALHO  TRIBUNAL REGIONAL DO TRABALHO DA 10ª REGIÃO  4ª Vara do Trabalho de Taguatinga - DF   ATOrd 0001279-59.2024.5.10.0104  RECLAMANTE: LAYLA KARYNE SILVA NOGUEIRA  RECLAMADO: DROGARIA RABELO 1031 SN LTDA, XIMENES E OLIVEIRA FARMACOS E COSMETICOS SN LTDA, DROGARIA RABELO 1031 LTDA  EDITAL DE INTIMAÇÃO  -  DESPACHO O(A) Juiz(a) da 4ª Vara do Trabalho de Taguatinga - DF, no uso das atribuições que lhe confere a lei, torna público que, por se encontrar em lugar incerto e não sabido, pelo presente Edital, fica INTIMADO(A) XIMENES E OLIVEIRA FARMACOS E COSMETICOS SN LTDA para tomar ciência do(a) DESPACHO de ID. 45a7841 proferido(a) nos autos e a seguir transcrito(a):  \" DESPACHO Vistos os autos.  Elaborada a conta pela reclamante (ID. d9b6ef9), abro vista às reclamadas para impugnação fundamentada com a indicação dos itens e valores objeto da discordância, sob pena de preclusão (art. 879, § 2º da CLT) pelo prazo comum de 8 (oito) dias.  Intimem-se, sendo a 2ª reclamada por edital e as 1ª e 3ª reclamadas por e-Carta.  Decorrido os prazos sem manifestação, venham os autos conclusos para homologação da conta e instauração da execução.  No caso de impugnação, vista à parte contrária.  Prazo de 8 (oito) dias.  Após, à conclusão.  Publique-se.     BRASILIA/DF, 07 de agosto de 2026.  RICARDO MACHADO LOURENCO FILHO Juiz do Trabalho Substituto  \". O inteiro teor do aludido ato processual poderá ser obtido na Secretaria desta Vara do Trabalho, situada no endereço identificado no cabeçalho. E, para que chegue ao conhecimento do interessado, é passado o presente Edital, que será publicado no Diário Eletrônico da Justiça do Trabalho e afixado no local de costume, na sede desta Vara.  Assinado pelo(a) Servidor(a) da Secretaria da 4ª Vara, por ordem do(a) Juiz(a) do Trabalho.  BRASILIA/DF, 12 de agosto de 2026. IVANIO DANTAS DE OLIVEIRA, Assessor<br><br>Intimado(s) / Citado(s)<br> - XIMENES E OLIVEIRA FARMACOS E COSMETICOS SN LTDA<br>",
+      "numero_processo": "00012795920245100104",
+      "meio": "E",
+      "link": "https://pje.trt10.jus.br/pjekz/validacao/26081223411534600000055668193?instancia=1",
+      "tipoDocumento": "Edital",
+      "nomeClasse": "AçãO TRABALHISTA - RITO ORDINáRIO",
+      "codigoClasse": "985",
+      "numeroComunicacao": 1,
+      "ativo": true,
+      "hash": "on1OxBm7YEBdFlhKhpdaykR3revpEj",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Plataforma Nacional de Editais",
+      "numeroprocessocommascara": "0001279-59.2024.5.10.0104",
+      "destinatarios": [
+        {
+          "nome": "DROGARIA RABELO 1031 LTDA",
+          "comunicacao_id": 696389871,
+          "polo": "P"
+        },
+        {
+          "nome": "DROGARIA RABELO 1031 SN LTDA",
+          "comunicacao_id": 696389871,
+          "polo": "P"
+        },
+        {
+          "nome": "HEBER FELIPE BORGES DAS CHAGAS",
+          "comunicacao_id": 696389871,
+          "polo": "A"
+        },
+        {
+          "nome": "LAYLA KARYNE SILVA NOGUEIRA",
+          "comunicacao_id": 696389871,
+          "polo": "A"
+        },
+        {
+          "nome": "XIMENES E OLIVEIRA FARMACOS E COSMETICOS SN LTDA",
+          "comunicacao_id": 696389871,
+          "polo": "P"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1294909038,
+          "comunicacao_id": 696389871,
+          "advogado_id": 3674558,
+          "created_at": "2026-08-13T07:01:04",
+          "updated_at": "2026-08-13T07:01:04",
+          "advogado": {
+            "id": 3674558,
+            "nome": "KATRINNE MOURA RIBEIRO",
+            "numero_oab": "62245",
+            "uf_oab": "DF"
+          }
+        },
+        {
+          "id": 1294909037,
+          "comunicacao_id": 696389871,
+          "advogado_id": 1504601,
+          "created_at": "2026-08-13T07:01:04",
+          "updated_at": "2026-08-13T07:01:04",
+          "advogado": {
+            "id": 1504601,
+            "nome": "MARIA CRISTINA DA SILVA",
+            "numero_oab": "48917",
+            "uf_oab": "DF"
+          }
+        },
+        {
+          "id": 1294909043,
+          "comunicacao_id": 696389871,
+          "advogado_id": 1504597,
+          "created_at": "2026-08-13T07:01:04",
+          "updated_at": "2026-08-13T07:01:04",
+          "advogado": {
+            "id": 1504597,
+            "nome": "LAIANE FIDELIS GOMES",
+            "numero_oab": "51380",
+            "uf_oab": "DF"
+          }
+        },
+        {
+          "id": 1294909036,
+          "comunicacao_id": 696389871,
+          "advogado_id": 1504598,
+          "created_at": "2026-08-13T07:01:04",
+          "updated_at": "2026-08-13T07:01:04",
+          "advogado": {
+            "id": 1504598,
+            "nome": "MARCOS MARTINS COSTA",
+            "numero_oab": "35467",
+            "uf_oab": "DF"
+          }
+        },
+        {
+          "id": 1294909039,
+          "comunicacao_id": 696389871,
+          "advogado_id": 1504599,
+          "created_at": "2026-08-13T07:01:04",
+          "updated_at": "2026-08-13T07:01:04",
+          "advogado": {
+            "id": 1504599,
+            "nome": "MAGNO MOURA TEXEIRA",
+            "numero_oab": "38404",
+            "uf_oab": "DF"
+          }
+        },
+        {
+          "id": 1294909041,
+          "comunicacao_id": 696389871,
+          "advogado_id": 1504602,
+          "created_at": "2026-08-13T07:01:04",
+          "updated_at": "2026-08-13T07:01:04",
+          "advogado": {
+            "id": 1504602,
+            "nome": "MARLEIDE TEIXEIRA DA SILVA",
+            "numero_oab": "41627",
+            "uf_oab": "DF"
+          }
+        }
+      ]
+    },
+    {
+      "id": 696385507,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TRT10",
+      "tipoComunicacao": "Lista de distribuição",
+      "nomeOrgao": "Desembargadora Flávia Simões Falcão",
+      "idOrgao": 46602,
+      "texto": "Processo 0000382-43.2026.5.10.0821 distribuído para 1ª Turma - Desembargadora Flávia Simões Falcão na data 12/08/2026 <br> Para maiores informações, clique no link a seguir:  <a target=\"_blank\" href=\"https://pje.trt10.jus.br/pjekz/visualizacao/26081300300166800000027287027?instancia=2\">https://pje.trt10.jus.br/pjekz/visualizacao/26081300300166800000027287027?instancia=2</a>",
+      "numero_processo": "00003824320265100821",
+      "meio": "D",
+      "link": "https://pje.trt10.jus.br/pjekz/visualizacao/26081300300166800000027287027?instancia=2",
+      "tipoDocumento": "Distribuição",
+      "nomeClasse": "RECURSO ORDINáRIO - RITO SUMARíSSIMO",
+      "codigoClasse": "11886",
+      "numeroComunicacao": 2,
+      "ativo": true,
+      "hash": "LQa7Deb9ZQELsQCDT5N7gKZgMzm2nv",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Diário de Justiça Eletrônico Nacional",
+      "numeroprocessocommascara": "0000382-43.2026.5.10.0821",
+      "destinatarios": [
+        {
+          "nome": "ADAO DIAS DA SILVA",
+          "comunicacao_id": 696385507,
+          "polo": "A"
+        },
+        {
+          "nome": "CENTRO OESTE VIGILANCIA E SEGURANCA EIRELI",
+          "comunicacao_id": 696385507,
+          "polo": "P"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1294895532,
+          "comunicacao_id": 696385507,
+          "advogado_id": 1759969,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 1759969,
+            "nome": "MICHELLY GERALDO DOS SANTOS TEODORO",
+            "numero_oab": "11.339",
+            "uf_oab": "TO"
+          }
+        },
+        {
+          "id": 1294895530,
+          "comunicacao_id": 696385507,
+          "advogado_id": 1389824,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 1389824,
+            "nome": "AURELIO FERNANDES PEIXOTO",
+            "numero_oab": "36774",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1294895533,
+          "comunicacao_id": 696385507,
+          "advogado_id": 3259346,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 3259346,
+            "nome": "FERNANDO PALMA PIMENTA FURLAN",
+            "numero_oab": "1530",
+            "uf_oab": "TO"
+          }
+        }
+      ]
+    },
+    {
+      "id": 696446332,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TRT10",
+      "tipoComunicacao": "Edital",
+      "nomeOrgao": "Vara do Trabalho de Guaraí - TO",
+      "idOrgao": 46653,
+      "texto": "PODER JUDICIÁRIO  JUSTIÇA DO TRABALHO  TRIBUNAL REGIONAL DO TRABALHO DA 10ª REGIÃO  Vara do Trabalho de Guaraí - TO   ATOrd 0000265-29.2026.5.10.0861  RECLAMANTE: CREDINALDO SILVA DE SOUSA  RECLAMADO: DINAMO SERVICOS TECNOLOGICOS LTDA, IRIRI CONSTRUTORA LTDA, MUNICIPIO DE COLINAS DO TOCANTINS  Horário de atendimento: 10 às 16h (de 2ª a 6ª feira).  Modalidades de atendimento: Presencial (Av. Araguaia, nº 1.360, Esquina com Av. Bernardo Sayão, Centro, GUARAI/TO - CEP: 77700-000) e Remoto - e-mail (svt01.guarai@trt10.jus.br) e Balcão Virtual (http://www.trt10.jus.br, opção Serviços>Balcão Virtual).     PROCESSO Nº 0000265-29.2026.5.10.0861 - CLASSE: Ação Trabalhista - Rito Ordinário  RECLAMANTE: CREDINALDO SILVA DE SOUSA  RECLAMADO: DINAMO SERVICOS TECNOLOGICOS LTDA  DATA E HORA DA AUDIÊNCIA UNA TELEPRESENCIAL: 27/08/2026 08:40    EDITAL DE NOTIFICAÇÃO DE AUDIÊNCIA UNA TELEPRESENCIAL     O(A) Juiz(a) do Trabalho da Vara do Trabalho de Guaraí - TO, no uso das atribuições que lhe confere a lei, torna público que, por se encontrar em lugar incerto e não sabido, pelo presente Edital, fica NOTIFICADO(A) o(a) réu(ré) DINAMO SERVICOS TECNOLOGICOS LTDA, a comparecer pessoalmente ou por PREPOSTO LEGALMENTE HABILITADO, conforme previsto no artigo 843 da CLT, perante a Vara do Trabalho de Guaraí - TO, na modalidade TELEPRESENCIAL, no dia 27/08/2026 08:40, para audiência UNA, com observância do art. 849 da CLT, no caso do rito ordinário, e do art. 852-C do mesmo diploma, no caso do rito sumaríssimo (CLT, art. 852-A).  A audiência  será realizada por meio da aplicação  Zoom Meetings (https://zoom.us/download#client_4meeting). O manual da aplicação, com informações úteis para a instalação e acesso ao aplicativo, poderá ser acessado pelo link (https://is.gd/manualzoom).  Registra-se, abaixo, link para acesso à sala de audiência virtual:  https://trt10-jus-br.zoom.us/j/6334644559.  As partes deverão estar presentes independentemente do comparecimento de advogado (artigo 843, CLT). O não comparecimento da (o) reclamada (o) importará a aplicação de REVELIA, além de CONFISSÃO quanto à matéria de fato (art. 844 da CLT), reputando-se verdadeiros os fatos alegados na petição inicial.  Recomenda-se, contudo, a contratação de advogado, haja vista que, se recusada eventual proposta de acordo, a(o) reclamada(o) deverá apresentar defesa com termos técnicos.  Defesa(s) escrita(s) deverá(ão) ser apresentada(s) mediante peça(s) salva(s) no ambiente do PJe-JT, observando-se a Resolução 185/2017 do CSJT. Recomenda-se a juntada com pelo menos 48 horas de antecedência (parágrafo primeiro, artigo 22 da referida norma), valendo-se a parte interessada dos seus próprios meios ou dos equipamentos disponibilizados nos Foros Trabalhistas em sistema de autoatendimento. Em cumprimento ao PGC do TRT 10ª Região, o Reclamado, se pessoa jurídica, deverá apresentar cópia do contrato social e de suas alterações, seu número de CNPJ, CEI (Cadastro Específico do INSS) e CPF do proprietário e dos sócios (TST, Provimento CGJT nº 05/2003); se pessoa física, deverá apresentar número do CPF e RG.  Em caso de dúvidas a parte poderá consultar a Portaria PRE/SGJUD Nº 1/2012, do TRT 10ª Região. http://www.trt10.jus.br.  Em caso de controvérsia quanto à jornada de trabalho a(o) reclamada(o) deverá apresentar os controles de horários, conforme Súmula 338 do C.TST.  ¹Caso a ação trate de acidente ou doença relacionada ao trabalho, ou pedidos de adicionais de insalubridade ou periculosidade, a reclamada deverá apresentar cópias do PPRA (Programa de Prevenção de Riscos Ambientais) e PCMSO (Programa de Controle Médico de Saúde Ocupacional), bem como os documentos que comprovem o cumprimento dos referidos programas, relativos ao período de prestação de serviços do autor.  A petição inicial e documentos poderão ser acessados pelo site https://pje.trt10.jus.br/pjekz/validacao, marcando a opção 1º Grau, devendo utilizar o navegador mozilla Firefox a partir da versão 10.2 ou superior (http://www.mozilla.org/pt-BR/firefox/fx/), digitando a(s) chave(s) abaixo:  Descrição Tipo de documento Chave de acesso** Intimação Intimação 26081111510580800000055621089 Intimação Intimação 26081111510600100000055621090 Despacho Despacho 26081111355769900000055620611 Manifestação - PEDIDO DE APRECIAÇÃO DE PETIÇÃO Id 03ea3ef Manifestação 26080610182569300000055519979 Despacho Despacho 26080514434943600000055496563 D. Negativa_Dinamo Certidão 26080513461845100000055493857 D. Positiva_Municipio de Colinas Certidão 26080413432229300000055458014 Petição Inicial Documento Diverso 26080212510297600000055402341 Ata Claudemir Documento Diverso 26080212505851800000055402340 Ações Maranhão Documento Diverso 26080212505730500000055402339 Manifestação - Depoimento Pessoal Reclamante Manifestação 26080212500786700000055402337 Contrato Social Contrato 26072816554085500000055290897 Procuracao_IRIRI_Credinaldo_Silva_de_Sousa (1) Procuração 26072816553992000000055290896 Habilitação Solicitação de Habilitação 26072816551536300000055290880 Certidão de Publicação no DJEN Certidão 26072300092748200000055165731 MUNICIPIO DE COLINAS DO TOCANTINS Mandado 26072214140073300000055149926 IRIRI CONSTRUTORA LTDA Mandado 26072214140063100000055149925 DINAMO SERVICOS TECNOLOGICOS LTDA Mandado 26072214140051800000055149924 Intimação Intimação 26072115442425900000055119702 Despacho Despacho 26072110364173600000055105377 contato dinamo Documento Diverso 26072011100809700000055071149 MANIFEST CREDINALDO SILVA DE SOUSA Manifestação 26072011095718900000055071132 notificação whatsapp Documento Diverso 26071420085146400000054952762 Oficial de Justiça - POSITIVA Certidão 26071420080235400000054952748 Comprovante de Devolução Carta Precatória - Negativo - Foro Trabalhista de Cuiabá - MT Certidão 26071413452701400000054938582 Oficial de Justiça - POSITIVA Certidão 26071315025338900000054904943 Comprovante de Distribuição de Carta Precatória - Foro Trabalhista de Cuiabá - MT Certidão 26070916045417600000054837282 Comprovante de envio de CP - Foro de Cuibá/MT Certidão 26070812295382400000054793272 Carta Precatória Notificatória - DINAMO SERVICOS TECNOLOGICOS LTDA Carta Precatória Notificatória 26070613581521100000054720971 Mandado de Notificação - MUNICIPIO DE COLINAS DO TOCANTINS Mandado 26070613581534100000054720973 Mandado de Notificação - IRIRI CONSTRUTORA LTDA Mandado 26070613581527300000054720972 Manifestação Manifestação 26070709472345400000054747084 Ata da Audiência Ata da Audiência 26060312234390600000053887603 Certidão Automática de Ciência por Domicílio Eletrônico Certidão 26052202404470400000053559793 Certidão Automática de Ausência de Confirmação por Domicílio Eletrônico Certidão 26051503323070200000053364706 Certidão Automática de Ausência de Confirmação por Domicílio Eletrônico Certidão 26051503323049000000053364705 MUNICIPIO DE COLINAS DO TOCANTINS Notificação 26050814434326400000053183141 IRIRI CONSTRUTORA LTDA Notificação 26050814434319900000053183140 DINAMO SERVICOS TECNOLOGICOS LTDA Notificação 26050814434313100000053183139 Certidão de Publicação no DJEN Certidão 26051101283265400000053211092 Intimação Intimação 26050718595541500000053166897 DESIGNAÇÃO DE AUDIÊNCIA CONCILIAÇÃO TELEPRESENCIAL Despacho 26050709520521300000053147547 Certidão de Distribuição Certidão 26042817554498800000052957666 08 subs Substabelecimento com Reserva de Poderes 26042817545521800000052957643 07 CNPJ IRIRI Cadastro Nacional de Pessoa Jurídica (CNPJ) 26042817545500700000052957642 06 CNPJ DINAMO Cadastro Nacional de Pessoa Jurídica (CNPJ) 26042817545488300000052957641 05 Contrato - Obra - Iriri - Dinamo Contrato 26042817545476000000052957640 04 COMP END Documento Diverso 26042817545447200000052957639 03 CTPS Carteira de Trabalho e Previdência Social (CTPS) 26042817545429000000052957638 02 PROCURAÇAO Procuração 26042817545388600000052957637 Petição Inicial Petição Inicial 26042817524229100000052957554  O Edital será publicado no Diário Eletrônico da Justiça do Trabalho, além de afixado no quadro de avisos deste Juízo.  Assinado pelo Servidor da Vara do Trabalho de Guaraí - TO, de ordem do(a) Juiz(a) do Trabalho.  Guaraí/TO, 12 de agosto de 2026 - 16:27:39.  GUARAI/TO, 13 de agosto de 2026. MIKAELEN VIEIRA DE MATOS, Assessor<br><br>Intimado(s) / Citado(s)<br> - DINAMO SERVICOS TECNOLOGICOS LTDA<br>",
+      "numero_processo": "00002652920265100861",
+      "meio": "E",
+      "link": "https://pje.trt10.jus.br/pjekz/validacao/26081216285878000000055658642?instancia=1",
+      "tipoDocumento": "Edital",
+      "nomeClasse": "AçãO TRABALHISTA - RITO ORDINáRIO",
+      "codigoClasse": "985",
+      "numeroComunicacao": 2,
+      "ativo": true,
+      "hash": "qo8LEjMvZg4dF2CNhGKOzEYmrz2A1x",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Plataforma Nacional de Editais",
+      "numeroprocessocommascara": "0000265-29.2026.5.10.0861",
+      "destinatarios": [
+        {
+          "nome": "CREDINALDO SILVA DE SOUSA",
+          "comunicacao_id": 696446332,
+          "polo": "A"
+        },
+        {
+          "nome": "DINAMO SERVICOS TECNOLOGICOS LTDA",
+          "comunicacao_id": 696446332,
+          "polo": "P"
+        },
+        {
+          "nome": "IRIRI CONSTRUTORA LTDA",
+          "comunicacao_id": 696446332,
+          "polo": "P"
+        },
+        {
+          "nome": "MUNICIPIO DE COLINAS DO TOCANTINS",
+          "comunicacao_id": 696446332,
+          "polo": "P"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1295037689,
+          "comunicacao_id": 696446332,
+          "advogado_id": 1525559,
+          "created_at": "2026-08-13T08:30:21",
+          "updated_at": "2026-08-13T08:30:21",
+          "advogado": {
+            "id": 1525559,
+            "nome": "REGINA MARCIA SILVA RODRIGUES SOUSA LIMA",
+            "numero_oab": "7532",
+            "uf_oab": "TO"
+          }
+        },
+        {
+          "id": 1295037681,
+          "comunicacao_id": 696446332,
+          "advogado_id": 3538128,
+          "created_at": "2026-08-13T08:30:21",
+          "updated_at": "2026-08-13T08:30:21",
+          "advogado": {
+            "id": 3538128,
+            "nome": "JÉSUS FERNANDES DA FONSECA",
+            "numero_oab": "2112-B",
+            "uf_oab": "TO"
+          }
+        }
+      ]
+    },
+    {
+      "id": 696385509,
+      "data_disponibilizacao": "2026-08-14",
+      "siglaTribunal": "TRT10",
+      "tipoComunicacao": "Intimação",
+      "nomeOrgao": "15ª Vara do Trabalho de Brasília - DF",
+      "idOrgao": 46614,
+      "texto": "PODER JUDICIÁRIO  JUSTIÇA DO TRABALHO  TRIBUNAL REGIONAL DO TRABALHO DA 10ª REGIÃO  15ª Vara do Trabalho de Brasília - DF   ATOrd 0000025-61.2023.5.10.0015  RECLAMANTE: CARLA EMANUELA DA SILVA GONCALVES  RECLAMADO: CONTAX S.A. - EM RECUPERACAO JUDICIAL EM RECUPERACAO JUDICIAL, TIM S A  INTIMAÇÃO  Fica V. Sa. intimado para tomar ciência da Sentença ID 64af535 proferida nos autos, cujo dispositivo consta a seguir:  III - DISPOSITIVO Pelo exposto, JULGO PROCEDENTES EM PARTE os EMBARGOS À EXECUÇÃO opostos por CONTAX S.A. - EM RECUPERACAO JUDICIAL para determinar a readequação dos cálculos previdenciários, observando-se o regime de desoneração da folha de pagamento (cota patronal) no período da condenação, mantendo-se os demais parâmetros de atualização e juros fixados no título executivo.  Custas processuais na execução pela executada, no valor de R$ 44,26, conforme art. 789-A, V, da CLT.  Observe-se a Secretaria no momento oportuno que se trata de execução em desfavor das empresas CONTAX S.A. - EM RECUPERACAO JUDICIAL EM RECUPERACAO JUDICIAL e TIM S A, sendo a última de forma subsidiária.  Intimem-se as partes.   DEBORA HERINGER MEGIORIN  Juíza do Trabalho Titular<br><br>Intimado(s) / Citado(s)<br> - CARLA EMANUELA DA SILVA GONCALVES<br>",
+      "numero_processo": "00000256120235100015",
+      "meio": "D",
+      "link": "https://pje.trt10.jus.br/pjekz/validacao/26081222362802300000055667650?instancia=1",
+      "tipoDocumento": "Notificação",
+      "nomeClasse": "AçãO TRABALHISTA - RITO ORDINáRIO",
+      "codigoClasse": "985",
+      "numeroComunicacao": 3,
+      "ativo": true,
+      "hash": "voGJwMkOYA2Pi1TbTGja9DRKa931z5",
+      "status": "P",
+      "motivo_cancelamento": null,
+      "data_cancelamento": null,
+      "datadisponibilizacao": "14/08/2026",
+      "meiocompleto": "Diário de Justiça Eletrônico Nacional",
+      "numeroprocessocommascara": "0000025-61.2023.5.10.0015",
+      "destinatarios": [
+        {
+          "nome": "CARLA EMANUELA DA SILVA GONCALVES",
+          "comunicacao_id": 696385509,
+          "polo": "A"
+        },
+        {
+          "nome": "CONTAX S.A. - EM RECUPERACAO JUDICIAL EM RECUPERACAO JUDICIAL",
+          "comunicacao_id": 696385509,
+          "polo": "P"
+        },
+        {
+          "nome": "TIM S A",
+          "comunicacao_id": 696385509,
+          "polo": "P"
+        }
+      ],
+      "destinatarioadvogados": [
+        {
+          "id": 1294895539,
+          "comunicacao_id": 696385509,
+          "advogado_id": 3060844,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 3060844,
+            "nome": "GUSTAVO REZENDE MITNE",
+            "numero_oab": "52997",
+            "uf_oab": "PR"
+          }
+        },
+        {
+          "id": 1294895545,
+          "comunicacao_id": 696385509,
+          "advogado_id": 1360903,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 1360903,
+            "nome": "LEONARDO SANTINI ECHENIQUE",
+            "numero_oab": "249651",
+            "uf_oab": "SP"
+          }
+        },
+        {
+          "id": 1294895544,
+          "comunicacao_id": 696385509,
+          "advogado_id": 1381213,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 1381213,
+            "nome": "FABIO LUIZ SEIXAS SOTERIO DE OLIVEIRA",
+            "numero_oab": "38557",
+            "uf_oab": "GO"
+          }
+        },
+        {
+          "id": 1294895543,
+          "comunicacao_id": 696385509,
+          "advogado_id": 1371416,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 1371416,
+            "nome": "GILIANE AGUINEL DE SOUSA",
+            "numero_oab": "143816",
+            "uf_oab": "RJ"
+          }
+        },
+        {
+          "id": 1294895542,
+          "comunicacao_id": 696385509,
+          "advogado_id": 3093178,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 3093178,
+            "nome": "CARLOS FERNANDO DE SIQUEIRA CASTRO",
+            "numero_oab": "20014",
+            "uf_oab": "DF"
+          }
+        },
+        {
+          "id": 1294895546,
+          "comunicacao_id": 696385509,
+          "advogado_id": 1360950,
+          "created_at": "2026-08-13T07:00:01",
+          "updated_at": "2026-08-13T07:00:01",
+          "advogado": {
+            "id": 1360950,
+            "nome": "DANIEL BATTIPAGLIA SGAI",
+            "numero_oab": "214918",
+            "uf_oab": "SP"
+          }
+        }
+      ]
+    }
+  ]
+}
