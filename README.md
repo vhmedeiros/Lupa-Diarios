@@ -16,26 +16,33 @@ Diários Oficiais brasileiros, raspa o texto das publicações, baixa os
 arquivos vinculados (PDF/ZIP) e dispara e-mail com as novidades. Roda
 24/7 em Docker.
 
-### O que já funciona hoje (Fases 1 a 14 do PLANO.md, implementadas e testadas)
+### O que já funciona hoje (MVP completo — Fases 1 a 18 do `PLANO.md` — mais a expansão das Fases 19 a 22, seção 8, tudo implementado e testado)
 
 - **Setup do projeto**: `uv`, Python 3.13, dependências, `ruff`,
   `pytest`, `scripts/inspect.py` (`app/`, `pyproject.toml`).
 - **Configuração e registry de portais**: `app/config.py` lê o `.env`;
   `app/registry.py` carrega e valida `portals.yaml`.
 - **Docker Compose + FastAPI**: `docker-compose.yml`, `Dockerfile`,
-  `app/main.py` com `GET /health` (checagem real de banco).
+  `app/main.py` com `GET /health` (checagem real de banco) e um
+  `lifespan` que, na subida, cria as tabelas (`create_all`) **e inicia o
+  scheduler** (ver abaixo) — hoje `docker compose up` já deixa o serviço
+  rodando sozinho, sem precisar de nenhum disparo manual.
 - **Modelo de dados**: tabelas `publications` e `seen_hashes`
   (`app/models.py`), criadas via `create_all` no startup da app
   (`app/main.py`) — não há Alembic/migrations no MVP.
 - **BaseScraper + dedupe**: contrato comum de adapter
   (`app/scrapers/base.py`) e a lógica de hash/dedupe (`app/dedupe.py`,
   função `filter_new`).
-- **5 adapters funcionando**, todos parte do recorte do MVP definido no
-  `PLANO.md` (seção 4) — os únicos 5 portais habilitados
-  (`enabled: true`) em `portals.yaml` hoje:
+- **4 adapters, cobrindo 8 portais habilitados hoje** (`enabled: true`
+  em `portals.yaml`). O número de adapters não cresce junto com o de
+  portais porque um deles é parametrizado e reaproveitado por 5 portais
+  diferentes:
   - **TST** — feed Atom (`app/scrapers/tst_juslaboris.py`)
-  - **STJDJN** e **TJDFTDJN** — API JSON do DJEN/comunica_pje, mesmo
-    adapter parametrizado por tribunal (`app/scrapers/comunica_pje.py`)
+  - **`comunica_pje`** (API JSON do DJEN, `app/scrapers/comunica_pje.py`)
+    — parametrizado por `params.sigla_tribunal` de `portals.yaml`, mesmo
+    código reaproveitado por **5 portais**: `STJDJN` (STJ), `TJDFTDJN`
+    (TJDFT), `TRFDJN` (TRF1, habilitado na Fase 19), `TSTDJN` (TST, Fase
+    20) e `TRT10DJN` (TRT10, Fase 21)
   - **TCU** — HTML estático server-side rendered (`app/scrapers/tcu.py`)
   - **TCDF** — API JSON descoberta no bundle JS da SPA
     (`app/scrapers/tcdf.py`)
@@ -57,15 +64,10 @@ arquivos vinculados (PDF/ZIP) e dispara e-mail com as novidades. Roda
     ordem de primeira aparição, depois por `published_at`) — não
     "menores primeiro". A partir do arquivo que faria a soma estourar,
     ele e todos os seguintes viram link no corpo, com aviso explícito
-    de tamanho; nenhuma publicação é omitida por causa de tamanho. Isso
-    foi confirmado com o usuário (era a pergunta 1 da seção 7 do
-    `PLANO.md`, respondida durante a implementação).
+    de tamanho; nenhuma publicação é omitida por causa de tamanho.
   - `send_email(subject, html_body, attachments)` envia de verdade via
     `aiosmtplib`, com STARTTLS real (MailGrid). `MAIL_TO` já suporta
-    múltiplos destinatários separados por vírgula — o `aiosmtplib`
-    extrai os destinatários do header `To` da mensagem automaticamente;
-    não foi preciso nenhum código extra de parsing para isso
-    (confirmado nesta sessão).
+    múltiplos destinatários separados por vírgula.
 - **Pipeline completo** (`app/pipeline.py`, `run_cycle`, Fase 14):
   fetch → dedupe → download → monta e envia UM e-mail (só se houver
   publicação nova, R5) → grava `sent_at`. Erro em qualquer etapa de um
@@ -74,26 +76,88 @@ arquivos vinculados (PDF/ZIP) e dispara e-mail com as novidades. Roda
 - **Endpoints de operação** (`app/routers.py` + `app/main.py`, Fase 14):
   `POST /run` (todos os portais habilitados) e `POST /run/{portal_code}`
   (um portal específico) disparam o pipeline via `BackgroundTasks` do
-  FastAPI — a rota responde `{"status": "started"}` na hora e o ciclo
-  roda em segundo plano, numa sessão de banco própria.
+  FastAPI.
 - **CLI completo**: `app/cli.py` tem hoje três comportamentos do
   comando `run`, além de `send-test`:
   - `uv run python -m app.cli run --portal CODE --dry-run` — só coleta
     e imprime; não grava, não baixa, não envia e-mail.
   - `uv run python -m app.cli run [--portal CODE]` — roda o pipeline de
-    verdade (grava no banco, baixa arquivo, envia e-mail se houver
-    novidade). Sem `--portal`, roda todos os portais habilitados.
+    verdade. Sem `--portal`, roda todos os portais habilitados.
   - `uv run python -m app.cli run --portal CODE --force` — feature
-    pontual **fora do `PLANO.md` original**, aprovada pelo usuário
-    nesta sessão (commit `9b5f5c3`): ver seção 5.1 abaixo para os
-    detalhes.
+    pontual **fora do `PLANO.md` original**, aprovada pelo usuário em
+    sessão anterior (commit `9b5f5c3`): ver seção 5.1 abaixo.
   - `uv run python -m app.cli send-test` — envia um e-mail de teste
     real via SMTP, sem tocar no banco.
+- **Job de retenção** (`app/retention.py`, Fase 15): `run_retention`
+  apaga de `publications` (e os arquivos correspondentes em disco, campo
+  `files`) as linhas com `sent_at` preenchido e anterior a
+  `RETENTION_DAYS` dias (padrão 3). Publicações com `sent_at` nulo
+  (ainda não enviadas) **nunca** são apagadas, e `seen_hashes` **nunca**
+  é tocada por este job. Testado contra banco real
+  (`tests/test_retention.py`, 5 testes, incluindo o caso "arquivo já
+  tinha sido apagado do disco" e o teste-chave que confirma que
+  `seen_hashes` sobrevive).
+- **Scheduler** (`app/scheduler.py`, Fase 16): registra dois jobs no
+  APScheduler — `scan` (cron `SCAN_CRON`, timezone `TZ`, roda
+  `run_cycle` para todos os portais habilitados) e `retention` (diário,
+  fixo às 03:00 `America/Sao_Paulo`, roda `run_retention`). `start()` é
+  chamado uma vez no `lifespan` de `app/main.py`; cada disparo de job
+  abre sua própria sessão de banco. **Isso é a mudança mais importante
+  desde a última versão deste README**: o serviço já roda sozinho hoje,
+  sem depender de CLI/`POST /run` manuais — esses dois continuam
+  existindo como forma de disparo avulso/teste.
+- **Endpoints de leitura `GET /portals` e `GET /publications`**
+  (`app/routers.py`, Fase 17): `GET /portals` lista os portais de
+  `portals.yaml` com `enabled` e `last_run_at` (calculado como
+  `MAX(sent_at)` das publicações daquele portal ainda no buffer);
+  `GET /publications?limit=N` (padrão 50, máx. 500) retorna as
+  publicações mais recentes do buffer, mais novas primeiro.
+- **Fase 18 (fechamento do MVP original)**: suíte completa e checklist
+  do `SPEC.md` §11 rodados de ponta a ponta; commit "chore: MVP
+  funcional".
 
-### Testes reais já rodados nesta sessão (prova de ponta a ponta)
+### Expansão de 14/08/2026: TRF1, TST e TRT10 no DJEN (Fases 19-22 do `PLANO.md`, seção 8)
+
+Depois do fechamento do MVP original, uma sessão seguinte habilitou 3
+portais adicionais **sem escrever nenhum adapter novo** — só
+reaproveitando `comunica_pje` com outro `sigla_tribunal`, a mesma
+estratégia que a Fase 10 original já tinha usado (por descoberta, não
+por plano) para `TJDFTDJN`:
+
+- `portals.yaml` tem hoje **8 portais `enabled: true`** (eram 5): os 5
+  originais (TST, STJDJN, TCU, TCDF, TJDFTDJN) + **`TRFDJN`**
+  (`sigla_tribunal: TRF1`, Fase 19), **`TSTDJN`** (`sigla_tribunal: TST`,
+  Fase 20) e **`TRT10DJN`** (`sigla_tribunal: TRT10`, Fase 21).
+- **`JFDFDJN` continua `enabled: false`**, mas agora por um motivo
+  diferente do original (que era "sem investigação ainda"): a Fase 19
+  confirmou, olhando o campo `orgaoJulgador` dos itens reais devolvidos
+  pela API para `siglaTribunal=TRF1`, que a mesma consulta já traz tanto
+  1º grau ("Vara Federal"/"Seção Judiciária") quanto 2º grau
+  ("Turma"/"Desembargador Federal") — ou seja, `TRFDJN` já cobre o
+  conteúdo que `JFDFDJN` tentaria coletar. Habilitar os dois duplicaria a
+  mesma publicação no e-mail (mesmo conteúdo, `portal_code` diferente →
+  hash diferente no dedupe). Isso está documentado como comentário no
+  próprio `portals.yaml`, em cima da entrada de `JFDFDJN`.
+- **Volumes reais confirmados** (relevante para quem for operar/
+  monitorar): `TRFDJN` (~32.000 comunicações/dia — o maior de todos os
+  portais hoje), `TSTDJN` (~12.000/dia), `TRT10DJN` (~5.800/dia), além
+  dos já conhecidos `STJDJN`/`TJDFTDJN` (~10.000/dia cada). Todos os
+  cinco são capados por `MAX_PAGES = 10` no adapter
+  (`app/scrapers/comunica_pje.py`) — ou seja, **5 dos 8 portais
+  habilitados hoje são de alto volume via DJEN**, não só os 2 originais.
+- **Testes**: `tests/test_scrapers_comunica_pje.py` agora tem 5 testes
+  (parse de STJ, TRF1, TST e TRT10, mais o teste de `sigla_tribunal`
+  ausente). A suíte completa do projeto está em **48 testes**.
+- **Ainda ficam de fora** (`enabled: false`, sem nenhum trabalho de
+  investigação feito ainda): `STFDJE`, `STJ` e `TRF1ATA` — os únicos 3
+  portais que restam do conjunto original de 7 candidatos da seção 3 do
+  `PLANO.md`, e os únicos para os quais a análise (seção 3, e a nova
+  seção 8.1) não encontrou evidência de alternativa a Playwright.
+
+### Testes reais já rodados (disparo completo, sem `--dry-run`)
 
 Os três portais mais simples do recorte já foram disparados de verdade
-(sem `--dry-run`) contra os sites reais, com sucesso:
+contra os sites reais, com sucesso:
 
 - **TST** (feed Atom, sem arquivos vinculados)
 - **TCU** (HTML estático, com download real de PDF anexado ao e-mail)
@@ -105,39 +169,41 @@ comprovado, critério 5 do `SPEC.md` §11), e o reenvio manual via
 `--force` também já foi validado ao vivo para pelo menos um desses
 portais.
 
-### Pendência conhecida (não é bug): STJDJN e TJDFTDJN ainda não foram disparados de verdade
+### Pendência conhecida (não é bug): 5 portais de alto volume via DJEN ainda não foram disparados de verdade
 
-Ambos usam o adapter `comunica_pje` (DJEN) e, na primeira coleta real,
-trazem um volume muito alto de publicações "novas" — da ordem de
-~10.000 cada, mesmo já com o teto `MAX_PAGES = 10` do adapter
-(`app/scrapers/comunica_pje.py`) limitando quantas páginas da API são
-percorridas por execução. Um e-mail com ~20.000 itens de uma vez é
-arriscado (tamanho da mensagem, limite prático do MailGrid), então
-esses dois portais só foram testados via `--dry-run` até agora — nunca
-com envio de e-mail real. Isso é uma pendência conhecida a resolver
-antes de habilitar o pipeline completo para eles em produção (ex.:
-lote menor na primeira carga, ou paginação do próprio envio), não um
-defeito do código atual.
+`STJDJN`, `TJDFTDJN`, `TRFDJN`, `TSTDJN` e `TRT10DJN` usam todos o
+adapter `comunica_pje` (DJEN) e, na primeira coleta real, trazem um
+volume muito alto de publicações "novas" — de ~5.800 (`TRT10DJN`) a
+~32.000 (`TRFDJN`) por dia, mesmo já com o teto `MAX_PAGES = 10` do
+adapter limitando quantas páginas da API são percorridas por execução.
+Um e-mail com dezenas de milhares de itens de uma vez é arriscado
+(tamanho da mensagem, limite prático do MailGrid), então os cinco só
+foram testados via `--dry-run` até agora — nunca com envio de e-mail
+real. Isso continua sendo uma pendência conhecida mesmo depois do
+scheduler existir (que, sozinho, dispararia esses portais no primeiro
+scan sem mais nenhuma decisão) — resolver isso (ex.: lote menor na
+primeira carga, ou paginação do próprio envio) é uma decisão de produto
+ainda em aberto com o usuário antes de considerar esses portais prontos
+para rodar em produção real, não um defeito do código atual.
 
-### O que ainda NÃO existe (Fases 15 a 18 do PLANO.md — não implementadas)
+### O que ainda não existe
 
-Nada abaixo existe em código ainda. Não confie em nenhum destes
-comportamentos até a fase correspondente ser implementada:
+Os únicos portais fora do escopo implementado hoje são os 3 que exigem
+Playwright: `STFDJE`, `STJ` e `TRF1ATA` (ver seção acima) — nenhuma
+investigação (`scripts/inspect.py`) foi feita para eles ainda, e
+seguem `enabled: false`. Fora isso, todo o roadmap do `PLANO.md`
+original (Fases 1 a 18) e da expansão (Fases 19 a 22) está implementado
+e testado.
 
-- Job de retenção de 3 dias (`app/retention.py` — Fase 15)
-- Scheduler/cron (`app/scheduler.py` — Fase 16)
-- Endpoints `GET /portals`, `GET /publications` (`app/routers.py` —
-  Fase 17)
-- Fechamento do MVP (checklist do `SPEC.md` §11 rodado por completo —
-  Fase 18)
-
-Ou seja: hoje o projeto **coleta, deduplica, baixa arquivos e envia
-e-mail de verdade** para 3 dos 5 portais do recorte já testados ao vivo
-(TST, TCU, TCDF), com STJDJN/TJDFTDJN pendentes de um primeiro disparo
-real por causa do volume (ver pendência acima). Ele ainda não roda
-sozinho (sem scheduler, cada ciclo precisa ser disparado manualmente
-via CLI ou `POST /run`) e ainda não tem retenção automática do buffer —
-isso é o roadmap em `PLANO.md`, fases 15 em diante.
+Ou seja: hoje o projeto **roda sozinho** — o scheduler dispara o scan
+conforme `SCAN_CRON` (padrão: de hora em hora, 8h-20h, seg-sex) e a
+retenção 1x por dia (03:00), automaticamente, assim que o container sobe
+(`docker compose up`) — para os **8 portais hoje habilitados**, com
+dedupe, download de arquivo e envio de e-mail de verdade já comprovados
+ao vivo para 3 deles (TST, TCU, TCDF) e pendentes para os 5 de alto
+volume (ver pendência acima). O pipeline continua podendo ser disparado
+manualmente a qualquer momento via CLI ou `POST /run`/`POST
+/run/{portal_code}`.
 
 ### Inconsistência que vale registrar
 
@@ -149,20 +215,27 @@ mostrou que o TJDFT também é coberto pelo DJEN — o mesmo adapter
 §10 já cogitava ("intimações TRF1 PJe podem já estar cobertas pelo
 DJEN — validar antes de investir tempo"). Não existe `app/scrapers/tjdft.py`
 no repositório, e não deveria — a Fase 10 real terminou reaproveitando
-`comunica_pje.py`, não criando um adapter novo. Se você ler o `PLANO.md`
-tal como está hoje, ele ainda descreve o plano original (arquivo
-`tjdft.py`); o código é a fonte de verdade sobre o que de fato foi
+`comunica_pje.py`, não criando um adapter novo. A mesma dinâmica se
+repetiu, de forma deliberada desta vez, nas Fases 19-21: `TRFDJN`,
+`TSTDJN` e `TRT10DJN` também reaproveitam `comunica_pje` em vez de
+adapters novos (`trf1_biblioteca`/`dejt`) que a seção 3 original do
+`PLANO.md` tinha cogitado. Se você ler as seções 1, 3 e a árvore de
+arquivos do `PLANO.md` tal como estão, elas ainda descrevem o plano
+original (incluindo `tjdft.py` e adapters Playwright que nunca foram
+escritos); o código é a fonte de verdade sobre o que de fato foi
 construído.
 
 ---
 
 ## 2. Arquitetura em texto
 
-Pipeline completo, como descrito em `CLAUDE.md`/`SPEC.md` (partes em
-**[futuro]** ainda não existem em código):
+Pipeline completo, como descrito em `CLAUDE.md`/`SPEC.md` — hoje **tudo
+abaixo já existe em código e roda de verdade**, inclusive os dois jobs
+automáticos do scheduler (nenhuma parte é mais "futuro"):
 
 ```
-[futuro] scheduler [app/scheduler.py]
+scheduler (app/scheduler.py, APScheduler) — job "scan"
+  cron SCAN_CRON, timezone TZ (America/Sao_Paulo)
   └─▶ registry (app/registry.py) carrega portals.yaml, filtra enabled=true
   └─▶ para cada portal: adapter.fetch() -> list[Publication]
         (app/scrapers/<adapter>.py, herda de app/scrapers/base.py)
@@ -174,15 +247,17 @@ Pipeline completo, como descrito em `CLAUDE.md`/`SPEC.md` (partes em
         só se houver publicação nova (R5)
   └─▶ grava sent_at nas publicações enviadas
 
-[futuro] job diário de retenção (app/retention.py):
-  apaga publications+arquivos com sent_at > RETENTION_DAYS dias;
-  nunca toca seen_hashes
+scheduler (app/scheduler.py) — job "retention", diário às 03:00
+America/Sao_Paulo:
+  apaga de publications (+ arquivos em disco) as linhas com
+  sent_at > RETENTION_DAYS dias; nunca toca seen_hashes
+  (app/retention.py, run_retention)
 ```
 
-Tudo dentro de `run_cycle` (`app/pipeline.py`) já existe e roda de
-verdade — o único `[futuro]` real do diagrama acima hoje é o
-**scheduler**: nada dispara o pipeline sozinho ainda, ele precisa ser
-chamado manualmente. Duas formas de disparar o pipeline completo hoje:
+Os dois jobs ficam registrados automaticamente quando a app sobe: o
+`lifespan` de `app/main.py` chama `scheduler_module.start()` depois do
+`create_all`. Além do disparo automático, duas formas manuais de rodar
+o pipeline completo continuam disponíveis:
 
 ```
 app/cli.py (run, sem --dry-run)
@@ -235,6 +310,12 @@ pipeline:
 - **`app/pipeline.py`**: `run_cycle()` orquestra tudo isso por ciclo,
   com isolamento de falha por portal (R4) e "só envia se houver
   novidade" (R5).
+- **`app/retention.py`**: `run_retention()` apaga de `publications` (e
+  os arquivos correspondentes em disco) as linhas com `sent_at` velho;
+  nunca toca `seen_hashes`, nunca apaga `sent_at` nulo.
+- **`app/scheduler.py`**: `start()` registra e agenda os jobs `scan`
+  (cron `SCAN_CRON`) e `retention` (diário, 03:00) no APScheduler;
+  chamado uma única vez, no `lifespan` de `app/main.py`.
 
 ---
 
@@ -253,11 +334,14 @@ uv run python -m app.cli run --portal STJDJN --dry-run
 uv run python -m app.cli run --portal TCU --dry-run
 uv run python -m app.cli run --portal TCDF --dry-run
 uv run python -m app.cli run --portal TJDFTDJN --dry-run
+uv run python -m app.cli run --portal TRFDJN --dry-run
+uv run python -m app.cli run --portal TSTDJN --dry-run
+uv run python -m app.cli run --portal TRT10DJN --dry-run
 
 # 4. Rodar o pipeline de verdade (grava no banco, baixa arquivo, envia e-mail
 #    se houver novidade) — preencha o .env com credenciais reais antes
 uv run python -m app.cli run --portal TCU
-uv run python -m app.cli run   # todos os portais habilitados
+uv run python -m app.cli run   # todos os 8 portais habilitados
 
 # 5. Reenviar manualmente publicações já vistas de um portal (ver seção 5.1)
 uv run python -m app.cli run --portal TCU --force
@@ -268,7 +352,9 @@ uv run python -m app.cli send-test
 # 7. Lint e format antes de commitar
 uv run ruff check --fix . && uv run ruff format .
 
-# 8. Subir tudo em Docker (app + db)
+# 8. Subir tudo em Docker (app + db) — o scheduler já sobe junto e passa a
+#    disparar o scan (SCAN_CRON) e a retenção (03:00) sozinho, sem mais
+#    nenhum comando manual
 docker compose up --build
 ```
 
@@ -284,12 +370,13 @@ existir e estar acessível** antes de rodar `pytest`.
 
 Se você rodar `uv run pytest -q` sem antes rodar `docker compose up -d
 db`, os testes que tocam banco (`tests/test_dedupe.py`,
-`tests/test_pipeline.py`, `tests/test_routers.py`, por exemplo) vão
-falhar com erro de conexão recusada — não é bug do teste, é o serviço
-`db` que não está de pé. Isso é uma decisão deliberada (`CLAUDE.md`:
-"Sem ORM extra... simplicidade é requisito de negócio") — testar contra
-Postgres real evita bugs que só aparecem com o dialeto real (tipos
-`JSONB`, `unique constraint` etc.) e que um SQLite fake não pegaria.
+`tests/test_pipeline.py`, `tests/test_routers.py`, `tests/test_retention.py`,
+por exemplo) vão falhar com erro de conexão recusada — não é bug do
+teste, é o serviço `db` que não está de pé. Isso é uma decisão
+deliberada (`CLAUDE.md`: "Sem ORM extra... simplicidade é requisito de
+negócio") — testar contra Postgres real evita bugs que só aparecem com
+o dialeto real (tipos `JSONB`, `unique constraint` etc.) e que um
+SQLite fake não pegaria.
 
 Resumindo o hábito a criar: **sempre `docker compose up -d db` antes de
 `uv run pytest -q`** (ou já deixe o `db` rodando o tempo todo durante o
@@ -300,7 +387,7 @@ desenvolvimento).
 ## 4. Guia passo a passo: como adicionar um novo portal
 
 Esta é a seção mais importante deste manual. Ela descreve o processo
-real que os 5 adapters existentes seguiram — não é hipotético.
+real que os adapters existentes seguiram — não é hipotético.
 
 ### Passo 0 — Antes de qualquer código: investigar o portal
 
@@ -339,7 +426,7 @@ uv run python scripts/inspect.py "https://exemplo.gov.br/algum-endpoint"
 
 **Não pule este passo, e não assuma a estratégia que está hoje em
 `portals.yaml`** — ela é só um palpite inicial e pode estar errada ou
-desatualizada. Isso aconteceu de verdade duas vezes no recorte atual:
+desatualizada. Isso aconteceu de verdade várias vezes no projeto:
 
 - **TCU**: `portals.yaml` tinha `engine: playwright`, mas a investigação
   (`app/scrapers/tcu.py`, docstring) mostrou que `portal.tcu.gov.br/btcu`
@@ -355,12 +442,14 @@ desatualizada. Isso aconteceu de verdade duas vezes no recorte atual:
   `app/scrapers/tcdf.py`). Ou seja, às vezes a estratégia real é
   *melhor* do que a suposição inicial, não pior — só a investigação
   revela isso.
-- **TJDFTDJN**: o `SPEC.md`/`PLANO.md` originais previam um adapter
-  dedicado com URL previsível de PDF. A investigação mostrou que o
-  TJDFT também está coberto pelo mesmo agregador DJEN usado pelo STJ —
-  então **nenhum adapter novo foi criado**; `TJDFTDJN` só ganhou uma
-  entrada em `portals.yaml` reaproveitando `adapter: comunica_pje` com
-  outro `sigla_tribunal`. Antes de escrever um adapter do zero, vale
+- **TJDFTDJN, TRFDJN, TSTDJN, TRT10DJN**: o `PLANO.md` original previa
+  um adapter dedicado com URL previsível de PDF para o TJDFTDJN, e
+  adapters Playwright (`trf1_biblioteca`, `dejt`) para os outros três.
+  A investigação mostrou que os quatro tribunais já são cobertos pelo
+  mesmo agregador DJEN usado pelo STJ — então **nenhum adapter novo foi
+  criado** para nenhum deles; todos só ganharam uma entrada em
+  `portals.yaml` reaproveitando `adapter: comunica_pje` com outro
+  `sigla_tribunal`. Antes de escrever um adapter do zero, vale
   perguntar: "um adapter que já existe serve para este portal, só
   mudando parâmetro?"
 
@@ -391,9 +480,9 @@ entrada na lista `portals:`. Campos:
   usa para se especializar — hoje só `comunica_pje` usa isso
   (`sigla_tribunal`).
 - `enabled`: `true`/`false`. Só portais `enabled: true` entram em
-  `get_enabled_portals()` (o que já é consumido por `run_cycle` sem
-  `--portal`, e vai importar de novo quando o scheduler existir);
-  portais em desenvolvimento devem começar como `false`.
+  `get_enabled_portals()`, que hoje é consumido tanto pelo scheduler
+  (job `scan`, disparado sozinho) quanto por `run_cycle` sem
+  `--portal`; portais em desenvolvimento devem começar como `false`.
 
 Exemplos reais do arquivo atual (`portals.yaml`):
 
@@ -406,7 +495,7 @@ Exemplos reais do arquivo atual (`portals.yaml`):
   engine: http
   enabled: true
 
-# Adapter parametrizado, reaproveitado por dois portais diferentes:
+# Adapter parametrizado, hoje reaproveitado por 5 portais diferentes:
 - code: STJDJN
   name: "STJ no DJEN (Comunica PJe)"
   url: "https://comunica.pje.jus.br/consulta?siglaTribunal=STJ&meio=D"
@@ -415,12 +504,12 @@ Exemplos reais do arquivo atual (`portals.yaml`):
   params: { sigla_tribunal: STJ }
   enabled: true
 
-- code: TJDFTDJN
-  name: "TJDFT no DJEN (Comunica PJe)"
-  url: "https://comunica.pje.jus.br/consulta?siglaTribunal=TJDFT&meio=D"
+- code: TRFDJN
+  name: "TRF 1ª Região"
+  url: "https://trf1.jus.br/trf1/biblioteca/diarios-da-justica"
   adapter: comunica_pje
   engine: http
-  params: { sigla_tribunal: TJDFT }
+  params: { sigla_tribunal: TRF1 }
   enabled: true
 ```
 
@@ -429,7 +518,7 @@ Exemplos reais do arquivo atual (`portals.yaml`):
 Todo adapter segue o mesmo esqueleto: herda `BaseScraper`, implementa
 `fetch()`, e **separa a parte de rede da parte de parse** — isso é o
 que permite testar sem rede no Passo 3. Use `app/scrapers/tst_juslaboris.py`
-como referência (é o mais simples dos cinco): a estrutura, comentada
+como referência (é o mais simples): a estrutura, comentada
 passo a passo, é:
 
 ```python
@@ -464,9 +553,9 @@ class TstJuslaborisScraper(BaseScraper):
 Por que separar `_fetch_*` de `_parse`: é o que torna possível escrever
 um teste que roda em CI/local sem rede e sem depender do portal estar
 no ar — o teste chama `scraper._parse(conteudo_da_fixture)` direto, sem
-passar por `fetch()`. Os cinco adapters existentes seguem exatamente
-esse padrão (compare `app/scrapers/comunica_pje.py`, `tcu.py`, `tcdf.py`
-— todos têm um `_fetch_*` e um ou mais `_parse*`).
+passar por `fetch()`. Os adapters existentes seguem exatamente esse
+padrão (compare `app/scrapers/comunica_pje.py`, `tcu.py`, `tcdf.py` —
+todos têm um `_fetch_*` e um ou mais `_parse*`).
 
 Se o seu adapter precisar de parâmetro vindo de `portals.yaml`
 (`params`), siga o padrão de `app/scrapers/comunica_pje.py`: o
@@ -479,10 +568,14 @@ silenciosamente no meio do `fetch()`.
 1. Rode o adapter manualmente (ou `scripts/inspect.py`) contra o portal
    real, copie a resposta (XML/JSON/HTML) e salve em
    `tests/fixtures/<nome_descritivo>.{xml,json,html}` — hoje existem:
-   `tst_juslaboris_feed.xml`, `comunica_pje_stj.json`, `tcu.html`,
-   `tcdf_diarios.json`, `tcdf_diario_detalhe.json`.
-2. Crie `tests/test_scrapers_<portal>.py`. Exemplo real completo
-   (`tests/test_scrapers_tst.py`):
+   `tst_juslaboris_feed.xml`, `comunica_pje_stj.json`,
+   `comunica_pje_trf1.json`, `comunica_pje_tst.json`,
+   `comunica_pje_trt10.json`, `tcu.html`, `tcdf_diarios.json`,
+   `tcdf_diario_detalhe.json`.
+2. Crie `tests/test_scrapers_<portal>.py` (ou adicione um novo teste ao
+   arquivo já existente, se o adapter já tiver testes — é o que
+   `tests/test_scrapers_comunica_pje.py` faz para cada tribunal novo).
+   Exemplo real completo (`tests/test_scrapers_tst.py`):
 
 ```python
 from pathlib import Path
@@ -506,16 +599,18 @@ def test_parse_feed_returns_publications() -> None:
 Note que este teste **não precisa** da fixture `db_session` de
 `tests/conftest.py` nem do banco de pé — ele só testa o `_parse`, que é
 função pura. Só os testes que tocam o banco (`tests/test_dedupe.py`,
-`tests/test_pipeline.py`, `tests/test_routers.py`) precisam do `db` de
-pé.
+`tests/test_pipeline.py`, `tests/test_routers.py`,
+`tests/test_retention.py`) precisam do `db` de pé.
 
 ### Passo 4 — Registrar o adapter em `app/cli.py` E em `app/pipeline.py`
 
 Os dois arquivos têm, hoje, um dicionário `ADAPTERS` próprio (mesma
 forma, mantidos em paralelo — `app/cli.py` para `--dry-run`/`--force`,
-`app/pipeline.py` para o `run_cycle` real). Adicione a importação da
-classe e uma entrada em **ambos**, usando a mesma string que você
-colocou no campo `adapter` de `portals.yaml`:
+`app/pipeline.py` para o `run_cycle` real, que também é o que o
+scheduler chama). Adicione a importação da classe e uma entrada em
+**ambos**, usando a mesma string que você colocou no campo `adapter`
+de `portals.yaml`. Se o adapter já existir (caso de um novo tribunal em
+`comunica_pje`), não precisa mexer aqui — só em `portals.yaml`:
 
 ```python
 from app.scrapers.meu_novo_adapter import MeuNovoScraper
@@ -563,10 +658,10 @@ primeiro.
   como isso se traduziu em código: o adapter `comunica_pje.py` usa o
   teto de itens por página que a própria API aceita (`ITEMS_PER_PAGE =
   1000`) para minimizar o número de páginas, tem um teto de páginas por
-  execução (`MAX_PAGES = 10` — é a origem da pendência de STJDJN/
-  TJDFTDJN na seção 1) e espera `PAGE_DELAY_SECONDS = 5` segundos entre
-  páginas — não porque é bonito, mas porque a API do DJEN devolveu um
-  429 real durante a investigação (header `x-ratelimit-limit: 20`).
+  execução (`MAX_PAGES = 10` — é a origem da pendência de volume alto
+  na seção 1) e espera `PAGE_DELAY_SECONDS = 5` segundos entre páginas
+  — não porque é bonito, mas porque a API do DJEN devolveu um 429 real
+  durante a investigação (header `x-ratelimit-limit: 20`).
 - **Tratamento de rate-limit (429), quando aplicável**: veja
   `app/scrapers/comunica_pje.py`, método `_retry_after_seconds` — em vez
   de aplicar o backoff genérico num 429, o adapter lê o header
@@ -575,9 +670,9 @@ primeiro.
   10`) do que o backoff normal, porque um 429 significa que a janela de
   limite já estourou — esperar pouco só geraria outro 429. Isso não é
   genérico em `BaseScraper`; é tratado dentro do próprio adapter porque
-  só `comunica_pje` (STJDJN/TJDFTDJN) mostrou esse comportamento até
-  agora. Se o seu novo portal também tiver rate-limit, siga o mesmo
-  padrão: leia `Retry-After` antes de assumir um número fixo.
+  só `comunica_pje` mostrou esse comportamento até agora. Se o seu novo
+  portal também tiver rate-limit, siga o mesmo padrão: leia
+  `Retry-After` antes de assumir um número fixo.
 - **Fixture + teste sem rede é obrigatório**, não opcional — nenhum
   adapter deve ser considerado "pronto" sem os dois.
 - **Logging, nunca `print`** dentro de `app/`, com uma exceção
@@ -594,16 +689,20 @@ primeiro.
 | Eu quero... | Vá em... |
 |---|---|
 | Adicionar, desabilitar ou reconfigurar um portal | `portals.yaml` |
-| Mudar o horário/frequência do scan | `SCAN_CRON` no `.env` (variável já lida por `app/config.py`; ainda não consumida por nenhum scheduler — Fase 16) |
+| Mudar o horário/frequência do scan | `SCAN_CRON` no `.env` (lida por `app/config.py` e **já consumida de verdade** pelo scheduler — `app/scheduler.py`, job `scan`) |
 | Mudar o limite de anexo do e-mail | `MAX_ATTACH_MB` no `.env` (já lida por `app/config.py` e **já aplicada de verdade** pelo mailer — `app/mailer.py`, `build_email`) |
-| Mudar quantos dias o buffer guarda publicações | `RETENTION_DAYS` no `.env` (já lida; ainda não usada — Fase 15) |
+| Mudar quantos dias o buffer guarda publicações | `RETENTION_DAYS` no `.env` (já lida por `app/config.py` e **já aplicada de verdade** pelo job de retenção — `app/retention.py`, disparado diariamente pelo scheduler) |
 | Ver/mudar o modelo das tabelas do banco | `app/models.py` (`Publication`, `SeenHash`) |
 | Ver a regra de dedupe (hash, filtro) | `app/dedupe.py` |
 | Ver/mudar a configuração lida do `.env` | `app/config.py` |
 | Ver como os arquivos são baixados (retry, extensão por Content-Type) | `app/downloader.py` |
 | Ver a regra dos 15MB e a montagem do e-mail | `app/mailer.py` (`build_email`, `send_email`) |
 | Ver a orquestração de um ciclo completo (fetch→dedupe→download→mail→sent_at) | `app/pipeline.py` (`run_cycle`) |
+| Ver a lógica do job de retenção (o que apaga, o que preserva) | `app/retention.py` (`run_retention`) |
+| Ver o agendamento automático (scan + retenção) | `app/scheduler.py` (`start`) — chamado no `lifespan` de `app/main.py` |
 | Disparar o pipeline via HTTP | `app/routers.py` (`POST /run`, `POST /run/{portal_code}`) |
+| Ver o status dos portais e a última execução conhecida | `GET /portals` (`app/routers.py`) |
+| Ver as publicações mais recentes do buffer | `GET /publications?limit=N` (`app/routers.py`) |
 | Adicionar um adapter novo | ver seção 4 acima; arquivos em `app/scrapers/`, registro em `app/cli.py` **e** `app/pipeline.py` |
 | Ver como o CLI resolve portal → adapter | `app/cli.py`, funções `_find_portal` e `_build_scraper` |
 | Rodar/testar um portal sem afetar o banco | `uv run python -m app.cli run --portal CODE --dry-run` |
@@ -643,7 +742,7 @@ publicação encontrada (mesma fórmula de sempre,
 arriscar apagar dado de outro portal ou período por engano. Em seguida
 roda o pipeline normal (`app.pipeline.run_cycle`), que trata essas
 publicações como novas de novo e as reenvia por e-mail. Já validado ao
-vivo nesta sessão.
+vivo.
 
 ---
 
@@ -651,23 +750,24 @@ vivo nesta sessão.
 
 | Variável | Para que serve | Usada hoje? |
 |---|---|---|
-| `DATABASE_URL` | String de conexão do Postgres (formato `postgresql+asyncpg://...`). Fora do Docker (`uv run`) aponta para `localhost`; dentro do compose, o serviço `app` recebe uma versão sobrescrita apontando para o host interno `db` (ver comentário no topo do `.env.example` e em `docker-compose.yml`). | **Sim** — `app/db.py` cria o engine a partir dela; testes, dry-run e pipeline real dependem dela. |
+| `DATABASE_URL` | String de conexão do Postgres (formato `postgresql+asyncpg://...`). Fora do Docker (`uv run`) aponta para `localhost`; dentro do compose, o serviço `app` recebe uma versão sobrescrita apontando para o host interno `db` (ver comentário no topo do `.env.example` e em `docker-compose.yml`). | **Sim** — `app/db.py` cria o engine a partir dela; testes, dry-run, pipeline real e scheduler dependem dela. |
 | `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | Credenciais usadas tanto para montar a `DATABASE_URL` do serviço `app` no compose quanto para inicializar o container `db` (imagem `postgres:17-alpine`). | **Sim**, via `docker-compose.yml`. |
-| `SCAN_CRON` | Expressão cron de quando rodar o ciclo de coleta (padrão: de hora em hora, 8h-20h, seg-sex). | Lida por `app/config.py`; **ainda não consumida** — não há scheduler implementado (Fase 16). |
-| `TZ` | Timezone do agendamento (`America/Sao_Paulo`). | Lida por `app/config.py`; **ainda não consumida** pelo mesmo motivo acima. Nota: o adapter `comunica_pje.py` já usa `America/Sao_Paulo` internamente (hardcoded via `zoneinfo`, não lendo esta variável) para calcular "hoje" na busca por data. |
-| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASSWORD` / `SMTP_TLS` | Credenciais do MailGrid para envio de e-mail. | **Sim** — `app/mailer.py` (`send_email`) usa todas para enviar de verdade via `aiosmtplib`, STARTTLS real, já testado contra o MailGrid nesta sessão. |
+| `SCAN_CRON` | Expressão cron de quando rodar o ciclo de coleta (padrão: de hora em hora, 8h-20h, seg-sex). | **Sim** — lida por `app/config.py` e consumida de verdade pelo job `scan` do `app/scheduler.py`. |
+| `TZ` | Timezone do agendamento (`America/Sao_Paulo`). | **Sim** — lida por `app/config.py` e usada tanto pelo `AsyncIOScheduler` (`app/scheduler.py`) quanto pelo `CronTrigger` do job `scan`. Nota: o adapter `comunica_pje.py` também usa `America/Sao_Paulo` internamente (hardcoded via `zoneinfo`, não lendo esta variável) para calcular "hoje" na busca por data. |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASSWORD` / `SMTP_TLS` | Credenciais do MailGrid para envio de e-mail. | **Sim** — `app/mailer.py` (`send_email`) usa todas para enviar de verdade via `aiosmtplib`, STARTTLS real. |
 | `MAIL_FROM` / `MAIL_TO` | Remetente e destinatário(s) do e-mail de novidades. | **Sim** — lidas em `app/mailer.py`. `MAIL_TO` já suporta múltiplos destinatários separados por vírgula (o `aiosmtplib` extrai a lista do header `To` da mensagem automaticamente; nenhum parsing extra foi necessário no código). |
 | `MAX_ATTACH_MB` | Limite (em MB) da soma de anexos por e-mail (regra R2 do `SPEC.md`) — **global por e-mail**, não por portal. | **Sim** — `app/mailer.py` (`build_email`) aplica a regra de verdade: soma os arquivos em ordem de descoberta até o limite; o que excede vira link no corpo com aviso de tamanho. |
-| `RETENTION_DAYS` | Quantos dias uma publicação enviada fica no buffer antes de ser apagada. | Lida por `app/config.py` (padrão 3); **ainda não usada** — job de retenção é Fase 15. |
+| `RETENTION_DAYS` | Quantos dias uma publicação enviada fica no buffer antes de ser apagada. | **Sim** — lida por `app/config.py` (padrão 3) e aplicada de verdade pelo job diário do scheduler (`app/scheduler.py` → `app/retention.py`, `run_retention`). |
 | `JWT_SECRET` | Reservado para a futura integração com o SaaS Lupa (Django) via JWT. | Explicitamente **fora de escopo do MVP** — só existe a variável reservada, nenhuma autenticação é implementada (`CLAUDE.md` e `SPEC.md` são explícitos sobre isso). |
 
 Importante: como `SMTP_*`, `MAIL_FROM` e `MAIL_TO` são campos
 obrigatórios (sem valor padrão) em `app/config.py`, a aplicação **não
 sobe** sem um `.env` com algum valor preenchido nesses campos. Hoje
 esses campos já são usados para enviar e-mail de verdade sempre que o
-pipeline roda sem `--dry-run` — preencha com credenciais reais do
-MailGrid antes de rodar `run` (sem `--dry-run`) ou `send-test`; para
-só rodar os testes e o `--dry-run`, valores fictícios bastam.
+pipeline roda (via scheduler automático, CLI sem `--dry-run`, ou
+`POST /run`) — preencha com credenciais reais do MailGrid antes de
+subir o serviço de verdade; para só rodar os testes e o `--dry-run`,
+valores fictícios bastam.
 
 ---
 
@@ -675,8 +775,8 @@ só rodar os testes e o `--dry-run`, valores fictícios bastam.
 
 - **Adapter**: classe em `app/scrapers/` que sabe coletar publicações de
   um portal específico (ou de uma família de portais parametrizada, como
-  `comunica_pje`). Todo adapter herda de `BaseScraper` e implementa
-  `fetch()`.
+  `comunica_pje`, hoje reaproveitado por 5 portais). Todo adapter herda
+  de `BaseScraper` e implementa `fetch()`.
 - **Engine**: campo de `portals.yaml` que diz se o adapter usa requisição
   HTTP simples (`http`, via `httpx`) ou navegador automatizado
   (`playwright`) — hoje nenhum portal habilitado usa `playwright`.
@@ -685,9 +785,10 @@ só rodar os testes e o `--dry-run`, valores fictícios bastam.
   modo seguro para testar um portal sem efeitos colaterais.
 - **Ciclo**: uma execução completa do pipeline (`app.pipeline.run_cycle`)
   para um portal ou para todos os habilitados: fetch → dedupe →
-  download → e-mail (se houver novidade) → `sent_at`. Disparado hoje
-  via `run` (sem `--dry-run`) do CLI ou via `POST /run`/`POST
-  /run/{portal_code}`; a Fase 16 vai automatizar esse disparo por cron.
+  download → e-mail (se houver novidade) → `sent_at`. Disparado
+  automaticamente pelo scheduler (job `scan`, cron `SCAN_CRON`), ou
+  manualmente via `run` (sem `--dry-run`) do CLI ou via `POST /run`/
+  `POST /run/{portal_code}`.
 - **`--force`**: flag do comando `run` do CLI (fora do `PLANO.md`
   original) que libera as publicações atuais de um portal para reenvio,
   apagando só os hashes exatos delas de `seen_hashes`/`publications`
@@ -708,24 +809,36 @@ só rodar os testes e o `--dry-run`, valores fictícios bastam.
   **nunca é apagada** (nem pela retenção). `publications` guarda o
   conteúdo completo (título, resumo, arquivos) e é um **buffer
   temporário**: existe só para montar o e-mail e é apagado depois de
-  `RETENTION_DAYS` dias (quando a Fase 15 existir). Se fossem a mesma
+  `RETENTION_DAYS` dias pelo job diário do scheduler. Se fossem a mesma
   tabela, o job de retenção teria que decidir linha a linha o que
   preservar — separá-las torna a regra de retenção uma instrução única,
   sem exceções.
-- **Retenção**: job (ainda não implementado, Fase 15) que apaga
-  publicações antigas de `publications` (e seus arquivos em disco) —
-  o banco é um buffer operacional, não um histórico permanente.
+- **Retenção**: job diário (`app/retention.py`, disparado pelo
+  scheduler às 03:00) que apaga publicações antigas de `publications`
+  (e seus arquivos em disco) — o banco é um buffer operacional, não um
+  histórico permanente. Só apaga linhas com `sent_at` preenchido e
+  vencido; nunca toca `seen_hashes`.
+- **Scheduler**: `app/scheduler.py`, baseado em APScheduler, registra
+  dois jobs automáticos assim que a app sobe — `scan` (cron
+  `SCAN_CRON`) e `retention` (diário, 03:00) — e é o que faz o serviço
+  rodar sozinho, sem depender de disparo manual via CLI/HTTP.
 
 ---
 
 ## Fontes desta documentação
 
 Este README foi escrito originalmente lendo o código do repositório em
-2026-08-13 (logo após a Fase 10) e atualizado em 2026-08-13, no mesmo
-dia, depois da implementação das Fases 11-14 (`app/downloader.py`,
-`app/mailer.py`, `app/pipeline.py`, `app/routers.py`), de uma correção
-de bug no downloader (commit `baeaed3`) e da feature `--force` no CLI
-(commit `9b5f5c3`, fora do `PLANO.md` original). Se o código mudar de
-novo, este arquivo pode ficar desatualizado — em caso de dúvida, o
-código em `app/` é sempre a fonte de verdade final sobre o que está de
-fato implementado.
+2026-08-13 (logo após a Fase 10) e passou por revisões sucessivas
+conforme o código avançava (Fases 11-14, correção de bug do downloader
+— commit `baeaed3` —, e a feature `--force` — commit `9b5f5c3`, fora do
+`PLANO.md` original). Esta versão foi atualizada em 2026-08-14, lendo o
+código real de novo, para refletir duas mudanças que tinham ficado de
+fora da última revisão: (1) o fechamento completo do MVP original
+(Fases 15-18: job de retenção, scheduler automático e os endpoints
+`GET /portals`/`GET /publications`, todos já implementados e testados,
+não mais "futuro"); e (2) a expansão das Fases 19-22 (seção 8 do
+`PLANO.md`), que habilitou `TRFDJN`, `TSTDJN` e `TRT10DJN` reaproveitando
+o adapter `comunica_pje` já em produção, sem escrever nenhum adapter
+novo. Se o código mudar de novo, este arquivo pode ficar desatualizado
+— em caso de dúvida, o código em `app/` é sempre a fonte de verdade
+final sobre o que está de fato implementado.
