@@ -35,13 +35,20 @@ portals:
     adapter: stj
     engine: playwright
     enabled: false
+  # Desabilitado em 2026-08-17: volume diário (~10-13 mil comunicações,
+  # já que o adapter busca "hoje" a cada ciclo, não é backlog único)
+  # gera e-mail HTML grande o bastante para estourar o limite de tamanho
+  # do servidor SMTP (MailGrid, 552 Message size exceeds maximum) em
+  # dias de conteúdo mais longo. Passou raspando num teste, falhou no
+  # outro. Precisa de envio em lotes (split por tamanho) no mailer antes
+  # de reabilitar — ver TJDFTDJN abaixo, mesmo motivo.
   - code: STJDJN
     name: "STJ no DJEN (Comunica PJe)"
     url: "https://comunica.pje.jus.br/consulta?siglaTribunal=STJ&meio=D"
     adapter: comunica_pje
     engine: http
     params: { sigla_tribunal: STJ }
-    enabled: true
+    enabled: false
   - code: TST
     name: "Diário do TST (JusLaboris)"
     url: "https://juslaboris.tst.jus.br/feed/atom_1.0/site"
@@ -62,13 +69,18 @@ portals:
     engine: http
     params: { sigla_tribunal: TRT10 }
     enabled: true
+  # Desabilitado em 2026-08-17: mesmo motivo do STJDJN acima — e-mail
+  # com ~10 mil comunicações do dia estourou o limite de tamanho do
+  # SMTP (552 Message size exceeds maximum permitted). Sem perda de
+  # dados (rollback automático, sessão não comitou), mas vai repetir
+  # todo dia até o mailer suportar envio em lotes.
   - code: TJDFTDJN
     name: "TJDFT no DJEN (Comunica PJe)"
     url: "https://comunica.pje.jus.br/consulta?siglaTribunal=TJDFT&meio=D"
     adapter: comunica_pje
     engine: http
     params: { sigla_tribunal: TJDFT }
-    enabled: true
+    enabled: false
   - code: TRFDJN
     name: "TRF 1ª Região"
     url: "https://trf1.jus.br/trf1/biblioteca/diarios-da-justica"
